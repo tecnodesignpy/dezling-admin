@@ -1,7 +1,7 @@
 angular.module('noodlio.controllers-home', ["chart.js"])
 
 
-.controller('HomeCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, Auth, $log) {
+.controller('HomeCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, Auth, $log, $window) {
 
     var home        = this;
     home.AuthData   = Auth.AuthData;
@@ -31,6 +31,14 @@ angular.module('noodlio.controllers-home', ["chart.js"])
     
     home.goTo = function(nextState) {
         $state.go(nextState)
+    };
+
+    $scope.analytics = function(){
+        $window.open('https://analytics.google.com/','_blank');
+    };
+
+    $scope.devicepush = function(){
+        $window.open('http://panel.devicepush.com','_blank');
     };
 })
 

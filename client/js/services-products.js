@@ -1145,6 +1145,29 @@ angular.module('noodlio.services-products', [])
         // Notificamos al usuario en la bandeja de entrada
         if(PromocionMeta.notificaciones.mensajes == true ){
             console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([slug])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:slug,
+                            }); 
+                        }
+                    }
+                });
+            });
         }
         
         var ref = firebase.database().ref('categorias/centros_comerciales/comercios/' + slug);
@@ -1176,7 +1199,8 @@ angular.module('noodlio.services-products', [])
                 angular.forEach(success,function (detalle,key) {
                     if(detalle.hasOwnProperty(['favoritos'])){
                         if(detalle.favoritos.hasOwnProperty([slug])){
-                            console.log("El ususario "+ key + " le tiene como Fav");
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
                             // Procedemos a colocar en su bandeja de entrada
                             firebase.database().ref('users/'+ key + '/notificaciones').push().set({
                                 detalle: {
@@ -1186,7 +1210,7 @@ angular.module('noodlio.services-products', [])
                                 fechainicio:datos.fechainicio || '',
                                 fechafin:datos.fechafin || '',
                                 estado:'nueva',
-                                avatar:'',
+                                slug:slug,
                             }); 
                         }
                     }
@@ -1643,6 +1667,33 @@ angular.module('noodlio.services-products', [])
     self.submitPromocion = function(PromocionMeta, AuthData, shopping, local) {
         var database = firebase.database();
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
         
         var ref = firebase.database().ref('categorias/centros_comerciales/comercios/' + shopping +'/locales/' + local );
         var id = ref.child('promociones');
@@ -1664,6 +1715,33 @@ angular.module('noodlio.services-products', [])
     // Hacemos Submit a la promocion Editada
     self.editPromocion = function(PromocionMeta, AuthData, shopping, local, promoId) {
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
 
         var funcion = firebase.database().ref('categorias/centros_comerciales/comercios/' + shopping +'/locales/' + local + '/promociones/' + promoId ).update({
             texto: {
@@ -2050,6 +2128,33 @@ angular.module('noodlio.services-products', [])
     self.submitPromocion = function(PromocionMeta, AuthData, slug) {
         var database = firebase.database();
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([slug])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:slug,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
         
         var ref = firebase.database().ref('categorias/multimarcas/comercios/' + slug);
         var id = ref.child('promociones');
@@ -2071,6 +2176,33 @@ angular.module('noodlio.services-products', [])
     // Hacemos Submit a la promocion Editada
     self.editPromocion = function(PromocionMeta, AuthData, slug, promoId) {
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([slug])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:slug,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
 
         var funcion = firebase.database().ref('categorias/multimarcas/comercios/' + slug +'/promociones/'+promoId ).update({
             texto: {
@@ -2498,6 +2630,33 @@ angular.module('noodlio.services-products', [])
     self.submitPromocion = function(PromocionMeta, AuthData, shopping, local) {
         var database = firebase.database();
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
         
         var ref = firebase.database().ref('categorias/multimarcas/comercios/' + shopping +'/locales/' + local );
         var id = ref.child('promociones');
@@ -2518,6 +2677,33 @@ angular.module('noodlio.services-products', [])
     // Hacemos Submit a la promocion Editada
     self.editPromocion = function(PromocionMeta, AuthData, shopping, local, promoId) {
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
 
         var funcion = firebase.database().ref('categorias/multimarcas/comercios/' + shopping +'/locales/' + local + '/promociones/' + promoId ).update({
             texto: {
@@ -2902,6 +3088,33 @@ angular.module('noodlio.services-products', [])
     self.submitPromocion = function(PromocionMeta, AuthData, slug) {
         var database = firebase.database();
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([slug])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:slug,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
         
         var ref = firebase.database().ref('categorias/supermercados/comercios/' + slug);
         var id = ref.child('promociones');
@@ -2923,6 +3136,33 @@ angular.module('noodlio.services-products', [])
     // Hacemos Submit a la promocion Editada
     self.editPromocion = function(PromocionMeta, AuthData, slug, promoId) {
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([slug])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:slug,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
 
         var funcion = firebase.database().ref('categorias/supermercados/comercios/' + slug +'/promociones/'+promoId ).update({
             texto: {
@@ -3350,6 +3590,33 @@ angular.module('noodlio.services-products', [])
     self.submitPromocion = function(PromocionMeta, AuthData, shopping, local) {
         var database = firebase.database();
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
         
         var ref = firebase.database().ref('categorias/supermercados/comercios/' + shopping +'/locales/' + local );
         var id = ref.child('promociones');
@@ -3370,11 +3637,38 @@ angular.module('noodlio.services-products', [])
     // Hacemos Submit a la promocion Editada
     self.editPromocion = function(PromocionMeta, AuthData, shopping, local, promoId) {
         var datos = PromocionMeta;
+        // Notificamos al usuario en la bandeja de entrada
+        if(PromocionMeta.notificaciones.mensajes == true ){
+            console.log("Notificamos a los usuario que tienen como FAV");
+            // Recorremos el array User
+            UserService.getUsuarios().then(function(success){
+                console.log(success);
+                angular.forEach(success,function (detalle,key) {
+                    if(detalle.hasOwnProperty(['favoritos'])){
+                        if(detalle.favoritos.hasOwnProperty([local])){
+                            console.log("El usuario "+ key + " le tiene como Fav");
+                            // Obtenemos el avatar del comercio
+                            // Procedemos a colocar en su bandeja de entrada
+                            firebase.database().ref('users/'+ key + '/notificaciones').push().set({
+                                detalle: {
+                                                titulo : datos.texto.titulo || '',
+                                                descripcion: datos.texto.descripcion || '',
+                                        },
+                                fechainicio:datos.fechainicio || '',
+                                fechafin:datos.fechafin || '',
+                                estado:'nueva',
+                                slug:local,
+                            }); 
+                        }
+                    }
+                });
+            });
+        }
 
         var funcion = firebase.database().ref('categorias/supermercados/comercios/' + shopping +'/locales/' + local + '/promociones/' + promoId ).update({
             texto: {
-                            titulo : datos.texto.titulo || '',
-                            descripcion: datos.texto.descripcion || '',
+                        titulo : datos.texto.titulo || '',
+                        descripcion: datos.texto.descripcion || '',
                     },
             fechainicio:datos.fechainicio || '',
             fechafin:datos.fechafin || '',

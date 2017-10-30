@@ -113,7 +113,7 @@ angular.module('noodlio', [
                       .state('admin.SubmitBeneficioCentrosComerciales', {
                           url: '/categories/centros_comerciales/beneficios/:shopping/submit/:beneficio',
                           templateUrl: '/templates/shoppings/submit_centros_beneficios.html',
-                          controller:'BeneficiosShoppingLocales',
+                          controller:'BeneficiosShopping',
                           resolve: {authResolve: authResolve}
                       })
               /*  FIN CATEGORIAS  */

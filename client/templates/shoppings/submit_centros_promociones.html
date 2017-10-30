@@ -104,7 +104,7 @@
         </div>
     </div>
 </section>
-        
+
 <section class="main-wrapper">
     <div class="container">
         
@@ -176,7 +176,10 @@
                 <p id="error-message">{{submit.ErrorMessages['link']}}</p>
                 <input type="checkbox" 
                         ng-model="submit.PromocionMeta.notificaciones.mensajes"
-                        class="submit-box-generic submit-input-wide"> Notificar en la bandeja de Mensajes
+                        class="submit-box-generic submit-input-wide"> Notificar en la bandeja de Mensajes <br>
+                <input type="checkbox" 
+                        ng-model="submit.PromocionMeta.notificaciones.push"
+                        class="submit-box-generic submit-input-wide"> Notificar via Push
                 
                 
 

@@ -60,6 +60,13 @@ angular.module('noodlio.controllers-items', [])
             }
         );
     };
+
+    // SUBMIT BENEFICIOS
+
+    //Primero Redireccionamos si es nuevo o debemos editar
+    $scope.Redireccionar = function(){
+        console.log("Vamos a Redireccionar");
+    }
         
 })
 .controller('BeneficiosShoppingLocales', function($location, $anchorScroll, $stateParams, $state) {
