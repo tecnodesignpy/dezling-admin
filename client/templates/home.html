@@ -1,0 +1,98 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="home.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                <h1>
+                    Administrador - Dezling App
+                </h1>
+                <br>
+                <p>
+                    Entraste con: 
+                    <span class="text-variable">
+                        {{home.AuthData.email}}
+                    </span>
+                </p>
+      
+            </div>
+        </div>
+        <hr class="star-light">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                <button
+                    ng-click="home.goTo('admin.usuarios')"
+                    class="btn-choice">
+                    Usuarios
+                </button>
+                
+                <button
+                    class="btn-choice">
+                    <a
+                        target="_blank"
+                        href="http://panel.devicepush.com" style="color:#515151 !important" class="btn-choice">
+                        Notificaciones Push
+                    </a>
+                </button>
+                
+                <button
+                    ng-click="home.goTo('admin.submit')"
+                    class="btn-choice">
+                    Reportes
+                </button>
+
+                <button
+                    ng-click="home.goTo('admin.categories-multimarcas')"
+                    class="btn-choice active">
+                    Multimarcas
+                </button>
+                
+                <button 
+                    ng-click="home.goTo('admin.categories-centros_comerciales')"
+                    class="btn-choice active">
+                    Shopping's
+                </button>
+                
+                <button 
+                    ng-click="home.goTo('admin.categories-supermercados')"
+                    class="btn-choice active">
+                    Supermercados
+                </button>
+                
+                <button
+                    ui-sref="admin.sponsor"
+                    class="btn-choice">
+                    Sponsors
+                </button>
+                
+                <button 
+                    ng-click="home.goTo('admin.destacados')"
+                    class="btn-choice">
+                    Destacados
+                </button>
+                
+                <button
+                    class="btn-choice">
+                    <a
+                        target="_blank"
+                        href="https://analytics.google.com/" style="color:#515151 !important" class="btn-choice">
+                        Anaytics Web
+                    </a>
+                </button>
+                
+                <button 
+                    ng-click="home.goTo('admin.home')"
+                    class="btn-choice">
+                    Feriados
+                </button>
+      
+            </div>
+            
+        </div>
+
+    </div>
+</section>

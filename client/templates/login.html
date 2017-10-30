@@ -1,0 +1,43 @@
+<div id="page-top" class="page-top">&nbsp;</div>
+
+<section id="account" class="section-product" ng-init="account.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h1>Administrador - Dezling App</h1>
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <div class="row">
+            
+            <div class="col-sm-12">
+                <h2>Iniciar Sesion</h2>
+                <p>
+                    <input 
+                        class="submit-box-generic input-wide"
+                        placeholder="E-mail"
+                        type="email" ng-model="account.inputData.signIn.email">
+                    <input 
+                        class="submit-box-generic input-wide"
+                        placeholder="Password"
+                        type="password" ng-model="account.inputData.signIn.password">
+                </p>
+                <p>
+                    <button 
+                        class="btn-positive"
+                        ng-click="account.authWithEmail()">Entrar</button>
+                </p>
+                <p>
+                    {{account.inputData.signIn.message}}
+                </p>
+            </div>
+        </div>
+
+        
+    </div>
+</section>
+
+

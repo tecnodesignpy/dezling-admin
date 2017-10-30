@@ -1,0 +1,72 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ui-sref="admin.home">Menu</a> | Sponsor's
+                </h1>
+                <p>&nbsp;</p>
+                <p>
+                    <a href="" ui-sref="admin.submit_sponsor">+ Agregar Banner Sponsor</a>
+                </p>
+                <p>{{mensaje}}</p>
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="cargando">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <h1>Listado de Sponsor's</h1>
+            </div>
+        </div>
+            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in sponsors">
+                
+                <div class="col-sm-3  text-left center-small-screen">
+                    <p class="small">
+                        <strong style="text-transform: uppercase;">{{categoryObj.titulo}}</strong>
+                    </p>
+                    <!-- <p class="smaller">
+                        <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
+                    </p> -->
+                </div>
+
+                <div class="col-sm-2  text-left center-small-screen">
+                    <p class="smaller">
+                        Inicio: {{ categoryObj.fechainicio }} <br>
+                        Fin:  {{categoryObj.fechafin }} <br>
+                        Descripcion:  {{categoryObj.descripcion }} <br>
+                    </p>
+                </div>
+                <div class="col-sm-7  text-right center-small-screen">
+                    <p>
+                        <button class="btn-red-outline active" ng-click="EliminarSponsor(key)">
+                            Eliminar
+                        </button>
+                        <button class="btn-grey-outline active" ng-click="EditarSponsor(key)">
+                            Editar
+                        </button>
+                    </p>
+                </div>
+            </div>
+    </div>

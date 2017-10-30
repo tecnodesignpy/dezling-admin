@@ -1,0 +1,79 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="initListado()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ui-sref="admin.home">Menu</a> | Supermercados
+                </h1>
+                <p>&nbsp;</p>
+                <p>
+                    <a href="" ui-sref="admin.submitSupermercados">+ Agregar Supermercados</a>
+                </p>
+                <p id="warning" ng-show="mensaje">
+                    {{ mensaje }}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="cargando">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!categories.statusObj.loading">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <h1>Listado de Supermercados</h1>
+            </div>
+        </div>
+        
+
+            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in multimarcas">
+                
+                <div class="col-sm-3  text-left center-small-screen">
+                    <p class="small">
+                        <strong style="text-transform: uppercase;">{{key}}</strong>
+                    </p>
+                    <!-- <p class="smaller">
+                        <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
+                    </p> -->
+                </div>
+                <div class="col-sm-9  text-right center-small-screen">
+                    <p>
+                        <button class="btn-grey-outline active" ui-sref="admin.BeneficiosSupermercados({shopping: key})">
+                            Beneficios
+                        </button>
+                        <button class="btn-grey-outline active" ui-sref="admin.SucursalesSupermercados({CentroComercial: key})">
+                            Ver Sucursales
+                        </button>
+                        <button class="btn-positive-outline active" ui-sref="admin.promocionesSupermercados({multimarca: key})">
+                            Promociones <i class="icon_set_1_icon-81"></i>
+                        </button>
+                        <button class="btn-random-outline" ng-click="editItem(key)">
+                            Editar
+                        </button>
+                    </p>
+                </div>
+                
+            </div>
+        
+    </div>
+</section>

@@ -1,0 +1,370 @@
+<div id="page-top" class="page-top">&nbsp;</div>
+
+<!-- Submit Section -->
+<section id="submit" class="section-product" ng-init="submit.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                    
+                    <div ng-switch="submit.status['generalView']">
+                        <div ng-switch-when="loading">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="error">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p style="color: red">Oops... something went wrong. Try again.</p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="new">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> | Submit Items as an Administrator
+                            </h1>
+                            
+                        </div>
+                        <div ng-switch-when="edit">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> | Edit | {{submit.ProductMeta.title}}
+                            </h1>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <hr class="star-light">
+                    
+                    <!-- 
+                    <button class="btn-positive" ng-click="submit.simulateSubmit()">Simulate</button>
+                    -->
+                    
+                    <!-- <img ng-src="img/submit-icon.png" style="max-width: 90vw; height: auto"> -->
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Submission</h2>
+        
+        <hr class="star-light">
+        
+        <!-- 
+        <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border">
+                    <h5>Deal type*</h5>
+                    <p id="error-message">{{submit.ErrorMessages['productType']}}</p>
+                    
+                    <select class="selectpicker submit-box-generic submit-input-narrow" 
+                        ng-model="submit.ProductMeta.productType">
+    
+                        <option 
+                            selected
+                            value="local">
+                            Local
+                        </option>
+                        <option 
+                            value="online">
+                            Online
+                        </option>
+                        <option 
+                            value="voucher">
+                            Voucher
+                        </option>
+                        
+                    </select>
+                </div>
+            </div>
+        -->
+
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group  submit-top-border">
+                
+                <h5>Category*</h5>
+                <p id="error-message">{{submit.ErrorMessages['categoryId']}}</p>
+                
+                <select class="selectpicker submit-box-generic submit-input-wide" 
+                    ng-model="submit.ProductMeta.categoryId">
+                    
+                    <option disabled selected> -- Category options are managed through Admin -- </option>
+
+                    <option 
+                        ng-selected="{{categoryKey == submit.ProductMeta.categoryId}}"
+                        ng-repeat="(categoryKey, categoryObj) in submit.Categories" 
+                        value="{{categoryKey}}">
+                        {{categoryObj.title}}
+                    </option>
+                    
+                </select>
+                
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Tags*</h5>
+                <p id="error-message">{{submit.ErrorMessages['tagsString']}}</p>
+                
+                <input 
+                    ng-model="submit.ProductMeta.tagsString"
+                    class="submit-box-generic submit-input-wide" type="text" 
+                    placeholder="E.g. sass, stopwatch, shop, etc." value="">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Title*</h5>
+                <p id="error-message">{{submit.ErrorMessages['title']}}</p>
+                
+                <input
+                    ng-model="submit.ProductMeta.title"
+                    class="submit-box-generic submit-input-wide" type="text" 
+                    placeholder="Max 150. characters" value="" 
+                    maxlength="150">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Price*</h5>
+                <p id="error-message">{{submit.ErrorMessages['price']}}</p>
+                
+                <input
+                    ng-model="submit.ProductMeta.price"
+                    class="submit-box-generic submit-input-narrow" type="number" 
+                    placeholder="In USD">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Attributes</h5>
+                <p>If your product can have different options then add it here.</p>
+                <p>
+                    For instance, you are selling a T-shirt and the user can choose the Color and Size <strong>(Attribute Type)</strong>.
+                    <br>
+                    He can choose between the colors Yellow and Green and Sizes XL and L <strong>(Attribute Values)</strong>.
+                </p>
+                <p id="error-message">{{submit.ErrorMessages['attributes']}}</p>
+                
+                <p>
+                    <a href="" ng-click="status['editAttributes'] = true">Edit attributes</a>
+                </p>
+                <div ng-show="status.editAttributes">
+                    <attribute-settings></attribute-settings>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Description (optional)</h5>
+                <p>You can use markdown to style your description</p>
+                <p id="error-message">{{submit.ErrorMessages['description']}}</p>
+                
+                <textarea 
+                    ng-model="submit.ProductMeta.description"
+                    rows="6" 
+                    class="submit-box-generic submit-input-wide" 
+                    placeholder="Optional"></textarea>
+                
+            </div>
+        </div>
+        
+        
+        <!-- LIMITED OFFER --> 
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>A1: Discount (optional)</h5>
+                <p>If you fill in this field, then a discount message will be shown for this item (X% discount)</p>
+                <p id="error-message">{{submit.ErrorMessages['discount_perc']}}</p>
+                
+                <input 
+                    ng-model="submit.ProductMeta['discount_perc']"
+                    class="submit-box-generic submit-input-narrow" type="number" 
+                    value="" placeholder="In absolute % (i.e. 25 for 25%)">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>A2: Deal ends (optional)</h5>
+                <p>If you fill in this field then an expiration date will be added to the item (only X days left!)</p>
+                <p id="error-message">{{submit.ErrorMessages['discount_date_end']}}</p>
+                
+                <input 
+                    ng-model="submit.ProductMeta['discount_date_end_raw']"
+                    class="submit-box-generic submit-input-narrow" type="date">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group  submit-bottom-border">
+                
+                <h5>B1: Nb of products left (optional)</h5>
+                <p>If you fill in this field, then a field will be shown stating (only X left)</p>
+                <p>Set -1 if this field is not relevant</p>
+                <p id="error-message">{{submit.ErrorMessages['inventory_nb_items']}}</p>
+                
+                <input 
+                    ng-model="submit.IndexData['inventory_nb_items']"
+                    class="submit-box-generic submit-input-narrow" type="number" >
+            </div>
+        </div>
+        
+        
+        
+        
+
+    </div>
+</section>
+        
+        <hr class="star-light">
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Images</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border">
+                
+                <h5>Add images</h5>
+                <p>Will be resized to best fit for width or height {{submit.dimensions.screenshot.w}}px.</p>
+                <p id="error-message">{{submit.ErrorMessages['screenshots']}}</p>
+                
+                <form name="form9" class="submit-box-generic-blank">
+                        
+                    <input 
+                        type="file" 
+                        ng-model="file9" 
+                        name="file9" 
+                        base-sixty-four-input 
+                        required 
+                        onload="submit.onLoad9" 
+                        maxsize="10000" 
+                        accept="image/*">
+
+                </form>
+                
+            </div>
+        
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-bottom-border">
+                
+                <p ng-show="submit.status['loadingScreenshots']">
+                    Loading screenshots...
+                </p>
+                
+                <div class="images-row"
+                    ng-repeat="(key, image) in submit.ProductImages"
+                    ng-show="key != 'icon'">
+                    
+                    <div class="center">
+                        <img ng-src="{{image}}" class="not-opened"><br>
+                        <a href="" ng-click="submit.removeScreenshot(key)">Remove</a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        
+        </div>
+        
+        
+    </div>
+</section>
+        
+<hr class="star-light">
+
+<section class="main-wrapper" id="submit0" ng-show="submit.status['generalView'] == 'new' || submit.status['generalView'] == 'edit'">
+    <div class="container">
+        
+        <h2>Submit</h2>
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 submit-form-group submit-top-border submit-bottom-border text-center">
+                
+                
+                <p>
+                    Pressing on submit implies that you agree with your own terms of service ;)
+                </p>
+        
+                
+                <hr class="star-light">
+                
+                <div ng-switch="submit.status['containsNoError']">
+                    <p ng-switch-when="false" style="color: red !important">
+                        {{submit.ErrorMessages['general']}}
+                    </p>
+                    <p ng-switch-when="true" class="text-positive" ng-show="submit.status['submitLoading']">
+                        Please hold while we are uploading your files
+                    </p>
+                    <hr class="star-light">
+                </div>
+                
+                
+                
+                <div ng-switch="submit.status['submitLoading']">
+                    <div ng-switch-when="false">
+                        <button class="btn-positive" ng-click="submit.submitForm()">
+                            <span ng-switch="submit.status['generalView']">
+                                <span ng-switch-when="new">
+                                    Submit
+                                </span>
+                                <span ng-switch-when="edit">
+                                    Save changes
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div ng-switch-when="true">
+                        <button class="btn-positive">
+                            <img ng-src="css/rolling.svg" id="loading-img">
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<canvas id="canvas0" style="display: none !important;"></canvas>
+<canvas id="canvas1" style="display: none !important;"></canvas>
+<canvas id="canvas2" style="display: none !important;"></canvas>
+<canvas id="canvas3" style="display: none !important;"></canvas>
+<canvas id="canvas4" style="display: none !important;"></canvas>
+<canvas id="canvas5" style="display: none !important;"></canvas>
+<canvas id="canvas9" style="display: none !important;"></canvas>

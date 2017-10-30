@@ -1,0 +1,213 @@
+<div id="page-top" class="page-top">&nbsp;</div>
+
+<!-- Submit Section -->
+<section id="submit" class="section-product" ng-init="Redireccion()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                    
+                    <div ng-switch="status">
+                        <div ng-switch-when="loading">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="error">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p style="color: red">Oops... algo salio mal.</p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="new">
+                            
+                            <h1>
+                                <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.sponsor">Sponsor</a> | Nuevo
+                            </h1>
+                            
+                        </div>
+                        <div ng-switch-when="edit">
+                            
+                            <h1>
+                                <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.sponsor">Sponsor</a> | Editar {{submit.ProductMeta.perfil.nombre }}
+                            </h1>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <hr class="star-light">
+                    
+                    <!-- 
+                    <button class="btn-positive" ng-click="submit.simulateSubmit()">Simulate</button>
+                    -->
+                    
+                    <!-- <img ng-src="img/submit-icon.png" style="max-width: 90vw; height: auto"> -->
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        <div ng-switch="status">
+            <div ng-switch-when="new">
+                <h2>Agregar Nuevo Sponsor</h2>
+            </div>
+            <div ng-switch-when="edit">
+                <h2>Editar Sponsor</h2>
+            </div>
+        </div>
+        
+        <hr class="star-light">        
+    </div>
+</section>
+<br><br>
+        
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>TEXTO</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Titulo</h5>
+                <p id="error-message">{{submit.ErrorMessages['titulo']}}</p>
+                
+                <input id="titulo"
+                    ng-model="SponsorMeta.titulo"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+                <h5>Descripcion</h5>
+                <p id="error-message">{{submit.ErrorMessages['descripcion']}}</p>
+                
+                <textarea 
+                    id="descripcion"
+                    ng-model="SponsorMeta.descripcion"
+                    rows="6" 
+                    class="submit-box-generic submit-input-wide"></textarea>
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Datos de la Promocion</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Fecha de Inicio</h5>
+                <p id="error-message">{{submit.ErrorMessages['fecha_inicio']}}</p>
+                
+                <input placeholder="dd/mm/aaaa" id="fecha_inicio"
+                    ng-model="SponsorMeta.fechainicio"
+                    class="submit-box-generic submit-input-wide" type="text">
+                
+                <h5>Fecha de Finalizacion</h5>
+                <p id="error-message">{{submit.ErrorMessages['fecha_fin']}}</p>
+                
+                <input placeholder="dd/mm/aaaa" id="fecha_fin"
+                    ng-model="SponsorMeta.fechafin"
+                    class="submit-box-generic submit-input-wide" type="text">
+
+                <h5>Banner</h5>
+                <p id="error-message">{{submit.ErrorMessages['banner']}}</p>
+                    
+                <input type="file" fileinput="file" filepreview="filepreview"/>
+
+                <img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview"/>
+
+
+                <!--
+                    <input id="banner"
+                        type="file" 
+                        ng-model="banner" 
+                        name="banner" 
+                        base-sixty-four-input 
+                        required 
+                        maxsize="10000" 
+                        accept="image/*" multiple="false">
+                
+                <div class="images-row" style="margin-top: 15px">
+                    <div class="center">
+                        <img id="bannerURL" class="not-opened"><br>
+                    </div>
+                </div>
+                -->
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+        
+<hr class="star-light">
+
+<section class="main-wrapper" id="submit0" ng-show="status == 'new' || status == 'edit'">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 submit-form-group submit-top-border submit-bottom-border text-center">
+                
+                <hr class="star-light">
+                
+                <div ng-switch="NoError">
+                    <p ng-switch-when="false" style="color: red !important">
+                        Hay campos que deben ser completados!
+                    </p>
+                    <p ng-switch-when="true" class="text-positive" ng-show="submit.status['submitLoading']">
+                        Espere mientras cargamos la base de datos!
+                    </p>
+                    <hr class="star-light">
+                </div>
+                
+                
+                
+                <div ng-switch="enviando">
+                    <div ng-switch-when="false">
+                        <button class="btn-positive" ng-click="guardar()">
+                            <span ng-switch="status">
+                                <span ng-switch-when="new">
+                                    Guardar
+                                </span>
+                                <span ng-switch-when="edit">
+                                    Guardar Cambios
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div ng-switch-when="true">
+                        <button class="btn-positive">
+                            <img ng-src="css/rolling.svg" id="loading-img">
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<canvas id="canvas0" style="display: none !important;"></canvas>
+<canvas id="canvas1" style="display: none !important;"></canvas>
+<canvas id="canvas2" style="display: none !important;"></canvas>
+<canvas id="canvas3" style="display: none !important;"></canvas>
+<canvas id="canvas4" style="display: none !important;"></canvas>
+<canvas id="canvas5" style="display: none !important;"></canvas>
+<canvas id="canvas9" style="display: none !important;"></canvas>

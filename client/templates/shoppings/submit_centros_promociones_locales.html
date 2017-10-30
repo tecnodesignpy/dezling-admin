@@ -1,0 +1,243 @@
+<div id="page-top" class="page-top">&nbsp;</div>
+
+<!-- Submit Section -->
+<section id="submit" class="section-product" ng-init="submit.initPromociones()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-12">
+                    
+                    <div ng-switch="submit.status['generalView']">
+                        <div ng-switch-when="loading">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="error">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p style="color: red">Oops... algo salio mal.</p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="new">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> |<a href="" ng-click="submit.goTo('admin.categories-centros_comerciales')">Centros Comerciales</a> | <a href="" ng-click="submit.IrAlShopping()">{{ shopping }}</a>| {{ local }} | Nueva Promocion
+                            </h1>
+                            
+                        </div>
+                        <div ng-switch-when="edit">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> |<a href="" ng-click="submit.goTo('admin.categories-centros_comerciales')">Centros Comerciales</a> | <a href="" ng-click="submit.IrAlShopping()">{{ shopping }}</a>| Editar {{ local }}
+                            </h1>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <hr class="star-light">
+                    
+                    <!-- 
+                    <button class="btn-positive" ng-click="submit.simulateSubmit()">Simulate</button>
+                    -->
+                    
+                    <!-- <img ng-src="img/submit-icon.png" style="max-width: 90vw; height: auto"> -->
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        <div ng-switch="submit.status['generalView']">
+            <div ng-switch-when="new">
+                <h2>Agregar Nueva Promocion</h2>
+            </div>
+            <div ng-switch-when="edit">
+                <h2>Editar Promocion</h2>
+            </div>
+        </div>
+        
+        <hr class="star-light">        
+    </div>
+</section>
+<br><br>
+        
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>TEXTO</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Titulo</h5>
+                <p id="error-message">{{submit.ErrorMessages['titulo']}}</p>
+                
+                <input id="titulo"
+                    ng-model="submit.PromocionMeta.texto.titulo"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+                <h5>Descripcion Corta</h5>
+                <p id="error-message">{{submit.ErrorMessages['descripcion']}}</p>
+                
+                <input id="descripcion"
+                    ng-model="submit.PromocionMeta.texto.descripcion"
+                    class="submit-box-generic submit-input-wide" type="text" value="" maxlength="25">
+                
+                <h5>Descripcion Larga</h5>
+                <p id="error-message">{{submit.ErrorMessages['descripcion']}}</p>
+                
+                <textarea 
+                    ng-model="submit.PromocionMeta.texto.descripcion_larga"
+                    rows="6" 
+                    class="submit-box-generic submit-input-wide"></textarea>
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Datos de la Promocion</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Fecha de Inicio</h5>
+                <p id="error-message">{{submit.ErrorMessages['fecha_inicio']}}</p>
+                
+                <input placeholder="dd/mm/aaaa" id="fecha_inicio"
+                    ng-model="submit.PromocionMeta.fechainicio"
+                    class="submit-box-generic submit-input-wide" type="text">
+                
+                <h5>Fecha de Finalizacion</h5>
+                <p id="error-message">{{submit.ErrorMessages['fecha_fin']}}</p>
+                
+                <input placeholder="dd/mm/aaaa" id="fecha_fin"
+                    ng-model="submit.PromocionMeta.fechafin"
+                    class="submit-box-generic submit-input-wide" type="text">
+                
+                <h5>Categoria</h5>
+                <p id="error-message">{{submit.ErrorMessages['categoria']}}</p>
+                        
+                        <select id="categoria" class="selectpicker submit-box-generic submit-input-wide" 
+                            ng-model="submit.PromocionMeta.categoria">
+        
+                            <option 
+                                selected
+                                value="01">
+                                Tiendas de Ropas
+                            </option>
+                            <option 
+                                value="02">
+                                Locales Gastronómicos
+                            </option>
+                            <option 
+                                value="03">
+                                Cines/Juegos
+                            </option>
+                            <option 
+                                value="04">
+                                Bancos/Financieras/Cooperativas
+                            </option>
+                            <option 
+                                value="05">
+                                Farmacias
+                            </option>
+                            <option 
+                                value="06">
+                                Supermercado
+                            </option>
+                            <option 
+                                value="07">
+                                Multimarcas/De todo un poco
+                            </option>
+                            <option 
+                                value="08">
+                                Dezling
+                            </option>
+                            
+                        </select>
+
+                <h5>Link</h5>
+                <p id="error-message">{{submit.ErrorMessages['link']}}</p>
+                
+                <input id="link"
+                    ng-model="submit.PromocionMeta.link"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+        
+<hr class="star-light">
+
+<section class="main-wrapper" id="submit0" ng-show="submit.status['generalView'] == 'new' || submit.status['generalView'] == 'edit'">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 submit-form-group submit-top-border submit-bottom-border text-center">
+                
+                <hr class="star-light">
+                
+                <div ng-switch="submit.status['containsNoError']">
+                    <p ng-switch-when="false" style="color: red !important">
+                        {{submit.ErrorMessages['general']}}
+                    </p>
+                    <p ng-switch-when="true" class="text-positive" ng-show="submit.status['submitLoading']">
+                        Espere mientras cargamos la base de datos!
+                    </p>
+                    <hr class="star-light">
+                </div>
+                
+                
+                
+                <div ng-switch="submit.status['submitLoading']">
+                    <div ng-switch-when="false">
+                        <button class="btn-positive" ng-click="submit.submitFormPromociones()">
+                            <span ng-switch="submit.status['generalView']">
+                                <span ng-switch-when="new">
+                                    Guardar
+                                </span>
+                                <span ng-switch-when="edit">
+                                    Guardar Cambios
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div ng-switch-when="true">
+                        <button class="btn-positive">
+                            <img ng-src="css/rolling.svg" id="loading-img">
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<canvas id="canvas0" style="display: none !important;"></canvas>
+<canvas id="canvas1" style="display: none !important;"></canvas>
+<canvas id="canvas2" style="display: none !important;"></canvas>
+<canvas id="canvas3" style="display: none !important;"></canvas>
+<canvas id="canvas4" style="display: none !important;"></canvas>
+<canvas id="canvas5" style="display: none !important;"></canvas>
+<canvas id="canvas9" style="display: none !important;"></canvas>

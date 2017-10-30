@@ -1,0 +1,77 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.categories-centros_comerciales">Centros Comerciales</a> | {{ shopping }}
+                </h1>
+                <p>&nbsp;</p>
+                <p>
+                    <a href="" ui-sref="admin.SubmitBeneficioCentrosComerciales({shopping: shopping})">+ Agregar Beneficio</a>
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="categories.statusObj.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!categories.statusObj.loading">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <h1>Beneficios</h1>
+            </div>
+        </div>
+        
+
+            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in beneficios">
+                <div class="col-sm-3  text-left center-small-screen">
+                    <p class="small">
+                        <strong style="text-transform: uppercase;">{{key}}</strong>
+                    </p>
+                    <!-- <p class="smaller">
+                        <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
+                    </p> -->
+                </div>
+
+                <div class="col-sm-2  text-left center-small-screen">
+                    <p class="smaller">
+                        Fecha Inicio: {{ categoryObj.fechainicio }} <br>
+                        Fecha Fin:  {{categoryObj.fechafin }} <br>
+                        Titulo:  {{categoryObj.texto.titulo }} <br>
+                        Descripcion:  {{categoryObj.texto.descripcion }} <br>
+                    </p>
+                </div>
+                <div class="col-sm-7  text-right center-small-screen">
+                    <p>
+                        <button class="btn-grey-outline active" ng-click="categories.locales(key)">
+                            Estadisticas
+                        </button>
+                        <button class="btn-random-outline"  ng-click="editarPromocion(promocion,key)">
+                            Editar
+                        </button>
+                    </p>
+                </div>                
+            </div>
+        
+    </div>
+</section>

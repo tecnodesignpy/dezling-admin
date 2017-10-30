@@ -1,0 +1,543 @@
+<div id="page-top" class="page-top">&nbsp;</div>
+
+<!-- Submit Section -->
+<section id="submit" class="section-product" ng-init="submit.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                    
+                    <div ng-switch="submit.status['generalView']">
+                        <div ng-switch-when="loading">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="error">
+                            <div style="height: 20vh">&nbsp;</div>
+                            <p style="color: red">Oops... algo salio mal.</p>
+                            <div style="height: 20vh">&nbsp;</div>
+                        </div>
+                        <div ng-switch-when="new">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> |<a href="" ng-click="submit.goTo('admin.categories-supermercados')">Supermercados</a> |<a href="" ng-click="submit.goTocomercio()">{{submit.comercio}} </a>| Nuevo
+                            </h1>
+                            
+                        </div>
+                        <div ng-switch-when="edit">
+                            
+                            <h1>
+                                <a href="" ng-click="submit.goTo('admin.home')">Menu</a> |<a href="" ng-click="submit.goTo('admin.categories-supermercados')">Supermercados</a> |<a href="" ng-click="submit.goTocomercio()">{{submit.comercio}} </a>| {{ submit.local }}
+                            </h1>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <hr class="star-light">
+                    
+                    <!-- 
+                    <button class="btn-positive" ng-click="submit.simulateSubmit()">Simulate</button>
+                    -->
+                    
+                    <!-- <img ng-src="img/submit-icon.png" style="max-width: 90vw; height: auto"> -->
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        <div ng-switch="submit.status['generalView']">
+            <div ng-switch-when="new">
+                <h2>Agregar Nueva Sucursal</h2>
+            </div>
+            <div ng-switch-when="edit">
+                <h2>Editar Sucursal</h2>
+            </div>
+        </div>
+        
+        <hr class="star-light">        
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Nombre del Local</h5>
+                <p id="error-message">{{submit.ErrorMessages['nombre']}}</p>
+                
+                <input id="nombre"
+                    ng-model="submit.ProductMeta.perfil.nombre"
+                    class="submit-box-generic submit-input-wide" type="text" 
+                    placeholder="Ej.: Shopping del Sol" value="">
+                
+            </div>
+        </div>        
+        
+        <div ng-switch="submit.status['generalView']">
+            <div ng-switch-when="new">
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                        <h5>Slug</h5>
+                        <p>De esta manera se va a identificar a cada comercio, el slug es unico para cada comercio.</p>
+                        <p id="error-message">{{submit.ErrorMessages['slug']}}</p>
+                        
+                        <input  id="slug"
+                            ng-model="submit.ProductMeta.slug"
+                            class="submit-box-generic submit-input-wide" type="text" 
+                            placeholder="Ej.: shopping-del-sol" value="">
+                        
+                    </div>
+                </div> 
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Email</h5>
+                <p id="error-message">{{submit.ErrorMessages['email']}}</p>
+                
+                <input  id="email"
+                    ng-model="submit.ProductMeta.perfil.email"
+                    class="submit-box-generic submit-input-wide" type="email" value="">
+                
+            </div>
+        </div>  
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Numero de Telefono</h5>
+                <p id="error-message">{{submit.ErrorMessages['telefono']}}</p>
+                
+                <input  id="telefono"
+                    ng-model="submit.ProductMeta.perfil.numero_telefono"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Direccion</h5>
+                <p id="error-message">{{submit.ErrorMessages['direccion']}}</p>
+                
+                <input  id="direccion"
+                    ng-model="submit.ProductMeta.perfil.direccion"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                
+                <h5>Descripcion (opcional)</h5>
+                <p id="error-message">{{submit.ErrorMessages['description']}}</p>
+                
+                <textarea 
+                    ng-model="submit.ProductMeta.perfil.descripcion"
+                    rows="6" 
+                    class="submit-box-generic submit-input-wide" 
+                    placeholder="Opcional"></textarea>
+                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+                <p id="error-message">{{submit.ErrorMessages['description']}}</p>
+                
+                <input type="checkbox" 
+                    ng-model="submit.ProductMeta.perfil.online"
+                    class="submit-box-generic submit-input-wide"> Online <br>
+                
+                <input type="checkbox" 
+                    ng-model="submit.ProductMeta.perfil.destacado"
+                    class="submit-box-generic submit-input-wide"> Banner Perfil
+                
+            </div>
+        </div>
+    </div>
+</section>
+        
+        <hr class="star-light">
+        
+
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Horario</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Horario de Atencion</h5>
+                <p id="error-message">{{submit.ErrorMessages['horarios']}}</p>
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <p style="font-weight: bold;">Dias</p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <p style="font-weight: bold;">Desde</p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <p style="font-weight: bold;">Hasta</p>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Lunes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px" id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.lunes.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px" id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.lunes.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Martes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.martes.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.martes.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Miercoles</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.miercoles.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.miercoles.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Jueves</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.jueves.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.jueves.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Viernes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.viernes.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.viernes.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Sabado</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.sabado.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.sabado.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Domingo</p>
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.domingo.desde"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                    </div>
+                    <div class="col-md-3">
+                        <input style="padding: 5px;margin: 5px"  id="horario"
+                            ng-model="submit.ProductMeta.perfil.horario.domingo.hasta"
+                            class="submit-box-generic submit-input-wide" type="text" value="">
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+        
+<section class="main-wrapper">
+    <div class="container">
+        
+        <h2>Ubicacion</h2>
+        
+        <hr class="star-light">
+
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border">
+                
+                <h5>Latitud</h5>
+                <p id="error-message">{{submit.ErrorMessages['latitud']}}</p>
+                
+                <input id="mapa.latitud"
+                    ng-model="submit.ProductMeta.perfil.mapa.latitud"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+                <h5>Longitud</h5>
+                <p id="error-message">{{submit.ErrorMessages['longitud']}}</p>
+                
+                <input id="mapa.longitud"
+                    ng-model="submit.ProductMeta.perfil.mapa.longitud"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+
+            </div>
+        
+        </div>
+    </div>
+</section>
+<section class="main-wrapper" ng-show="submit.status['generalView'] == 'edit' ">
+    <div class="container">
+        
+        <h2>Imagenes</h2>
+        <p>Las imagenes se reemplazan automaticamente, no es necesario guardar el formulario.</p>
+        
+        <hr class="star-light">
+
+        <div ng-show="submit.ProductMeta.perfil.destacado">
+            <hr class="star-light">
+
+            <div class="row">
+                
+                <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border submit-bottom-border ">
+                    
+                    <center><h5>BANNERS PERFIL</h5></center>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Banner 1</p>
+                            <p id="error-message">{{ErrorMessages['banner1']}}</p>
+
+                            <form name="form9" class="submit-box-generic-blank">
+                                    
+                                <input id="imagen.destacado.banner1"
+                                    type="file" 
+                                    ng-model="submit.destacado.banner1" 
+                                    name="submit.destacado.banner1" 
+                                    base-sixty-four-input 
+                                    required 
+                                    onload="submit.banner1" 
+                                    maxsize="10000" 
+                                    accept="image/*" multiple="false">
+                
+                                <div class="images-row" style="margin-top: 15px">
+                                    <div class="center">
+                                        <img width="100%" style="max-width: 400px;" id="banner1URL" class="not-opened"><br>
+                                        <!--<a href="" ng-click="submit.removeScreenshot(key)">Quitar Imagen </a>-->
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Banner 2</p>
+                            <p id="error-message">{{ErrorMessages['banner2']}}</p>
+
+                            <form name="form9" class="submit-box-generic-blank">
+                                    
+                                <input id="imagen.destacado.banner2"
+                                    type="file" 
+                                    ng-model="submit.destacado.banner2" 
+                                    name="submit.destacado.banner2" 
+                                    base-sixty-four-input 
+                                    required 
+                                    onload="submit.banner2" 
+                                    maxsize="10000" 
+                                    accept="image/*" multiple="false">
+                
+                                <div class="images-row" style="margin-top: 15px">
+                                    <div class="center">
+                                        <img width="100%" style="max-width: 400px;" id="banner2URL" class="not-opened"><br>
+                                        <!--<a href="" ng-click="submit.removeScreenshot(key)">Quitar Imagen </a>-->
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <p>Banner 3</p>
+                            <p id="error-message">{{ErrorMessages['banner3']}}</p>
+
+                            <form name="form9" class="submit-box-generic-blank">
+                                    
+                                <input id="imagen.destacado.banner3"
+                                    type="file" 
+                                    ng-model="submit.destacado.banner3" 
+                                    name="submit.destacado.banner3" 
+                                    base-sixty-four-input 
+                                    required 
+                                    onload="submit.banner3" 
+                                    maxsize="10000" 
+                                    accept="image/*" multiple="false">
+                
+                                <div class="images-row" style="margin-top: 15px">
+                                    <div class="center">
+                                        <img width="100%" style="max-width: 400px;" id="banner3URL" class="not-opened"><br>
+                                        <!--<a href="" ng-click="submit.removeScreenshot(key)">Quitar Imagen </a>-->
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="row" ng-show="status['loadingScreenshots']">
+            
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-bottom-border">
+                
+                <p>
+                    Cargando Imagenes...
+                </p>
+                
+            </div>
+        
+        </div>
+        
+        
+    </div>
+</section>
+        
+<hr class="star-light">
+
+<section class="main-wrapper" id="submit0" ng-show="submit.status['generalView'] == 'new' || submit.status['generalView'] == 'edit'">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 submit-form-group submit-top-border submit-bottom-border text-center">
+                
+                <hr class="star-light">
+                
+                <div ng-switch="submit.status['containsNoError']">
+                    <p ng-switch-when="false" style="color: red !important">
+                        {{submit.ErrorMessages['general']}}
+                    </p>
+                    <p ng-switch-when="true" class="text-positive" ng-show="submit.status['submitLoading']">
+                        Espere mientras cargamos la base de datos!
+                    </p>
+                    <hr class="star-light">
+                </div>
+                
+                
+                
+                <div ng-switch="submit.status['submitLoading']">
+                    <div ng-switch-when="false">
+                        <button class="btn-positive" ng-click="submit.submitForm(submit.comercio)">
+                            <span ng-switch="submit.status['generalView']">
+                                <span ng-switch-when="new">
+                                    Guardar
+                                </span>
+                                <span ng-switch-when="edit">
+                                    Guardar Cambios
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div ng-switch-when="true">
+                        <button class="btn-positive">
+                            <img ng-src="css/rolling.svg" id="loading-img">
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<section class="main-wrapper" ng-show="submit.status['generalView'] == 'edit'">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 submit-form-group submit-top-border submit-bottom-border text-center">
+                    
+                <center><h5>Eliminar Sucursal</h5></center>
+                <center>
+                    <button class="btn-red-outline active" ng-click="submit.Eliminar('supermercado_sucursales', submit.comercio, submit.local)">
+                        Eliminar
+                    </button>
+                </center>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<canvas id="canvas0" style="display: none !important;"></canvas>
+<canvas id="canvas1" style="display: none !important;"></canvas>
+<canvas id="canvas2" style="display: none !important;"></canvas>
+<canvas id="canvas3" style="display: none !important;"></canvas>
+<canvas id="canvas4" style="display: none !important;"></canvas>
+<canvas id="canvas5" style="display: none !important;"></canvas>
+<canvas id="canvas9" style="display: none !important;"></canvas>

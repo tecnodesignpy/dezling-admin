@@ -1,0 +1,67 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="sdetail.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ng-click="sdetail.goTo('admin.home')">Menu</a> | 
+                    <a href="" ng-click="sdetail.goTo('admin.sales')">Sales</a> | {{sdetail.orderId}}
+                </h1>
+                <p>&nbsp;</p>
+                <p id="warning" ng-show="sdetail.status.generalmessage">
+                    {{sdetail.status.generalmessage}}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="sdetail.status.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        <!-- FormData -->
+        <div ng-show="!sdetail.status.loading">
+            
+            <!-- product -->
+            <h3 class="center">Order details</h3>
+            <checkout-cart-overview></checkout-cart-overview>
+              
+            <br><br>
+            
+            <!-- USER ADDRESS AND CONTACT DETAILS -->
+            <h3 class="center">Contact details</h3>
+            <div class="row row-item" ng-repeat="(userField, userValue) in sdetail.UserData.meta">
+              <div class="col-sm-4 text-left center-small-screen">
+                  <p>
+                      {{userField}}
+                  </p>
+              </div>
+              <div class="col-sm-6 text-left center-small-screen">
+                  <p>{{userValue}}</p>
+              </div>
+            </div>
+            <div class="row row-item" ng-repeat="(userField, userValue) in sdetail.UserData.other">
+              <div class="col-sm-4 text-left center-small-screen">
+                  <p>{{userField}}</p>
+              </div>
+              <div class="col-sm-6 text-left center-small-screen">
+                  <p>{{userValue}}</p>
+              </div>
+            </div>
+            
+        </div> <!-- ./ FormData -->
+        
+        
+        
+
+    </div>
+</section>

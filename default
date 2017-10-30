@@ -1,0 +1,23 @@
+server {
+    listen 80;
+
+    server_name dezling.com;
+
+    location / {
+        proxy_pass http://dezling.com:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+	
+	location /web {
+        proxy_pass http://admin.dezling.com:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}

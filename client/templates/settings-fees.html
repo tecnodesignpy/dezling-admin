@@ -1,0 +1,95 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="settings.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                <h1>
+                    <a href="" ng-click="settings.goTo('admin.home')">Menu</a> | Manage Fees
+                </h1>
+                <p>&nbsp;</p>
+                <p id="warning" ng-show="settings.statusObj.generalmessage">
+                    {{settings.statusObj.generalmessage}}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="settings.statusObj.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!settings.statusObj.loading">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                <h1>Buyer Fees</h1>
+                <p>Please choose a value between 0 and 100 (10 = 10%)</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                
+                <input 
+                    ng-model="settings.statusObj.newFee"
+                    class="submit-box-generic submit-input-wide" type="text"
+                    placeholder="Short description">
+                    
+                <input 
+                    ng-model="settings.statusObj.newFeeValue"
+                    class="submit-box-generic submit-input-wide" type="number"
+                    placeholder="10 for 10%" min="0" max="100"
+                    placeholder="Fee in abs % (i.e. 5 for 5%)">
+                    
+            </div>
+            <div class="col-sm-4 text-left">
+                
+           
+                <button class="btn-positive-outline" ng-click="settings.add()">Add</button>
+                    
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        <hr class="star-light">
+        
+        <div class="row" ng-repeat="(key, feeObj) in settings.SettingsFeesForm['buyer']" ng-show="key != 'application_fee'">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                
+                <br>
+                id: {{key}} <br>
+                <input 
+                    ng-model="settings.SettingsFeesForm['buyer'][key].title"
+                    class="submit-box-generic submit-input-wide" type="text">
+                <input 
+                    ng-model="settings.SettingsFeesForm['buyer'][key].value"
+                    placeholder="10 for 10%" min="0" max="100"
+                    class="submit-box-generic submit-input-wide" type="number">
+                    
+            </div>
+            <div class="col-sm-4 text-left">
+                
+                     <p>&nbsp;</p>
+                <button class="btn-positive-outline" ng-click="settings.save();">Save</button>
+                <button class="btn-negative-outline" ng-click="settings.remove(key)">Delete</button>
+                
+            </div>
+        </div>
+        
+    </div>
+</section>

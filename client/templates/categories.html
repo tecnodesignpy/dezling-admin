@@ -1,0 +1,91 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="categories.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ng-click="categories.goTo('admin.home')">Menu</a> | Manage Categories
+                </h1>
+                <p>&nbsp;</p>
+                <p id="warning" ng-show="categories.statusObj.generalmessage">
+                    {{categories.statusObj.generalmessage}}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="categories.statusObj.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!categories.statusObj.loading">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                <h1>+ Add a category</h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                
+                <input 
+                    ng-model="categories.statusObj.newCategory"
+                    class="submit-box-generic submit-input-wide" type="text"
+                    placeholder="Title">
+                    
+            </div>
+            <div class="col-sm-4 text-left">
+                
+                <button class="btn-positive-outline" ng-click="categories.add()">Add</button>
+                    
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        <hr class="star-light">
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                <h1>Current categories</h1>
+            </div>
+        </div>
+        
+        
+        <div class="row" ng-repeat="(key, categoryObj) in categories.CategoriesForm">
+            <div class="col-sm-6 col-sm-offset-2 text-left">
+                
+                <br>
+                id: {{key}} <br>
+                <input 
+                    ng-model="categories.CategoriesForm[key].title"
+                    class="submit-box-generic submit-input-wide" type="text">
+                    
+            </div>
+            <div class="col-sm-4 text-left">
+                
+                <p>&nbsp;</p>
+                <button class="btn-positive-outline" ng-click="categories.save();">Save</button>
+                <button class="btn-negative-outline" ng-click="categories.remove(key)">Delete</button>
+                
+            </div>
+        </div>
+        
+    </div>
+</section>

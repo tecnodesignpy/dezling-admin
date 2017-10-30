@@ -1,0 +1,52 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="items.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ng-click="items.goTo('admin.home')">Menu</a> | Items
+                </h1>
+                <p>
+                    <a href="" ng-click="items.goTo('admin.submit')">+ Add a new item</a>
+                </p>
+                <p>&nbsp;</p>
+                <p id="warning" ng-show="items.status.generalmessage">
+                    {{items.status.generalmessage}}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="items.status.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        <hr class="star-light">
+        
+        <!-- FormData -->
+        <div ng-show="!items.status.loading">
+
+            
+            <!-- HEADER -->
+            <div class="row row-item" ng-repeat="item in items.ProductsMeta | orderBy: '-value.timestamp_update'">
+                
+                <item-cols></item-cols>
+                
+            </div>
+            <!-- ./ HEADER -->
+
+
+        </div> <!-- ./ FormData -->
+        
+
+    </div>
+</section>

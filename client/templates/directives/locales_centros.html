@@ -1,0 +1,27 @@
+
+    <div class="col-sm-5  text-left center-small-screen">
+        <p class="small">
+            <strong style="text-transform: uppercase;">{{key}}</strong>
+        </p>
+        <!-- <p class="smaller">
+            <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
+        </p> -->
+    </div>
+
+    <div class="col-sm-2  text-left center-small-screen">
+        <p class="smaller">
+            Cantidad de Locales: {{ categoryObj.estadisticas.cantidad_locales }} <br>
+            Visitas:  {{categoryObj.estadisticas.visitas}} <br>
+            Check-In: {{categoryObj.estadisticas.checks}} <br>
+        </p>
+    </div>
+    <div class="col-sm-5  text-right center-small-screen">
+        <p>
+            <button class="btn-positive-outline active" ng-click="locales.promociones(key,locales.local)">
+                Promociones <i class="icon_set_1_icon-81"></i>
+            </button>
+            <button class="btn-random-outline" ng-click="locales.editItem(key, locales.local)">
+                Editar
+            </button>
+        </p>
+    </div>

@@ -1,0 +1,56 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="locales.initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                
+                
+                <h1>
+                    <a href="" ng-click="locales.goTo('admin.home')">Menu</a> |<a href="" ng-click="locales.goTo('admin.categories-centros_comerciales')">Centros Comerciales</a> | {{ locales.local }}
+                </h1>
+                <p>&nbsp;</p>
+                <p>
+                    <a href="" ng-click="locales.nuevo(locales.local)">+ Agregar Local</a>
+                </p>
+                <p id="warning" ng-show="locales.statusObj.generalmessage">
+                    {{categories.statusObj.generalmessage}}
+                </p>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="locales.statusObj.loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!locales.statusObj.loading">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <h1>Listado de Locales</h1>
+            </div>
+        </div>
+        
+
+            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in locales.CategoriesForm">
+                
+                <locales></locales>
+                
+            </div>
+        
+    </div>
+</section>

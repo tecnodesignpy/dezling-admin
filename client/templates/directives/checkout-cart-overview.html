@@ -1,0 +1,73 @@
+<div class="checkout main" >
+  <div class="row row-item" ng-repeat="(productId, item) in sdetail.CachedList">
+    <div class="col-sm-6 text-left">
+      
+      <p>
+        <strong>{{sdetail.CachedMeta[productId].value.title}}</strong>
+      </p>
+      <p>
+        <span class="note">
+          category: {{sdetail.CachedMeta[productId].value.categoryId}}
+        </span>
+      </p>
+      <p ng-repeat="(aType, other) in sdetail.CachedMeta[productId].selection track by $index">
+        {{aType}}:
+        {{sdetail.CachedMeta[productId].selection[aType]}}
+      </p>
+    </div>
+    <div class="col-sm-6 text-right">
+      <p>
+        ${{sdetail.CachedTotal[productId].totalPrice.toFixed(2)}}
+      </p>
+      <p>
+        <span class="note">
+          {{sdetail.CachedTotal[productId].amount}} x ${{sdetail.CachedTotal[productId].price.toFixed(2)}} </span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<br>
+<!-- SUBTOTAL and FEES -->
+<div class="row row-item">
+  <div class="col-sm-6 text-left">
+    <p>
+      <strong>Order subtotal</strong>
+    </p>
+  </div>
+  <div class="col-sm-6 text-right">
+    <p>
+      ${{sdetail.CachedTotal['total_value'].toFixed(2)}}
+    </p>
+  </div>
+</div>
+<div class="row row-item" ng-repeat="feeObj in sdetail.CachedTotal['fees']">
+  <div class="col-sm-4 text-left">
+    <p>
+      <strong>{{feeObj.title}}</strong>
+    </p>
+  </div>
+  <div class="col-sm-4 text-right">
+    <p>
+      <span class="note"></span>{{feeObj.perc}}%
+    </p>
+  </div>
+  <div class="col-sm-4 text-right">
+    <p>
+      ${{feeObj.subfee_total.toFixed(2)}}
+    </p>
+  </div>
+</div>
+
+<!-- TOTAL -->
+<div class="row row-item" ng-show="sdetail.CachedTotal['total_count'] != 0">
+  <div class="col-sm-6 text-left">
+    <p>
+      <strong>Order total</strong></p>
+  </div>
+  <div class="col-sm-6 text-right">
+    <p>
+      ${{sdetail.CachedTotal['total_value_incl'].toFixed(2)}}
+    </p>
+  </div>
+</div>

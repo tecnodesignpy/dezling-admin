@@ -1,0 +1,37 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1>
+                    <a href="" ui-sref="admin.home">Menu</a> | Notificaciones
+                </h1>
+                <p>&nbsp;</p>
+                <p>
+                    <a href="" ng-click="nuevaPromocion(promocion)">+ Enviar Notificacion Push</a>
+                </p>
+            </div>
+        </div>
+        
+        
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        <div class="row">
+            <div class="col-md-4">
+                <h1>Dispositivos Resgistrados</h1>
+                <!-- Usuario Registrados -->
+                <canvas id="bar" class="chart chart-doughnut"
+                  chart-data="data" chart-labels="labels" chart-series="series" chart-colors="['#4D5360','#FDB45C']">
+                </canvas>
+            </div>
+        </div>
+
+    </div>
+</section>
