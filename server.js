@@ -78,7 +78,7 @@ function broadcast(event, data) {
   });
 }
 
-server.listen(3000, 'dezling.com', function(){  //dezling.com o localhost
+server.listen(3000, 'localhost', function(){  //admin.dezling.com o localhost
   var addr = server.address();
   console.log("Chat server listening at", addr.address + ":" + addr.port);
 });
