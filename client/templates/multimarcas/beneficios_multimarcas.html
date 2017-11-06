@@ -44,29 +44,24 @@
         
 
             <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in beneficios">
-                <div class="col-sm-3  text-left center-small-screen">
+                <div class="col-sm-5  text-left center-small-screen">
                     <p class="small">
-                        <strong style="text-transform: uppercase;">{{key}}</strong>
+                        <strong style="text-transform: uppercase;">{{categoryObj.puntos}} Puntos</strong>
+                        <span><br>{{categoryObj.beneficios}}</span>
                     </p>
                     <!-- <p class="smaller">
                         <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
                     </p> -->
                 </div>
-
-                <div class="col-sm-2  text-left center-small-screen">
-                    <p class="smaller">
-                        Fecha Inicio: {{ categoryObj.fechainicio }} <br>
-                        Fecha Fin:  {{categoryObj.fechafin }} <br>
-                        Titulo:  {{categoryObj.texto.titulo }} <br>
-                        Descripcion:  {{categoryObj.texto.descripcion }} <br>
-                    </p>
-                </div>
                 <div class="col-sm-7  text-right center-small-screen">
                     <p>
-                        <button class="btn-grey-outline active" ng-click="categories.locales(key)">
+                        <button class="btn-red-outline active" ng-click="EliminarBeneficio(key)">
+                            Eliminar
+                        </button>
+                        <button disabled class="btn-grey-outline active" ng-click="categories.locales(key)">
                             Estadisticas
                         </button>
-                        <button class="btn-random-outline"  ng-click="editarPromocion(promocion,key)">
+                        <button class="btn-random-outline" ui-sref="admin.SubmitBeneficioCentrosComerciales({shopping: shopping,beneficio: key})">
                             Editar
                         </button>
                     </p>

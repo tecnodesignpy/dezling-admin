@@ -1009,7 +1009,6 @@ angular.module('noodlio.controllers-submit', [])
 
         return submit.status['containsNoError'];
     };     
-  
 })
 
 .controller('SubmitCentrosLocales', function($scope,

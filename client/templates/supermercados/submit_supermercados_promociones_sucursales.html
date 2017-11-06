@@ -172,12 +172,14 @@
                             
                         </select>
 
-                <h5>Link</h5>
+                <h5>Notificaciones</h5>
                 <p id="error-message">{{submit.ErrorMessages['link']}}</p>
-                
-                <input id="link"
-                    ng-model="submit.PromocionMeta.link"
-                    class="submit-box-generic submit-input-wide" type="text" value="">
+                <input type="checkbox" 
+                        ng-model="submit.PromocionMeta.notificaciones.mensajes"
+                        class="submit-box-generic submit-input-wide"> Notificar en la bandeja de Mensajes <br>
+                <input type="checkbox" 
+                        ng-model="submit.PromocionMeta.notificaciones.push"
+                        class="submit-box-generic submit-input-wide"> Notificar via Push
 
             </div>
         
