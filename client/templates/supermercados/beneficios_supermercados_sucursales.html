@@ -1,6 +1,6 @@
 <div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
 
-<section id="home" class="section-product" ng-init="initListado()">
+<section id="home" class="section-product" ng-init="initView()">
     <div class="container">
         
         <div class="row">
@@ -8,14 +8,11 @@
                 
                 
                 <h1>
-                    <a href="" ui-sref="admin.home">Menu</a> | Multimarcas
+                    <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.categories-supermercados">Supermercados</a> | <a href="" ui-sref="admin.SucursalesSupermercados({CentroComercial: shopping})">{{ shopping }}</a> | {{ local }}
                 </h1>
                 <p>&nbsp;</p>
                 <p>
-                    <a href="" ui-sref="admin.submitMultimarcas">+ Agregar Multimarca</a>
-                </p>
-                <p id="warning" ng-show="mensaje">
-                    {{ mensaje }}
+                    <a href="" ui-sref="admin.SubmitBeneficioSupermercadosSucursales({shopping: shopping, local: local})">+ Agregar Beneficio</a>
                 </p>
       
             </div>
@@ -24,7 +21,7 @@
         <hr class="star-light">
         
         <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
-        <div class="row" ng-show="cargando">
+        <div class="row" ng-show="categories.statusObj.loading">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
             </div>
@@ -41,38 +38,34 @@
         
         <div class="row">
             <div class="col-sm-6 text-left">
-                <h1>Listado de Multimarcas</h1>
+                <h1>Beneficios</h1>
             </div>
         </div>
         
 
-            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in multimarcas">
-                
-                <div class="col-sm-3  text-left center-small-screen">
+            <div class="row row-item card-1"  ng-repeat="(key, categoryObj) in beneficios">
+                <div class="col-sm-5  text-left center-small-screen">
                     <p class="small">
-                        <strong style="text-transform: uppercase;">{{key}}</strong>
+                        <strong style="text-transform: uppercase;">{{categoryObj.puntos}} Puntos</strong>
+                        <span><br>{{categoryObj.beneficios}}</span>
                     </p>
                     <!-- <p class="smaller">
                         <strong>Last updated:</strong><br>{{items.formatTimestamp(item.value.timestamp_update)}}
                     </p> -->
                 </div>
-                <div class="col-sm-9  text-right center-small-screen">
+                <div class="col-sm-7  text-right center-small-screen">
                     <p>
-                        <button class="btn-grey-outline active" ui-sref="admin.BeneficiosMultimarcas({shopping: key})">
-                            Beneficios
+                        <button class="btn-red-outline active" ng-click="EliminarBeneficio(key)">
+                            Eliminar
                         </button>
-                        <button class="btn-grey-outline active" ui-sref="admin.SucursalesMultimarcas({CentroComercial: key})">
-                            Ver Sucursales
+                        <button disabled class="btn-grey-outline active" ng-click="categories.locales(key)">
+                            Estadisticas
                         </button>
-                        <button class="btn-positive-outline active" ui-sref="admin.promocionesMultimarcas({multimarca: key})">
-                            Promociones <i class="icon_set_1_icon-81"></i>
-                        </button>
-                        <button class="btn-random-outline" ng-click="editItem(key)">
+                        <button class="btn-random-outline" ui-sref="admin.SubmitBeneficioSupermercadosSucursales({shopping: shopping,beneficio: key, local: local})">
                             Editar
                         </button>
                     </p>
-                </div>
-                
+                </div>                
             </div>
         
     </div>

@@ -8,11 +8,11 @@
                 
                 
                 <h1>
-                    <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.categories-centros_comerciales">Centros Comerciales</a> | <a href="" ui-sref="admin.Locales({CentroComercial: shopping})">{{ shopping }}</a> | {{ local }}
+                    <a href="" ui-sref="admin.home">Menu</a> |<a href="" ui-sref="admin.categories-multimarcas">Multimarcas</a> | <a href="" ui-sref="admin.SucursalesMultimarcas({CentroComercial: shopping})">{{ shopping }}</a> | {{ local }}
                 </h1>
                 <p>&nbsp;</p>
                 <p>
-                    <a href="" ui-sref="admin.SubmitBeneficioCentrosComercialesLocales({shopping: shopping, local: local})">+ Agregar Beneficio</a>
+                    <a href="" ui-sref="admin.SubmitBeneficioMultimarcasSucursales({shopping: shopping, local: local})">+ Agregar Beneficio</a>
                 </p>
       
             </div>
@@ -61,7 +61,7 @@
                         <button disabled class="btn-grey-outline active" ng-click="categories.locales(key)">
                             Estadisticas
                         </button>
-                        <button class="btn-random-outline" ui-sref="admin.SubmitBeneficioCentrosComerciales({shopping: shopping,beneficio: key})">
+                        <button class="btn-random-outline" ui-sref="admin.SubmitBeneficioMultimarcasSucursales({shopping: shopping,beneficio: key, local: local})">
                             Editar
                         </button>
                     </p>

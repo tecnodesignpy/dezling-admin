@@ -80,21 +80,21 @@
                 <h5>Titulo</h5>
                 <p id="error-message">{{submit.ErrorMessages['titulo']}}</p>
                 
-                <input id="titulo"
+                <input placeholder="Promoción especifica. Ej: 20% de descuento" id="titulo"
                     ng-model="submit.PromocionMeta.texto.titulo"
                     class="submit-box-generic submit-input-wide" type="text" value="">
                 
                 <h5>Descripcion Corta</h5>
                 <p id="error-message">{{submit.ErrorMessages['descripcion']}}</p>
                 
-                <input id="descripcion"
+                <input placeholder="Duración/vigencia de la promoción. Ej. ¡Aprovecha los descuentos del 5 al 8 de octubre!" id="descripcion"
                     ng-model="submit.PromocionMeta.texto.descripcion"
                     class="submit-box-generic submit-input-wide" type="text" value="" maxlength="25">
                 
                 <h5>Descripcion Larga</h5>
                 <p id="error-message">{{submit.ErrorMessages['descripcion']}}</p>
                 
-                <textarea 
+                <textarea placeholder="Info completa sobre la promoción"
                     ng-model="submit.PromocionMeta.texto.descripcion_larga"
                     rows="6" 
                     class="submit-box-generic submit-input-wide"></textarea>

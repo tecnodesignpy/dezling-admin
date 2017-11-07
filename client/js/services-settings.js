@@ -310,6 +310,8 @@ angular.module('noodlio.services-settings', [])
   var self = this;
   self.all = {};
   self.promociones = {};
+  self.beneficios = {};
+  self.beneficio = {};
 
   self.get = function(local) {
     var qCat = $q.defer();
@@ -341,6 +343,61 @@ angular.module('noodlio.services-settings', [])
       qCat.reject(error);
     })
     return qCat.promise;
+  };
+
+  self.getBeneficios = function(shopping, local) {
+    var qCat = $q.defer();
+    FireFunc.onValue('categorias/multimarcas/comercios/'+shopping+'/locales/'+local+'/beneficios/').then(function(result){
+      console.log(result);
+      if(result != null) {
+        self.beneficios = result;
+      } else {
+        self.beneficios = {};
+      }
+      qCat.resolve(self.beneficios);
+    },
+    function(error){
+      qCat.reject(error);
+    })
+    return qCat.promise;
+  };
+
+  self.getBeneficio = function(shopping, local, beneficio) {
+    var qCat = $q.defer();
+    FireFunc.onValue('categorias/multimarcas/comercios/'+shopping+'/locales/'+local+'/beneficios/'+ beneficio).then(function(result){
+      if(result != null) {
+        self.beneficio = result;
+      } else {
+        self.beneficio = {};
+      }
+      qCat.resolve(self.beneficio);
+    },
+    function(error){
+      qCat.reject(error);
+    })
+    return qCat.promise;
+  };
+
+  // Submit nuevo beneficio
+  self.submitBeneficio = function(BeneficioMeta, AuthData, comercio, local) {
+        var funcion = firebase.database().ref('categorias/multimarcas/comercios/' + comercio +'/locales/'+local+'/beneficios/').push({
+            beneficios : BeneficioMeta.beneficios,
+            puntos: BeneficioMeta.puntos,
+          });
+        return funcion;
+    };
+
+  // Submit nuevo beneficio
+  self.editBeneficio = function(BeneficioMeta, AuthData, comercio, local, beneficio) {
+        var funcion = firebase.database().ref('categorias/multimarcas/comercios/' + comercio +'/locales/'+local+'/beneficios/'+beneficio).update({
+            beneficios : BeneficioMeta.beneficios,
+            puntos: BeneficioMeta.puntos,
+          });
+        return funcion;
+    };
+
+  self.eliminarBeneficio = function(shopping, local, key) {
+      return firebase.database().ref('categorias/multimarcas/comercios/'+shopping+'/locales/'+local+'/beneficios/'+key).remove();
   };
 
   self.set = function(CategoriesObj) {
@@ -456,6 +513,8 @@ angular.module('noodlio.services-settings', [])
   var self = this;
   self.all = {};
   self.promociones = {};
+  self.beneficios = {};
+  self.beneficio = {};
 
   self.get = function(local) {
     var qCat = $q.defer();
@@ -487,6 +546,61 @@ angular.module('noodlio.services-settings', [])
       qCat.reject(error);
     })
     return qCat.promise;
+  };
+
+  self.getBeneficios = function(shopping, local) {
+    var qCat = $q.defer();
+    FireFunc.onValue('categorias/supermercados/comercios/'+shopping+'/locales/'+local+'/beneficios/').then(function(result){
+      console.log(result);
+      if(result != null) {
+        self.beneficios = result;
+      } else {
+        self.beneficios = {};
+      }
+      qCat.resolve(self.beneficios);
+    },
+    function(error){
+      qCat.reject(error);
+    })
+    return qCat.promise;
+  };
+
+  self.getBeneficio = function(shopping, local, beneficio) {
+    var qCat = $q.defer();
+    FireFunc.onValue('categorias/supermercados/comercios/'+shopping+'/locales/'+local+'/beneficios/'+ beneficio).then(function(result){
+      if(result != null) {
+        self.beneficio = result;
+      } else {
+        self.beneficio = {};
+      }
+      qCat.resolve(self.beneficio);
+    },
+    function(error){
+      qCat.reject(error);
+    })
+    return qCat.promise;
+  };
+
+  // Submit nuevo beneficio
+  self.submitBeneficio = function(BeneficioMeta, AuthData, comercio, local) {
+        var funcion = firebase.database().ref('categorias/supermercados/comercios/' + comercio +'/locales/'+local+'/beneficios/').push({
+            beneficios : BeneficioMeta.beneficios,
+            puntos: BeneficioMeta.puntos,
+          });
+        return funcion;
+    };
+
+  // Submit nuevo beneficio
+  self.editBeneficio = function(BeneficioMeta, AuthData, comercio, local, beneficio) {
+        var funcion = firebase.database().ref('categorias/supermercados/comercios/' + comercio +'/locales/'+local+'/beneficios/'+beneficio).update({
+            beneficios : BeneficioMeta.beneficios,
+            puntos: BeneficioMeta.puntos,
+          });
+        return funcion;
+    };
+
+  self.eliminarBeneficio = function(shopping, local, key) {
+      return firebase.database().ref('categorias/supermercados/comercios/'+shopping+'/locales/'+local+'/beneficios/'+key).remove();
   };
 
   self.set = function(CategoriesObj) {

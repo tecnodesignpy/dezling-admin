@@ -254,15 +254,15 @@ angular.module('noodlio', [
                       // Visualiza los Beneficios del Centro Comercial, le pasamos el slug del centro comercial en la variable :shopping
                       .state('admin.BeneficiosMultimarcasSucursales', {
                           url: '/categories/multimarcas/:shopping/local/:local/beneficios',
-                          templateUrl: '/templates/shoppings/beneficios_multimarcas_sucursales.html',
-                          controller:'BeneficiosShoppingLocales',
+                          templateUrl: '/templates/multimarcas/beneficios_multimarcas_sucursales.html',
+                          controller:'BeneficiosMutimarcasSucursales',
                           resolve: {authResolve: authResolve}
                       })
                       // Agrega o Edita un beneficio del Centro Comercial, si le pasamos la variables beneficio, edita, sino, agrega uno nuevo
                       .state('admin.SubmitBeneficioMultimarcasSucursales', {
                           url: '/categories/multimarcas/:shopping/local/:local/beneficios/submit/:beneficio',
-                          templateUrl: '/templates/shoppings/submit_multimarcas_beneficios_sucursales.html',
-                          controller:'BeneficiosShoppingLocales',
+                          templateUrl: '/templates/multimarcas/submit_multimarcas_beneficios_sucursales.html',
+                          controller:'BeneficiosMutimarcasSucursales',
                           resolve: {authResolve: authResolve}
                       })
 
@@ -309,15 +309,15 @@ angular.module('noodlio', [
                       // Visualiza los Beneficios del Centro Comercial, le pasamos el slug del centro comercial en la variable :shopping
                       .state('admin.BeneficiosSupermercados', {
                           url: '/categories/supermercados/beneficios/:shopping',
-                          templateUrl: '/templates/shoppings/beneficios_supermercados.html',
-                          controller:'BeneficiosMultimarcas',
+                          templateUrl: '/templates/supermercados/beneficios_supermercados.html',
+                          controller:'BeneficiosSupermercados',
                           resolve: {authResolve: authResolve}
                       })
                       // Agrega o Edita un beneficio del Centro Comercial, si le pasamos la variables beneficio, edita, sino, agrega uno nuevo
                       .state('admin.SubmitBeneficiosSupermercados', {
                           url: '/categories/supermercados/beneficios/:shopping/submit/:beneficio',
-                          templateUrl: '/templates/shoppings/submit_supermercados_beneficios.html',
-                          controller:'SubmitBeneficiosMultiMarcas',
+                          templateUrl: '/templates/supermercados/submit_supermercados_beneficios.html',
+                          controller:'BeneficiosSupermercados',
                           resolve: {authResolve: authResolve}
                       })
               
@@ -352,6 +352,20 @@ angular.module('noodlio', [
                           url: '/supermercados/promociones/:shopping/:localId/submit/:promo',
                           templateUrl: '/templates/supermercados/submit_supermercados_promociones_sucursales.html',
                           controller:'SubmitSupermercadosSucursales as submit',
+                          resolve: {authResolve: authResolve}
+                      })
+                      // Visualiza los Beneficios del Centro Comercial, le pasamos el slug del centro comercial en la variable :shopping
+                      .state('admin.BeneficiosSupermercadosSucursales', {
+                          url: '/categories/supermercados/:shopping/local/:local/beneficios',
+                          templateUrl: '/templates/supermercados/beneficios_supermercados_sucursales.html',
+                          controller:'BeneficiosSupermercadosSucursales',
+                          resolve: {authResolve: authResolve}
+                      })
+                      // Agrega o Edita un beneficio del Centro Comercial, si le pasamos la variables beneficio, edita, sino, agrega uno nuevo
+                      .state('admin.SubmitBeneficioSupermercadosSucursales', {
+                          url: '/categories/supermercados/:shopping/local/:local/beneficios/submit/:beneficio',
+                          templateUrl: '/templates/supermercados/submit_supermercados_beneficios_sucursales.html',
+                          controller:'BeneficiosSupermercadosSucursales',
                           resolve: {authResolve: authResolve}
                       })
               

@@ -407,6 +407,819 @@ angular.module('noodlio.controllers-items', [])
     };
 })
 
+.controller('BeneficiosMultimarcas', function($location, $anchorScroll, $stateParams, $state, $scope, MultiMarcas, Auth, $window) {
+
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.AuthData = Auth.AuthData;
+        //Chequeamos que le haya pasado el parametro shopping como minimo
+        var shopping = $stateParams.shopping;
+        if(shopping ==''){
+            alert("No hay ningun Shopping seleccionado")
+            $state.go('admin.categories-multimarcas')
+        }else{
+            $scope.shopping = $stateParams.shopping;
+        }
+        checkAuth();
+    });
+
+    //Iniciamos la funcion desde el template para cargar los Sponsors
+    $scope.initView = function() {
+        $scope.shopping = $stateParams.shopping;
+        $location.hash('page-top');
+        $anchorScroll();
+        //Cargamos listado de Sponsor
+        CargarBeneficios();
+    };
+    
+    function checkAuth() { // can be put in a resolve in app.js
+        if(!$scope.AuthData.hasOwnProperty('uid')) {
+            Auth.checkAuthState().then(
+                function(loggedIn){
+                    $scope.AuthData = Auth.AuthData;
+                },
+                function(notLoggedIn) {
+                    $state.go('admin.login')
+                }
+            )
+        };
+        
+    };
+
+    // Funcion para Cargar el listado de Beneficios
+    function CargarBeneficios(){
+        $scope.cargando = true;
+        MultiMarcas.getBeneficios($scope.shopping).then(
+            function(success){
+                if(MultiMarcas.beneficios != null) {
+                    $scope.beneficios = MultiMarcas.beneficios;
+                    console.log($scope.beneficios);
+                    $scope.cargando = false;
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+    // SUBMIT BENEFICIOS
+
+    //Primero Redireccionamos si es nuevo o debemos editar
+    $scope.Redireccionar = function(){
+        console.log("Vamos a Redireccionar");
+        $scope.comercio = $stateParams.shopping;
+        $scope.beneficio = $stateParams.beneficio;
+
+        // init variables 
+        $scope.status = {
+            editMode: false,
+            submitLoading: false,
+            generalView: 'loading',
+        };
+
+        if(Auth.AuthData.hasOwnProperty('uid')){
+            if($scope.beneficio != undefined && $scope.beneficio != null && $scope.beneficio != "") {
+                MultiMarcas.getBeneficio($scope.comercio, $scope.beneficio).then(
+                    function(ProductMeta){
+                        if(ProductMeta != null) {
+                            $scope.BeneficioMeta = ProductMeta;
+                            EditarBeneficio();  
+                        } else {
+                            currentProductId = null;
+                            NuevoBeneficio();    // Error tecnico, entonces le damos la opcion de crear un nuevo Objeto
+                        };
+                    },
+                    function(error){
+                        console.log('e1', error);
+                        initError();
+                    }
+                )
+            }else{
+                NuevoBeneficio();
+            };
+        }else{
+            console.log('e2');
+            initError();
+        };
+    }
+
+    function NuevoBeneficio() {
+        $scope.status["generalView"]    = "new";
+        $scope.status["editMode"]       = false;
+        $scope.beneficio                = null;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    function EditarBeneficio() {
+        $scope.status["generalView"]    = "edit";
+        $scope.status["editMode"]       = true;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    $scope.EliminarBeneficio = function(key) {
+        console.log($scope.shopping);
+        swal({
+          title: "Desea eliminar el Beneficio?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            MultiMarcas.eliminarBeneficio($scope.shopping, key).then(function(success){
+                console.log(success);
+                $window.location.reload();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $window.location.reload();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
+    };
+
+
+    function initError() {
+        $scope.status["generalView"] = "error";     //console.log("error")
+        $state.go('admin.home');
+    };
+
+    /**
+     * Validamos el formulario y enviamos la promocion, ya sea uno nuevo o editamos uno ya existente
+     */
+    $scope.guardar = function() {
+        console.log("Guardar");
+        scrollToSubmitEnd(); 
+            switch ($scope.status['editMode']) {
+                case true:
+                    $scope.status['submitLoading']  = true;
+                    MultiMarcas.editBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.beneficio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+                case false:
+                    $scope.status['submitLoading']  = true;
+                    MultiMarcas.submitBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+            } // ./ switch
+            
+        
+        // fn error
+        function handleError(error) {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $scope.ErrorMessages['general']     = "Ooops hubo un problema ... " + error;
+        };
+        
+        // fn success
+        function handleSuccess() {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $state.go('admin.categories-multimarcas');
+        };
+        
+    }; 
+
+    function scrollToSubmitEnd() {
+        $location.hash('submit0');
+        $anchorScroll.yOffset = 100;
+        $anchorScroll();
+    };
+        
+})
+.controller('BeneficiosMutimarcasSucursales', function($location, $anchorScroll, $stateParams, $state, $scope, Auth, MultiSucursales, $window) {
+        
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.AuthData = Auth.AuthData;
+        //Chequeamos que le haya pasado el parametro shopping como minimo
+        var shopping = $stateParams.shopping;
+        if(shopping ==''){
+            alert("No hay ningun Shopping seleccionado" + shopping +" - "+ $stateParams.local )
+            $state.go('admin.categories-multimarcas')
+        }else{
+            $scope.shopping = $stateParams.shopping;
+        }
+        checkAuth();
+    });
+
+    //Iniciamos la funcion desde el template para cargar los Sponsors
+    $scope.initView = function() {
+        $scope.shopping = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $location.hash('page-top');
+        $anchorScroll();
+        //Cargamos listado de Sponsor
+        CargarBeneficios();
+    };
+    
+    function checkAuth() { // can be put in a resolve in app.js
+        if(!$scope.AuthData.hasOwnProperty('uid')) {
+            Auth.checkAuthState().then(
+                function(loggedIn){
+                    $scope.AuthData = Auth.AuthData;
+                },
+                function(notLoggedIn) {
+                    $state.go('admin.login')
+                }
+            )
+        };
+        
+    };
+
+    // Funcion para Cargar el listado de Beneficios
+    function CargarBeneficios(){
+        $scope.cargando = true;
+        MultiSucursales.getBeneficios($scope.shopping, $scope.local).then(
+            function(success){
+                if(MultiSucursales.beneficios != null) {
+                    $scope.beneficios = MultiSucursales.beneficios;
+                    console.log($scope.beneficios);
+                    $scope.cargando = false;
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+    // SUBMIT BENEFICIOS
+
+    //Primero Redireccionamos si es nuevo o debemos editar
+    $scope.Redireccionar = function(){
+        console.log("Vamos a Redireccionar");
+        $scope.comercio = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $scope.beneficio = $stateParams.beneficio;
+
+        // init variables 
+        $scope.status = {
+            editMode: false,
+            submitLoading: false,
+            generalView: 'loading',
+        };
+
+        if(Auth.AuthData.hasOwnProperty('uid')){
+            if($scope.beneficio != undefined && $scope.beneficio != null && $scope.beneficio != "") {
+                MultiSucursales.getBeneficio($scope.comercio, $scope.local, $scope.beneficio).then(
+                    function(ProductMeta){
+                        if(ProductMeta != null) {
+                            $scope.BeneficioMeta = ProductMeta;
+                            EditarBeneficio();  
+                        } else {
+                            currentProductId = null;
+                            NuevoBeneficio();    // Error tecnico, entonces le damos la opcion de crear un nuevo Objeto
+                        };
+                    },
+                    function(error){
+                        console.log('e1', error);
+                        initError();
+                    }
+                )
+            }else{
+                NuevoBeneficio();
+            };
+        }else{
+            console.log('e2');
+            initError();
+        };
+    }
+
+    function NuevoBeneficio() {
+        $scope.status["generalView"]    = "new";
+        $scope.status["editMode"]       = false;
+        $scope.beneficio                = null;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    function EditarBeneficio() {
+        $scope.status["generalView"]    = "edit";
+        $scope.status["editMode"]       = true;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    $scope.EliminarBeneficio = function(key) {
+        swal({
+          title: "Desea eliminar el Beneficio?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            MultiSucursales.eliminarBeneficio($scope.shopping, $scope.local, key).then(function(success){
+                console.log(success);
+                $window.location.reload();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $window.location.reload();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
+    };
+
+    function initError() {
+        $scope.status["generalView"] = "error";     //console.log("error")
+        $state.go('admin.home');
+    };
+
+    /**
+     * Validamos el formulario y enviamos la promocion, ya sea uno nuevo o editamos uno ya existente
+     */
+    $scope.guardar = function() {
+        console.log("Guardar");
+        scrollToSubmitEnd(); 
+            switch ($scope.status['editMode']) {
+                case true:
+                    $scope.status['submitLoading']  = true;
+                    MultiSucursales.editBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.local, $scope.beneficio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+                case false:
+                    $scope.status['submitLoading']  = true;
+                    MultiSucursales.submitBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.local).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+            } // ./ switch
+            
+        
+        // fn error
+        function handleError(error) {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $scope.ErrorMessages['general']     = "Ooops hubo un problema ... " + error;
+        };
+        
+        // fn success
+        function handleSuccess() {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $state.go('admin.categories-multimarcas');
+        };
+        
+    }; 
+
+    function scrollToSubmitEnd() {
+        $location.hash('submit0');
+        $anchorScroll.yOffset = 100;
+        $anchorScroll();
+    };
+})
+
+
+.controller('BeneficiosSupermercados', function($location, $anchorScroll, $stateParams, $state, $scope, Supermercados, Auth, $window) {
+
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.AuthData = Auth.AuthData;
+        //Chequeamos que le haya pasado el parametro shopping como minimo
+        var shopping = $stateParams.shopping;
+        if(shopping ==''){
+            alert("No hay ningun Shopping seleccionado")
+            $state.go('admin.categories-supermercados')
+        }else{
+            $scope.shopping = $stateParams.shopping;
+        }
+        checkAuth();
+    });
+
+    //Iniciamos la funcion desde el template para cargar los Sponsors
+    $scope.initView = function() {
+        $scope.shopping = $stateParams.shopping;
+        $location.hash('page-top');
+        $anchorScroll();
+        //Cargamos listado de Sponsor
+        CargarBeneficios();
+    };
+    
+    function checkAuth() { // can be put in a resolve in app.js
+        if(!$scope.AuthData.hasOwnProperty('uid')) {
+            Auth.checkAuthState().then(
+                function(loggedIn){
+                    $scope.AuthData = Auth.AuthData;
+                },
+                function(notLoggedIn) {
+                    $state.go('admin.login')
+                }
+            )
+        };
+        
+    };
+
+    // Funcion para Cargar el listado de Beneficios
+    function CargarBeneficios(){
+        $scope.cargando = true;
+        Supermercados.getBeneficios($scope.shopping).then(
+            function(success){
+                if(Supermercados.beneficios != null) {
+                    $scope.beneficios = Supermercados.beneficios;
+                    console.log($scope.beneficios);
+                    $scope.cargando = false;
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+    // SUBMIT BENEFICIOS
+
+    //Primero Redireccionamos si es nuevo o debemos editar
+    $scope.Redireccionar = function(){
+        console.log("Vamos a Redireccionar");
+        $scope.comercio = $stateParams.shopping;
+        $scope.beneficio = $stateParams.beneficio;
+
+        // init variables 
+        $scope.status = {
+            editMode: false,
+            submitLoading: false,
+            generalView: 'loading',
+        };
+
+        if(Auth.AuthData.hasOwnProperty('uid')){
+            if($scope.beneficio != undefined && $scope.beneficio != null && $scope.beneficio != "") {
+                Supermercados.getBeneficio($scope.comercio, $scope.beneficio).then(
+                    function(ProductMeta){
+                        if(ProductMeta != null) {
+                            $scope.BeneficioMeta = ProductMeta;
+                            EditarBeneficio();  
+                        } else {
+                            currentProductId = null;
+                            NuevoBeneficio();    // Error tecnico, entonces le damos la opcion de crear un nuevo Objeto
+                        };
+                    },
+                    function(error){
+                        console.log('e1', error);
+                        initError();
+                    }
+                )
+            }else{
+                NuevoBeneficio();
+            };
+        }else{
+            console.log('e2');
+            initError();
+        };
+    }
+
+    function NuevoBeneficio() {
+        $scope.status["generalView"]    = "new";
+        $scope.status["editMode"]       = false;
+        $scope.beneficio                = null;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    function EditarBeneficio() {
+        $scope.status["generalView"]    = "edit";
+        $scope.status["editMode"]       = true;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    $scope.EliminarBeneficio = function(key) {
+        console.log($scope.shopping);
+        swal({
+          title: "Desea eliminar el Beneficio?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            Supermercados.eliminarBeneficio($scope.shopping, key).then(function(success){
+                console.log(success);
+                $window.location.reload();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $window.location.reload();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
+    };
+
+
+    function initError() {
+        $scope.status["generalView"] = "error";     //console.log("error")
+        $state.go('admin.home');
+    };
+
+    /**
+     * Validamos el formulario y enviamos la promocion, ya sea uno nuevo o editamos uno ya existente
+     */
+    $scope.guardar = function() {
+        console.log("Guardar");
+        scrollToSubmitEnd(); 
+            switch ($scope.status['editMode']) {
+                case true:
+                    $scope.status['submitLoading']  = true;
+                    Supermercados.editBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.beneficio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+                case false:
+                    $scope.status['submitLoading']  = true;
+                    Supermercados.submitBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+            } // ./ switch
+            
+        
+        // fn error
+        function handleError(error) {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $scope.ErrorMessages['general']     = "Ooops hubo un problema ... " + error;
+        };
+        
+        // fn success
+        function handleSuccess() {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $state.go('admin.categories-supermercados');
+        };
+        
+    }; 
+
+    function scrollToSubmitEnd() {
+        $location.hash('submit0');
+        $anchorScroll.yOffset = 100;
+        $anchorScroll();
+    };
+        
+})
+.controller('BeneficiosSupermercadosSucursales', function($location, $anchorScroll, $stateParams, $state, $scope, Auth, SuperSucursales, $window) {
+        
+    $scope.$on('$viewContentLoaded', function() {
+        $scope.AuthData = Auth.AuthData;
+        //Chequeamos que le haya pasado el parametro shopping como minimo
+        var shopping = $stateParams.shopping;
+        if(shopping ==''){
+            alert("No hay ningun Shopping seleccionado" + shopping +" - "+ $stateParams.local )
+            $state.go('admin.categories-supermercados')
+        }else{
+            $scope.shopping = $stateParams.shopping;
+        }
+        checkAuth();
+    });
+
+    //Iniciamos la funcion desde el template para cargar los Sponsors
+    $scope.initView = function() {
+        $scope.shopping = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $location.hash('page-top');
+        $anchorScroll();
+        //Cargamos listado de Sponsor
+        CargarBeneficios();
+    };
+    
+    function checkAuth() { // can be put in a resolve in app.js
+        if(!$scope.AuthData.hasOwnProperty('uid')) {
+            Auth.checkAuthState().then(
+                function(loggedIn){
+                    $scope.AuthData = Auth.AuthData;
+                },
+                function(notLoggedIn) {
+                    $state.go('admin.login')
+                }
+            )
+        };
+        
+    };
+
+    // Funcion para Cargar el listado de Beneficios
+    function CargarBeneficios(){
+        $scope.cargando = true;
+        SuperSucursales.getBeneficios($scope.shopping, $scope.local).then(
+            function(success){
+                if(SuperSucursales.beneficios != null) {
+                    $scope.beneficios = SuperSucursales.beneficios;
+                    console.log($scope.beneficios);
+                    $scope.cargando = false;
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+    // SUBMIT BENEFICIOS
+
+    //Primero Redireccionamos si es nuevo o debemos editar
+    $scope.Redireccionar = function(){
+        console.log("Vamos a Redireccionar");
+        $scope.comercio = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $scope.beneficio = $stateParams.beneficio;
+
+        // init variables 
+        $scope.status = {
+            editMode: false,
+            submitLoading: false,
+            generalView: 'loading',
+        };
+
+        if(Auth.AuthData.hasOwnProperty('uid')){
+            if($scope.beneficio != undefined && $scope.beneficio != null && $scope.beneficio != "") {
+                SuperSucursales.getBeneficio($scope.comercio, $scope.local, $scope.beneficio).then(
+                    function(ProductMeta){
+                        if(ProductMeta != null) {
+                            $scope.BeneficioMeta = ProductMeta;
+                            EditarBeneficio();  
+                        } else {
+                            currentProductId = null;
+                            NuevoBeneficio();    // Error tecnico, entonces le damos la opcion de crear un nuevo Objeto
+                        };
+                    },
+                    function(error){
+                        console.log('e1', error);
+                        initError();
+                    }
+                )
+            }else{
+                NuevoBeneficio();
+            };
+        }else{
+            console.log('e2');
+            initError();
+        };
+    }
+
+    function NuevoBeneficio() {
+        $scope.status["generalView"]    = "new";
+        $scope.status["editMode"]       = false;
+        $scope.beneficio                = null;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    function EditarBeneficio() {
+        $scope.status["generalView"]    = "edit";
+        $scope.status["editMode"]       = true;
+        $scope.status["submitLoading"]  = false;
+
+    };
+
+    $scope.EliminarBeneficio = function(key) {
+        swal({
+          title: "Desea eliminar el Beneficio?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            SuperSucursales.eliminarBeneficio($scope.shopping, $scope.local, key).then(function(success){
+                console.log(success);
+                $window.location.reload();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $window.location.reload();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
+    };
+
+    function initError() {
+        $scope.status["generalView"] = "error";     //console.log("error")
+        $state.go('admin.home');
+    };
+
+    /**
+     * Validamos el formulario y enviamos la promocion, ya sea uno nuevo o editamos uno ya existente
+     */
+    $scope.guardar = function() {
+        console.log("Guardar");
+        scrollToSubmitEnd(); 
+            switch ($scope.status['editMode']) {
+                case true:
+                    $scope.status['submitLoading']  = true;
+                    SuperSucursales.editBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.local, $scope.beneficio).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+                case false:
+                    $scope.status['submitLoading']  = true;
+                    SuperSucursales.submitBeneficio($scope.BeneficioMeta, Auth.AuthData, $scope.comercio, $scope.local).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error);
+                        }
+                    );
+                    break
+            } // ./ switch
+            
+        
+        // fn error
+        function handleError(error) {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $scope.ErrorMessages['general']     = "Ooops hubo un problema ... " + error;
+        };
+        
+        // fn success
+        function handleSuccess() {
+            $scope.status['submitLoading']      = false;
+            $scope.status['containsNoError']    = false;
+            $state.go('admin.categories-supermercados');
+        };
+        
+    }; 
+
+    function scrollToSubmitEnd() {
+        $location.hash('submit0');
+        $anchorScroll.yOffset = 100;
+        $anchorScroll();
+    };
+})
+
 
 
 
