@@ -379,18 +379,18 @@ angular.module('noodlio', [
     /*
             SPONSOR
     */
-                    //Visualiza el listado de Sponsor
-                    .state('admin.sponsor', {
-                        url: '/sponsor',
-                        templateUrl: '/templates/sponsor/listado_sponsor.html',
-                        controller:'SponsorCtrl'
-                    })
-                    //Agrega o Edita Sponsor
-                    .state('admin.submit_sponsor', {
-                        url: '/sponsor/submit/:IdSponsor',
-                        templateUrl: '/templates/sponsor/submit_sponsor.html',
-                        controller:'SponsorCtrl'
-                    })
+              //Visualiza el listado de Sponsor
+              .state('admin.sponsor', {
+                  url: '/sponsor',
+                  templateUrl: '/templates/sponsor/listado_sponsor.html',
+                  controller:'SponsorCtrl'
+              })
+              //Agrega o Edita Sponsor
+              .state('admin.submit_sponsor', {
+                  url: '/sponsor/submit/:IdSponsor',
+                  templateUrl: '/templates/sponsor/submit_sponsor.html',
+                  controller:'SponsorCtrl'
+              })
 
 
     
@@ -401,23 +401,66 @@ angular.module('noodlio', [
     /*
             DESTACADOS
     */
-                    //Visualiza el listado de Destacados
-                    .state('admin.destacados', {
-                        url: '/destacados',
-                        templateUrl: '/templates/destacados/listado_destacado.html',
-                        controller:'DestacadosCtrl'
-                    })
-                    //Agrega o Edita Destacados
-                    .state('admin.submit_destacado', {
-                        url: '/destacados/submit/:IdSponsor',
-                        templateUrl: '/templates/destacados/submit_destacado.html',
-                        controller:'DestacadosCtrl'
-                    })
+              //Visualiza el listado de Destacados
+              .state('admin.destacados', {
+                  url: '/destacados',
+                  templateUrl: '/templates/destacados/listado_destacado.html',
+                  controller:'DestacadosCtrl'
+              })
+              //Agrega o Edita Destacados
+              .state('admin.submit_destacado', {
+                  url: '/destacados/submit/:IdSponsor',
+                  templateUrl: '/templates/destacados/submit_destacado.html',
+                  controller:'DestacadosCtrl'
+              })
 
 
     
     /*
             FIN DESTACADOS
+    */
+
+    /*
+      USUARIOS
+    */
+      .state('admin.usuarios', {
+          url: '/usuarios',
+          templateUrl: '/templates/usuarios/usuarios.html',
+          controller:'UsuariosCtrl',
+      })
+      .state('admin.listado-usuario', {
+          url: '/usuarios/:usuario/listado',
+          templateUrl: '/templates/usuarios/listado.html',
+          controller:'UsuariosCtrl',
+      })
+      .state('admin.favoritos-usuario', {
+          url: '/usuarios/:usuario/favoritos',
+          templateUrl: '/templates/usuarios/favoritos.html',
+          controller:'UsuariosCtrl',
+      })
+      .state('admin.perfil-usuario', {
+          url: '/usuarios/:usuario/perfil',
+          templateUrl: '/templates/usuarios/perfil.html',
+          controller:'UsuariosCtrl',
+      })
+    /*
+      FIN USUARIOS
+    */
+
+    /*
+            REPORTES
+    */
+              //Visualiza el listado de Destacados
+              .state('admin.reportes', {
+                  url: '/reportes',
+                  templateUrl: '/templates/reportes/lista_comercios.html',
+                  controller:'DestacadosCtrl'
+              })
+
+
+    
+    /*
+            FIN REPORTES
     */
     .state('admin.settings-fees', {
         url: '/settings/fees',
@@ -437,13 +480,6 @@ angular.module('noodlio', [
         templateUrl: '/templates/items.html',
         controller:'ItemsCtrl as items',
     })
-
-    .state('admin.usuarios', {
-        url: '/usuarios',
-        templateUrl: '/templates/usuarios.html',
-        controller:'UsuariosCtrl',
-    })
-
     .state('admin.sales', {
         url: '/sales',
         templateUrl: '/templates/sales.html',

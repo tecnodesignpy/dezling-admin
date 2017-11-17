@@ -1,0 +1,24 @@
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="getListas()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1>
+                    <a href="" ui-sref="admin.usuarios">Usuarios</a> | {{ usuarioDetalle.perfil.nombre }} {{ usuarioDetalle.perfil.apellido }} | Listado
+                </h1>
+            </div>
+        </div>
+        
+        
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+
+    </div>
+</section>

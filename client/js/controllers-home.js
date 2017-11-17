@@ -1,4 +1,4 @@
-angular.module('noodlio.controllers-home', ["chart.js"])
+angular.module('noodlio.controllers-home', ["chart.js",'dx',])
 
 
 .controller('HomeCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, Auth, $log, $window) {
@@ -581,7 +581,8 @@ angular.module('noodlio.controllers-home', ["chart.js"])
 
 })
 
-.controller('UsuariosCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, UserService) {
+.controller('UsuariosCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
+    CentrosService, CentrosLocalService, MultiMarcasService, MultiSucursalService, SupermercadosService, SuperSucursalService) {
 
     $scope.initView = function() {
         $location.hash('page-top');
@@ -598,11 +599,241 @@ angular.module('noodlio.controllers-home', ["chart.js"])
             function(success){
                 $scope.loading = false;
                 $scope.usuarios = success;
-                console.log(success);
+                //console.log(success);
             },
             function(error){
                 $scope.loading = false;
-                console.log(error);
+                //console.log(error);
+            }
+        );
+    };
+    // Lista de compras
+    $scope.getListas = function() {
+        $scope.loading = true;
+        $scope.usuarioId = $stateParams.usuario
+        UserService.getUsuario($scope.usuarioId).then(
+            function(success){
+                $scope.usuarioDetalle = success;
+                console.log(success);
+                $scope.loading = false;
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
+            }
+        );
+        $scope.listas = [];
+        UserService.getListas($scope.usuarioId).then(
+            function(success){
+                $scope.loading = false;
+                angular.forEach(success, function(value, key) {
+                    $scope.listas.push(value);
+                });
+                console.log($scope.listas);
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
+            }
+        );
+    };
+
+    // Favoritos
+    $scope.getFavoritos = function() {
+        $scope.loading = true;
+        $scope.usuarioId = $stateParams.usuario
+        UserService.getUsuario($scope.usuarioId).then(
+            function(success){
+                $scope.usuarioDetalle = success;
+                console.log(success);
+                $scope.loading = false;
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
+            }
+        );
+        $scope.detalle_Favorito = [];
+        UserService.getFavoritos($scope.usuarioId).then(
+            function(success){
+                $scope.loading = false;
+                angular.forEach(success,function (detalles) {
+                  if(detalles.categoria == "centros_comerciales"){
+                    $timeout(function() {
+                      CentrosService.getProductMeta(detalles.slug).then(
+                        function(success){
+                          console.log(success);
+                          $scope.detalle_Favorito.push(success);
+                      });
+                    }, 500);
+                  }
+                  if(detalles.categoria == "centros_comerciales_local"){
+                    $timeout(function() {
+                      CentrosLocalService.getProductMeta(detalles.slug,detalles.comercio).then(
+                        function(success){
+                          $scope.detalle_Favorito.push(success);
+                      });
+                    }, 500);
+                  }
+                  if(detalles.categoria == "multimarcas"){
+                    $timeout(function() {
+                      MultiMarcasService.getProductMeta(detalles.slug).then(
+                        function(success){
+                          //console.log(Multimarcas.shopping);
+                          $scope.detalle_Favorito.push(success);
+                      });
+                    }, 500);
+                  }
+                  if(detalles.categoria == "multimarcas_local"){
+                    $timeout(function() {
+                      //console.log(detalles.slug,detalles.comercio);
+                      MultiSucursalService.getProductMeta(detalles.slug,detalles.comercio).then(
+                        function(success){
+                          MultiMarcasService.getProductMeta(detalles.slug).then(
+                            function(datos){
+                              success.perfil.icono = datos.perfil.icono;
+                              $scope.detalle_Favorito.push(success);
+                          });
+                      });
+                    }, 500);
+                  }
+                  if(detalles.categoria == "supermercados"){
+                    $timeout(function() {
+                      SupermercadosService.getProductMeta(detalles.slug).then(
+                        function(success){
+                          //console.log(Multimarcas.shopping);
+                          $scope.detalle_Favorito.push(success);
+                      });
+                    }, 500);
+                  }
+                  if(detalles.categoria == "supermercados_local"){
+                    $timeout(function() {
+                      //console.log(detalles.slug,detalles.comercio);
+                      SuperSucursalService.getProductMeta(detalles.slug,detalles.comercio).then(
+                        function(success){
+                          SupermercadosService.getProductMeta(detalles.slug).then(
+                            function(datos){
+                              success.perfil.icono = datos.perfil.icono;
+                              $scope.detalle_Favorito.push(success);
+                          });
+                      });
+                    }, 500);
+                  }
+                });
+                console.log($scope.detalle_Favorito);
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
+            }
+        );
+    };
+
+    // Perfil
+    $scope.getPerfil = function() {
+        $scope.loading = true;
+        $scope.usuarioId = $stateParams.usuario
+        UserService.getUsuario($scope.usuarioId).then(
+            function(success){
+                $scope.usuarioDetalle = success;
+                console.log(success);
+                $scope.formOptions = {
+                    formData: success,
+                    bindingOptions: {
+                        readOnly: "true",
+                    },
+                    items: [{
+                        itemType: "group",
+                        cssClass: "first-group",
+                        colCount: 4,
+                        items: [{
+                            template: "<div class='form-avatar'></div>"
+                        }, {
+                            itemType: "group",
+                            colSpan: 3,
+                            items: [{
+                                dataField: "perfil.nombre",
+                                label: {
+                                    text: "Nombres"
+                                }
+                            }, {
+                                dataField: "perfil.apellido",
+                                label: {
+                                    text: "Apellidos"
+                                }
+                            }, {
+                                dataField: "perfil.birth",
+                                label: {
+                                    text: "Fecha de Nacimiento"
+                                }
+                            }]
+                        }]
+                    }, {
+                        itemType: "group",
+                        cssClass: "second-group",
+                        colCount: 2,
+                        items: [{
+                            itemType: "group",
+                            items: [{
+                                dataField: "perfil.email",
+                                label: {
+                                    text: "Email"
+                                }
+                            }, {
+                                dataField: "perfil.ciudad",
+                                label: {
+                                    text: "Ciudad"
+                                }
+                            }]
+                        }, {
+                            itemType: "group",
+                            items: [{
+                                dataField: "perfil.sexo",
+                                label: {
+                                    text: "Sexo"
+                                }
+                            }, {
+                                dataField: "perfil.edad.min",
+                                label: {
+                                    text: "Edad"
+                                }
+                            }]
+                        }]
+                    }]
+                };
+                $scope.loading = false;
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
+            }
+        );
+    };
+})
+
+.controller('UsuariosCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
+    CentrosService, CentrosLocalService, MultiMarcasService, MultiSucursalService, SupermercadosService, SuperSucursalService) {
+
+    $scope.initView = function() {
+        $location.hash('page-top');
+        $anchorScroll();
+        $scope.loading = true;
+        $scope.getComercios();
+    };
+    
+    /*
+        Funcion para obtener listado de Usuarios
+    */
+    $scope.getComercios = function() {
+        UserService.getUsuarios().then(
+            function(success){
+                $scope.loading = false;
+                $scope.usuarios = success;
+                //console.log(success);
+            },
+            function(error){
+                $scope.loading = false;
+                //console.log(error);
             }
         );
     };

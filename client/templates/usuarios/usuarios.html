@@ -1,0 +1,104 @@
+<style type="text/css">
+    #gridContainer {
+        height: 440px;
+    }
+
+    .options {
+        padding: 20px;
+        margin-top: 20px;
+        background-color: rgba(191, 191, 191, 0.15);
+    }
+
+    .caption {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .option {
+        margin-top: 10px;
+    }
+
+    .option > span {
+        margin-right: 10px;
+    }
+
+    .option > .dx-selectbox {
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="initView()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1>
+                    <a href="" ui-sref="admin.home">Menu</a> | Usuarios
+                </h1>
+            </div>
+        </div>
+        
+        
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+        
+                            <table id="ks-datatable" class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Email</th>
+                                    <th>Notificaciones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Email</th>
+                                    <th>Notificaciones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr ng-repeat="(id,usuario) in usuarios">
+                                    <td>{{ id }}</td>
+                                    <td>{{ usuario.perfil.nombre }}</td>
+                                    <td>{{ usuario.perfil.apellido }}</td>
+                                    <!-- <td>{{ repositor.jefe.usuario.first_name }} {{ repositor.jefe.usuario.last_name }}</td> -->
+                                    <td>{{ usuario.perfil.email }}</td>
+                                    <td ng-show="usuario.configuracion.notificaciones.activada"><i style="color: green;" class="fa fa-check-circle" aria-hidden="true"></i></td>
+                                    <td ng-show="!usuario.configuracion.notificaciones.activada"><i style="color: red;" class="fa fa-times-circle" aria-hidden="true"></i></td>
+                                    <td>
+                                        <a href="#" ui-sref="admin.listado-usuario({usuario:id})" style="color: #25628F">
+                                            <span class="ks-text">Listado</span>
+                                        </a>
+                                        | 
+                                        <a href="#" ui-sref="admin.favoritos-usuario({usuario:id})" style="color: #42a5f5">
+                                            <span class="ks-text">Favoritos</span>
+                                        </a>
+                                        | 
+                                        <a href="#" style="color: white">
+                                            <span class="ks-text">Check's</span>
+                                        </a>
+                                        | 
+                                        <a href="#" ui-sref="admin.perfil-usuario({usuario:id})" style="color: white">
+                                            <span class="ks-text">Perfil Completo</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+    </div>
+</section>

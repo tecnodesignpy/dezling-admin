@@ -1,4 +1,4 @@
-angular.module('noodlio.controllers-submit', [])
+angular.module('noodlio.controllers-submit', ['ui-leaflet'])
 // Controladores para hacer Submit de los distintos formularios en categorias, locales, promociones, beneficios y otros
 
 /*
@@ -26,6 +26,63 @@ angular.module('noodlio.controllers-submit', [])
     submit.ProductImages    = {};
     submit.ErrorMessages    = {};
     submit.IndexData        = {};
+
+    /* 
+        Funcion para hacer Drag en el mapa
+    */
+        var mainMarker = {
+                    lat: -25.342132,
+                    lng: -57.556246,
+                    focus: true,
+                    //message: "Hey, drag me if you want",
+                    draggable: true
+                };
+
+        angular.extend($scope, {
+            london: {
+                lat: -25.342132,
+                lng: -57.556246,
+                zoom: 15
+            },
+            markers: {
+                mainMarker: angular.copy(mainMarker)
+            },
+            position: {
+                lat: -25.3313193,
+                lng: -57.5719568
+            },
+            events: { // or just {} //all events
+                markers:{
+                  enable: [ 'dragend' ]
+                  //logic: 'emit'
+                }
+            },
+            defaults: {
+                scrollWheelZoom: false
+            },
+            layers: {
+                baselayers: {
+                    googleTerrain: {
+                        name: 'Google Terrain',
+                        layerType: 'TERRAIN',
+                        type: 'google'
+                    },
+                }
+            }
+        });
+
+        $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+            document.getElementById("mapa.latitud").value = args.model.lat;
+            document.getElementById("mapa.longitud").value = args.model.lng;
+            submit.ProductMeta.perfil.mapa.latitud = args.model.lat
+            submit.ProductMeta.perfil.mapa.longitud = args.model.lng
+            console.log($scope.london.lat);
+            console.log($scope.london.lng);
+        });
+
+    /* 
+        FIN Funcion para hacer Drag en el mapa
+    */
 
     // Iniciamos la funcion para redireccion la vista, ya sea un nuevo Centro Comercial o para editar uno ya existente
     submit.initView = function() {
@@ -58,6 +115,7 @@ angular.module('noodlio.controllers-submit', [])
         $location.hash('page-top');
         $anchorScroll();
     };
+
     
     /*
         Funcion para redireccion
@@ -72,7 +130,54 @@ angular.module('noodlio.controllers-submit', [])
                     function(ProductMeta){
                         if(ProductMeta != null) {
                             submit.ProductMeta = ProductMeta;
-                            console.log(ProductMeta);
+                            if(ProductMeta.perfil.mapa.latitud != 0 && ProductMeta.perfil.mapa.longitud != 0){
+                                setTimeout(function(){
+                                    $scope.lat = ProductMeta.perfil.mapa.latitud;
+                                    $scope.lng = ProductMeta.perfil.mapa.longitud;
+                                    var mainMarker = {
+                                        lat: $scope.lat,
+                                        lng: $scope.lng,
+                                        focus: true,
+                                        //message: "Hey, drag me if you want",
+                                        draggable: true
+                                    };
+
+                                    angular.extend($scope, {
+                                        london: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng,
+                                            zoom: 15
+                                        },
+                                        markers: {
+                                            mainMarker: angular.copy(mainMarker)
+                                        },
+                                        position: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng
+                                        },
+                                        events: { // or just {} //all events
+                                            markers:{
+                                              enable: [ 'dragend' ]
+                                              //logic: 'emit'
+                                            }
+                                        },
+                                        layers: {
+                                            baselayers: {
+                                                googleTerrain: {
+                                                    name: 'Google Terrain',
+                                                    layerType: 'TERRAIN',
+                                                    type: 'google'
+                                                },
+                                            }
+                                        }
+                                    });
+
+
+                                    $scope.$apply();
+                                }, 0);  
+                            }
+                            //render_mapa("editar",ProductMeta);
+
                             initEditMode();  
                         } else {
                             currentProductId = null;
@@ -94,7 +199,7 @@ angular.module('noodlio.controllers-submit', [])
         
         // stateA - new
         function initNewSubmission() {
-            
+            //render_mapa("nuevo");
             submit.status["generalView"]    = "new";
             submit.status["editMode"]       = false;
             currentProductId                = null; 
@@ -109,7 +214,9 @@ angular.module('noodlio.controllers-submit', [])
         };
         
         // stateB - edit mode
-        function initEditMode() {                       //console.log("edit submission")
+        function initEditMode() {   
+            
+            //console.log("edit submission")
             submit.status["generalView"]    = "edit";
             submit.status["editMode"]       = true;
             
@@ -3018,6 +3125,63 @@ angular.module('noodlio.controllers-submit', [])
     submit.ErrorMessages    = {};
     submit.IndexData        = {};
 
+    /* 
+        Funcion para hacer Drag en el mapa
+    */
+        var mainMarker = {
+                    lat: -25.342132,
+                    lng: -57.556246,
+                    focus: true,
+                    //message: "Hey, drag me if you want",
+                    draggable: true
+                };
+
+        angular.extend($scope, {
+            london: {
+                lat: -25.342132,
+                lng: -57.556246,
+                zoom: 15
+            },
+            markers: {
+                mainMarker: angular.copy(mainMarker)
+            },
+            position: {
+                lat: -25.3313193,
+                lng: -57.5719568
+            },
+            events: { // or just {} //all events
+                markers:{
+                  enable: [ 'dragend' ]
+                  //logic: 'emit'
+                }
+            },
+            defaults: {
+                scrollWheelZoom: false
+            },
+            layers: {
+                baselayers: {
+                    googleTerrain: {
+                        name: 'Google Terrain',
+                        layerType: 'TERRAIN',
+                        type: 'google'
+                    },
+                }
+            }
+        });
+
+        $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+            document.getElementById("mapa.latitud").value = args.model.lat;
+            document.getElementById("mapa.longitud").value = args.model.lng;
+            submit.ProductMeta.perfil.mapa.latitud = args.model.lat
+            submit.ProductMeta.perfil.mapa.longitud = args.model.lng
+            console.log($scope.london.lat);
+            console.log($scope.london.lng);
+        });
+
+    /* 
+        FIN Funcion para hacer Drag en el mapa
+    */
+
     // init the dependencies on load
     submit.initView = function() {
         
@@ -3259,6 +3423,52 @@ angular.module('noodlio.controllers-submit', [])
                     function(ProductMeta){
                         if(ProductMeta != null) {
                             submit.ProductMeta = ProductMeta;   // bind the data
+                            if(ProductMeta.perfil.mapa.latitud != 0 || ProductMeta.perfil.mapa.longitud != 0){
+                                setTimeout(function(){
+                                    $scope.lat = ProductMeta.perfil.mapa.latitud;
+                                    $scope.lng = ProductMeta.perfil.mapa.longitud;
+                                    var mainMarker = {
+                                        lat: $scope.lat,
+                                        lng: $scope.lng,
+                                        focus: true,
+                                        //message: "Hey, drag me if you want",
+                                        draggable: true
+                                    };
+
+                                    angular.extend($scope, {
+                                        london: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng,
+                                            zoom: 15
+                                        },
+                                        markers: {
+                                            mainMarker: angular.copy(mainMarker)
+                                        },
+                                        position: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng
+                                        },
+                                        events: { // or just {} //all events
+                                            markers:{
+                                              enable: [ 'dragend' ]
+                                              //logic: 'emit'
+                                            }
+                                        },
+                                        layers: {
+                                            baselayers: {
+                                                googleTerrain: {
+                                                    name: 'Google Terrain',
+                                                    layerType: 'TERRAIN',
+                                                    type: 'google'
+                                                },
+                                            }
+                                        }
+                                    });
+
+
+                                    $scope.$apply();
+                                }, 0);  
+                            }
                             initEditMode();  
                         } else {
                             local = null;
@@ -4884,6 +5094,63 @@ angular.module('noodlio.controllers-submit', [])
     submit.ErrorMessages    = {};
     submit.IndexData        = {};
 
+    /* 
+        Funcion para hacer Drag en el mapa
+    */
+        var mainMarker = {
+                    lat: -25.342132,
+                    lng: -57.556246,
+                    focus: true,
+                    //message: "Hey, drag me if you want",
+                    draggable: true
+                };
+
+        angular.extend($scope, {
+            london: {
+                lat: -25.342132,
+                lng: -57.556246,
+                zoom: 15
+            },
+            markers: {
+                mainMarker: angular.copy(mainMarker)
+            },
+            position: {
+                lat: -25.3313193,
+                lng: -57.5719568
+            },
+            events: { // or just {} //all events
+                markers:{
+                  enable: [ 'dragend' ]
+                  //logic: 'emit'
+                }
+            },
+            defaults: {
+                scrollWheelZoom: false
+            },
+            layers: {
+                baselayers: {
+                    googleTerrain: {
+                        name: 'Google Terrain',
+                        layerType: 'TERRAIN',
+                        type: 'google'
+                    },
+                }
+            }
+        });
+
+        $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+            document.getElementById("mapa.latitud").value = args.model.lat;
+            document.getElementById("mapa.longitud").value = args.model.lng;
+            submit.ProductMeta.perfil.mapa.latitud = args.model.lat
+            submit.ProductMeta.perfil.mapa.longitud = args.model.lng
+            console.log($scope.london.lat);
+            console.log($scope.london.lng);
+        });
+
+    /* 
+        FIN Funcion para hacer Drag en el mapa
+    */
+
     // init the dependencies on load
     submit.initView = function() {
         
@@ -5125,6 +5392,54 @@ angular.module('noodlio.controllers-submit', [])
                     function(ProductMeta){
                         if(ProductMeta != null) {
                             submit.ProductMeta = ProductMeta;   // bind the data
+                            
+                            submit.ProductMeta = ProductMeta;   // bind the data
+                            if(ProductMeta.perfil.mapa.latitud != 0 || ProductMeta.perfil.mapa.longitud != 0){
+                                setTimeout(function(){
+                                    $scope.lat = ProductMeta.perfil.mapa.latitud;
+                                    $scope.lng = ProductMeta.perfil.mapa.longitud;
+                                    var mainMarker = {
+                                        lat: $scope.lat,
+                                        lng: $scope.lng,
+                                        focus: true,
+                                        //message: "Hey, drag me if you want",
+                                        draggable: true
+                                    };
+
+                                    angular.extend($scope, {
+                                        london: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng,
+                                            zoom: 15
+                                        },
+                                        markers: {
+                                            mainMarker: angular.copy(mainMarker)
+                                        },
+                                        position: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng
+                                        },
+                                        events: { // or just {} //all events
+                                            markers:{
+                                              enable: [ 'dragend' ]
+                                              //logic: 'emit'
+                                            }
+                                        },
+                                        layers: {
+                                            baselayers: {
+                                                googleTerrain: {
+                                                    name: 'Google Terrain',
+                                                    layerType: 'TERRAIN',
+                                                    type: 'google'
+                                                },
+                                            }
+                                        }
+                                    });
+
+
+                                    $scope.$apply();
+                                }, 0);  
+                            }
                             initEditMode();  
                         } else {
                             local = null;

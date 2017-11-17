@@ -1,0 +1,48 @@
+<style type="text/css">
+    .first-group,
+    .second-group {
+        padding: 20px;
+    }
+
+    .second-group {
+        background-color: rgba(191, 191, 191, 0.15);
+    }
+
+    .form-avatar {
+        height: 128px;
+        width: 128px;
+        margin-right: 10px;
+        border: 1px solid #d2d3d5;
+        border-radius: 50%;
+        background-image: url({{ usuarioDetalle.perfil.foto_perfil || '/img/1024.png' }});
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+</style>
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="getPerfil()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <h1>
+                    <a href="" ui-sref="admin.usuarios">Usuarios</a> | {{ usuarioDetalle.perfil.nombre }} {{ usuarioDetalle.perfil.apellido }} | Perfil Completo
+                </h1>
+            </div>
+        </div>
+        
+        
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="loading">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+
+        <div dx-form="formOptions"></div>
+
+    </div>
+</section>
