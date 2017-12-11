@@ -454,7 +454,7 @@ angular.module('noodlio', [
               .state('admin.reportes', {
                   url: '/reportes',
                   templateUrl: '/templates/reportes/lista_comercios.html',
-                  controller:'DestacadosCtrl'
+                  controller:'ReportesCtrl'
               })
 
 

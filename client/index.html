@@ -106,8 +106,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
         <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-    
-    
+  </head>
+
+  <body class="dark underconstruction">
+
+    <!-- angular ui-router -->
+    <div ui-view></div>
+
+  </body>
+
 
     <!-- Archivos para Data Tables -->
         <link rel="stylesheet" type="text/css" href="/js/datatables-net/media/css/dataTables.bootstrap4.min.css"> <!-- original -->
@@ -116,20 +123,7 @@
         <script src="/js/select2/js/select2.min.js"></script>
         <script src="/js/datatables-net/media/js/jquery.dataTables.min.js"></script>
         <script src="/js/datatables-net/media/js/dataTables.bootstrap4.min.js"></script>
-
-        <script type="application/javascript">
-        (function ($) {
-            $(document).ready(function() {
-                $('#ks-datatable').DataTable({
-                    "initComplete": function () {
-                        $('.dataTables_wrapper select').select2({
-                            minimumResultsForSearch: Infinity
-                        });
-                    }
-                });
-            });
-        })(jQuery);
-        </script>
+    <script src="/css/libs/bootstrap-table/bootstrap-table.min.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -144,12 +138,4 @@
             src="http://maps.google.com/maps/api/js?key=AIzaSyAg-BXo7AgcqlpvLaQiKl00yrxAhl6gznE&amp;libraries=places"></script>
 
     <script src="https://use.fontawesome.com/6104e98fab.js"></script>
-  </head>
-
-  <body class="dark underconstruction">
-
-    <!-- angular ui-router -->
-    <div ui-view></div>
-
-  </body>
 </html>

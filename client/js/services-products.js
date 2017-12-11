@@ -1255,6 +1255,10 @@ angular.module('noodlio.services-products', [])
         return firebase.database().ref('categorias/centros_comerciales/comercios/'+slug).remove();
     };
 
+    self.eliminarPromocion = function(comercio, promocion) {
+        return firebase.database().ref('categorias/centros_comerciales/comercios/'+comercio+'/promociones/'+ promocion).remove();
+    };
+
     return self;
 })
 
@@ -1804,6 +1808,10 @@ angular.module('noodlio.services-products', [])
         return firebase.database().ref('categorias/centros_comerciales/comercios/'+shopping+'/locales/'+local).remove();
     };
 
+    self.eliminarPromocion = function(comercio, local, promocion) {
+        return firebase.database().ref('categorias/centros_comerciales/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
+    };
+
     return self;
 })
 
@@ -2283,6 +2291,10 @@ angular.module('noodlio.services-products', [])
     self.eliminarComercio = function(slug) {
         console.log(slug);
         return firebase.database().ref('categorias/multimarcas/comercios/'+slug).remove();
+    };
+
+    self.eliminarPromocion = function(comercio, promocion) {
+        return firebase.database().ref('categorias/multimarcas/comercios/'+comercio+'/promociones/'+ promocion).remove();
     };
 
     return self;
@@ -2808,6 +2820,10 @@ angular.module('noodlio.services-products', [])
         return firebase.database().ref('categorias/multimarcas/comercios/'+multimarca+'/locales/'+sucursal).remove();
     };
 
+    self.eliminarPromocion = function(comercio, local, promocion) {
+        return firebase.database().ref('categorias/multimarcas/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
+    };
+
     return self;
 })
 
@@ -3287,6 +3303,10 @@ angular.module('noodlio.services-products', [])
     self.eliminarComercio = function(slug) {
         console.log(slug);
         return firebase.database().ref('categorias/supermercados/comercios/'+slug).remove();
+    };
+
+    self.eliminarPromocion = function(comercio, promocion) {
+        return firebase.database().ref('categorias/supermercados/comercios/'+comercio+'/promociones/'+ promocion).remove();
     };
 
     return self;
@@ -3810,6 +3830,10 @@ angular.module('noodlio.services-products', [])
     self.eliminarSucursal = function(supermercado, sucursal) {
         console.log(supermercado);
         return firebase.database().ref('categorias/supermercados/comercios/'+supermercado+'/locales/'+sucursal).remove();
+    };
+
+    self.eliminarPromocion = function(comercio, local, promocion) {
+        return firebase.database().ref('categorias/supermercados/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
     };
 
     return self;

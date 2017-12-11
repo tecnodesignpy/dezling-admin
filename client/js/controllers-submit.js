@@ -4201,6 +4201,10 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
           }
         });
     };
+
+    $scope.EliminarImagen = function() {
+        
+    }
     
     /*
         Funcion para redireccion

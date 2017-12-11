@@ -1,7 +1,8 @@
 angular.module('noodlio.controllers-categories', [])
 
 
-.controller('CateCentrosComercialesCtrl', function($state, $anchorScroll, $location, Auth, CentrosComerciales, Utils, $stateParams, $scope) {
+.controller('CateCentrosComercialesCtrl', function($state, $anchorScroll, $location, Auth,
+    CentrosComerciales, Utils, $stateParams, $scope, CentrosService) {
     
     var categories              = this;
     categories.AuthData         = Auth.AuthData;
@@ -44,6 +45,39 @@ angular.module('noodlio.controllers-categories', [])
                 categories.statusObj['generalmessage'] = "Hubo un error..."
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(promocion, key) {
+        var comercio = promocion;
+        console.log(comercio);
+        console.log(key);
+
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        CentrosService.eliminarPromocion('centros_comerciales', comercio, key).then(function(success){
+                            console.log(success);
+                            categories.goTo('admin.categories-centros_comerciales');
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            categories.goTo('admin.categories-centros_comerciales');
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 
@@ -150,7 +184,8 @@ angular.module('noodlio.controllers-categories', [])
 })
 
 
-.controller('LocalesCentros', function($scope, $state, $anchorScroll, $location, $stateParams, Auth, Locales, Utils) {
+.controller('LocalesCentros', function($scope, $state, $anchorScroll, $location, $stateParams, 
+    Auth, Locales, Utils, CentrosLocalService) {
     
     var locales              = this;
     locales.AuthData         = Auth.AuthData;
@@ -213,6 +248,35 @@ angular.module('noodlio.controllers-categories', [])
                 locales.statusObj['generalmessage'] = "Hubo un error..."
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(shopping, local, key) {
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning", 
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        CentrosLocalService.eliminarPromocion(shopping, local, key).then(function(success){
+                            console.log(success);
+                            locales.goTocomercio();
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            locales.goTocomercio();
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 
@@ -301,7 +365,8 @@ angular.module('noodlio.controllers-categories', [])
 })
 
 
-.controller('MultiMarcasCtrl', function($state, $anchorScroll, $location, Auth, MultiMarcas, Utils, $stateParams, $scope) {
+.controller('MultiMarcasCtrl', function($state, $anchorScroll, $location, Auth, MultiMarcas, Utils,
+ $stateParams, $scope, MultiMarcasService) {
     
     var categories              = this;
     $scope.AuthData         = Auth.AuthData;
@@ -342,6 +407,35 @@ angular.module('noodlio.controllers-categories', [])
                 $scope.cargando = false;
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(shopping, key) {
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        MultiMarcasService.eliminarPromocion(shopping, key).then(function(success){
+                            console.log(success);
+                            categories.goTo('admin.categories-multimarcas');
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            categories.goTo('admin.categories-multimarcas');
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 
@@ -450,7 +544,8 @@ angular.module('noodlio.controllers-categories', [])
   
 })
 
-.controller('SucursalesMultimarcas', function($scope, $state, $anchorScroll, $location, $stateParams, Auth, MultiSucursales, Utils) {
+.controller('SucursalesMultimarcas', function($scope, $state, $anchorScroll, $location,
+ $stateParams, Auth, MultiSucursales, Utils, MultiSucursalService) {
     
     var locales              = this;
     locales.AuthData         = Auth.AuthData;
@@ -514,6 +609,35 @@ angular.module('noodlio.controllers-categories', [])
                 locales.statusObj['generalmessage'] = "Hubo un error..."
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(shopping, local, key) {
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        MultiSucursalService.eliminarPromocion(shopping, local, key).then(function(success){
+                            console.log(success);
+                            locales.goTocomercio();
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            locales.goTocomercio();
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 
@@ -602,7 +726,8 @@ angular.module('noodlio.controllers-categories', [])
 })
 
 
-.controller('SupermercadosCtrl', function($state, $anchorScroll, $location, Auth, Supermercados, Utils, $stateParams, $scope) {
+.controller('SupermercadosCtrl', function($state, $anchorScroll, $location, Auth,
+    Supermercados, Utils, $stateParams, $scope, SupermercadosService) {
     
     var categories              = this;
     $scope.AuthData         = Auth.AuthData;
@@ -643,6 +768,35 @@ angular.module('noodlio.controllers-categories', [])
                 $scope.cargando = false;
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(shopping, key) {
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        SupermercadosService.eliminarPromocion(shopping, key).then(function(success){
+                            console.log(success);
+                            categories.goTo('admin.categories-supermercados');
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            categories.goTo('admin.categories-supermercados');
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 
@@ -751,7 +905,8 @@ angular.module('noodlio.controllers-categories', [])
   
 })
 
-.controller('SucursalesSupermercados', function($scope, $state, $anchorScroll, $location, $stateParams, Auth, SuperSucursales, Utils) {
+.controller('SucursalesSupermercados', function($scope, $state, $anchorScroll, $location,
+ $stateParams, Auth, SuperSucursales, Utils, SuperSucursalService) {
     
     var locales              = this;
     locales.AuthData         = Auth.AuthData;
@@ -815,6 +970,35 @@ angular.module('noodlio.controllers-categories', [])
                 locales.statusObj['generalmessage'] = "Hubo un error..."
             }
         );
+    };
+
+    $scope.eliminarPromocion = function(shopping, local, key) {
+        swal({
+          title: "Desea eliminar la promocion?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+                        SuperSucursalService.eliminarPromocion(shopping, local, key).then(function(success){
+                            console.log(success);
+                            locales.goTocomercio();
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            locales.goTocomercio();
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+          }
+        });
+        
     };
 
 

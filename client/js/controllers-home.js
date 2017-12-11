@@ -811,13 +811,14 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
     };
 })
 
-.controller('UsuariosCtrl', function($rootScope, $scope ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
-    CentrosService, CentrosLocalService, MultiMarcasService, MultiSucursalService, SupermercadosService, SuperSucursalService) {
+.controller('ReportesCtrl', function($rootScope, $scope, $filter ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
+    CentrosComerciales, MultiMarcas, Supermercados) {
 
     $scope.initView = function() {
         $location.hash('page-top');
         $anchorScroll();
         $scope.loading = true;
+        $scope.items = [];
         $scope.getComercios();
     };
     
@@ -825,15 +826,141 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
         Funcion para obtener listado de Usuarios
     */
     $scope.getComercios = function() {
-        UserService.getUsuarios().then(
+        console.log("entro");
+        MultiMarcas.get().then(
             function(success){
-                $scope.loading = false;
-                $scope.usuarios = success;
-                //console.log(success);
+                console.log(success);
+                angular.forEach(success, function(value, key) {
+                    value.categoria = 'Multimarcas'
+                    $scope.items.push(value);
+                });
             },
             function(error){
                 $scope.loading = false;
-                //console.log(error);
+                console.log(error);
+            }
+        );
+        Supermercados.get().then(
+            function(success){
+                console.log(success);
+                angular.forEach(success, function(value, key) {
+                    value.categoria = 'Supermercados'
+                    $scope.items.push(value);
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+        CentrosComerciales.get().then(
+            function(success){
+                $scope.loading = false;
+                console.log(success);
+
+                angular.forEach(success, function(value, key) {
+                    value.categoria = 'Shoppings'
+                    $scope.items.push(value);
+                    // init
+                      $scope.sortingOrder = 'perfil.nombre';
+                      $scope.pageSizes = [5,10,25,50];
+                      $scope.reverse = false;
+                      $scope.filteredItems = [];
+                      $scope.groupedItems = [];
+                      $scope.itemsPerPage = 25;
+                      $scope.pagedItems = [];
+                      $scope.currentPage = 0;
+                      console.log($scope.items);
+
+                      var searchMatch = function (haystack, needle) {
+                        if (!needle) {
+                          return true;
+                        }
+                        return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                      };
+                      
+                      // init the filtered items
+                      $scope.search = function () {
+                        $scope.filteredItems = $scope.items;
+                        $scope.currentPage = 0;
+                        // now group by pages
+                        $scope.groupToPages();
+                      };
+                      
+                      // show items per page
+                      $scope.perPage = function () {
+                        $scope.groupToPages();
+                      };
+                      
+                      // calculate page in place
+                      $scope.groupToPages = function () {
+                        $scope.pagedItems = [];
+                        
+                        for (var i = 0; i < $scope.filteredItems.length; i++) {
+                          if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                          } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                          }
+                        }
+                      };
+
+                      /*
+                       $scope.deleteItem = function (idx) {
+                            var itemToDelete = $scope.pagedItems[$scope.currentPage][idx];
+                            var idxInItems = $scope.items.indexOf(itemToDelete);
+                            $scope.items.splice(idxInItems,1);
+                            $scope.search();
+                            
+                            return false;
+                        };
+                      */
+
+                      $scope.range = function (start, end) {
+                        var ret = [];
+                        if (!end) {
+                          end = start;
+                          start = 0;
+                        }
+                        for (var i = start; i < end; i++) {
+                          ret.push(i);
+                        }
+                        return ret;
+                      };
+                      
+                      $scope.prevPage = function () {
+                        if ($scope.currentPage > 0) {
+                          $scope.currentPage--;
+                        }
+                      };
+                      
+                      $scope.nextPage = function () {
+                        if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                          $scope.currentPage++;
+                        }
+                      };
+                      
+                      $scope.setPage = function () {
+                        $scope.currentPage = this.n;
+                      };
+                      
+                      // functions have been describe process the data for display
+                      $scope.search();
+                     
+                      
+                      // change sorting order
+                      $scope.sort_by = function(newSortingOrder) {
+                        if ($scope.sortingOrder == newSortingOrder)
+                          $scope.reverse = !$scope.reverse;
+                        
+                        $scope.sortingOrder = newSortingOrder;
+                      };
+                    // fin 
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
             }
         );
     };
