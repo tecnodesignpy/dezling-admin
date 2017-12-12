@@ -831,6 +831,10 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
             function(success){
                 console.log(success);
                 angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        valor.categoria = 'Multimarcas'
+                        $scope.items.push(valor);
+                    });
                     value.categoria = 'Multimarcas'
                     $scope.items.push(value);
                 });
@@ -844,6 +848,10 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
             function(success){
                 console.log(success);
                 angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        valor.categoria = 'Supermercados'
+                        $scope.items.push(valor);
+                    });
                     value.categoria = 'Supermercados'
                     $scope.items.push(value);
                 });
@@ -859,6 +867,10 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                 console.log(success);
 
                 angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        valor.categoria = 'Shoppings'
+                        $scope.items.push(valor);
+                    });
                     value.categoria = 'Shoppings'
                     $scope.items.push(value);
                     // init

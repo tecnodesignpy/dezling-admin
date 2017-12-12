@@ -1,3 +1,4 @@
 !/*.js
 client/node_modules
 otros
+server.js
