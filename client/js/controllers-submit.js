@@ -1017,18 +1017,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -1079,18 +1067,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             submit.status['containsNoError'] = false;
         }else{
             submit.ErrorMessages["slug"] =  "";
-        }
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
         }
 
         //
@@ -2030,18 +2006,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -2103,18 +2067,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             submit.status['containsNoError'] = false;
         }else{
             submit.ErrorMessages["slug"] =  "";
-        }
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
         }
 
         //
@@ -3000,18 +2952,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            $scope.ErrorMessages["email"] = "*";
-            $scope.status['containsNoError'] = false;
-        }else{
-            $scope.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -3065,18 +3005,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             $scope.ErrorMessages["slug"] =  "";
         }
         
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            $scope.ErrorMessages["email"] = "*";
-            $scope.status['containsNoError'] = false;
-        }else{
-            $scope.ErrorMessages["email"] =  "";
-        }
 
         //
         // Telefono
@@ -4012,18 +3940,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -4073,18 +3989,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             submit.status['containsNoError'] = false;
         }else{
             submit.ErrorMessages["slug"] =  "";
-        }
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
         }
 
         //
@@ -4973,18 +4877,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            $scope.ErrorMessages["email"] = "*";
-            $scope.status['containsNoError'] = false;
-        }else{
-            $scope.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -5038,18 +4930,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             $scope.ErrorMessages["slug"] =  "";
         }
         
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            $scope.ErrorMessages["email"] = "*";
-            $scope.status['containsNoError'] = false;
-        }else{
-            $scope.ErrorMessages["email"] =  "";
-        }
 
         //
         // Telefono
@@ -5988,18 +5868,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         }
 
         //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
-        }
-
-        //
         // Telefono
         var telefono = document.getElementById("telefono").value;
         if( telefono== "" || 
@@ -6049,18 +5917,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             submit.status['containsNoError'] = false;
         }else{
             submit.ErrorMessages["slug"] =  "";
-        }
-
-        //
-        // Email
-        var email = document.getElementById("email").value;
-        if( email== "" || 
-            email == null ||
-            email == undefined){
-            submit.ErrorMessages["email"] = "*";
-            submit.status['containsNoError'] = false;
-        }else{
-            submit.ErrorMessages["email"] =  "";
         }
 
         //
