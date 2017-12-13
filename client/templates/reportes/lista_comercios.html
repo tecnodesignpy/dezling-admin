@@ -31,7 +31,38 @@
             </div>
         </div>  <!-- ./ spinner -->
 
-          <hr>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <button
+                ui-sref="#"
+                class="btn-choice">
+                Banner Sponsor
+            </button>
+          </div>
+          <div class="col-md-3 text-center">
+            <button
+                ui-sref="#"
+                class="btn-choice">
+                Banner Destacado
+            </button>
+          </div>
+          <div class="col-md-3 text-center">
+            <button
+                ui-sref="#"
+                class="btn-choice">
+                Tiendas Favoritas
+            </button>
+          </div>
+          <div class="col-md-3 text-center">
+            <button
+                ui-sref="#"
+                class="btn-choice">
+                Promociones
+            </button>
+          </div>
+        </div>
             <div class="row">
               <div class="col-md-offset-9 col-md-3">
                 <select class="form-control input-lg pull-right" ng-model="itemsPerPage" ng-change="perPage()" ng-options="('Mostrar '+size) for size in pageSizes"></select>

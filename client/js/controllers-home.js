@@ -594,11 +594,68 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
     /*
         Funcion para obtener listado de Usuarios
     */
+    $scope.usuarios = [];
+    $scope.edades = [];
+    $scope.masculino = 0;
+    $scope.femenino = 0;
+    $scope.na = 0;
+    $scope.activada = 0;
+    $scope.desactivada = 0;
+    $scope.sexo = []
+    $scope.sexo_label = ["Masculino","Femenino","Sin Respuesta"]
+    $scope.notificaciones = []
+    $scope.notificaciones_label = ["Activadas","Desactivada"]
     $scope.getUsuarios = function() {
         UserService.getUsuarios().then(
             function(success){
                 $scope.loading = false;
-                $scope.usuarios = success;
+                angular.forEach(success, function(value, key) {
+                    console.log(value.perfil);
+                    if(value.perfil.hasOwnProperty('nacimiento')){
+                        var today = new Date();
+                        var birthDate = new Date(value.perfil.nacimiento);
+                        var age = today.getFullYear() - birthDate.getFullYear();
+                        var m = today.getMonth() - birthDate.getMonth(); 
+                        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                            age--;
+                        }
+                        value.age = age;
+                    }else if(value.perfil.hasOwnProperty('birth')){
+                        var today = new Date();
+                        var birthDate = new Date(value.perfil.birth);
+                        var age = today.getFullYear() - birthDate.getFullYear();
+                        var m = today.getMonth() - birthDate.getMonth(); 
+                        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                            age--;
+                        }
+                        value.age = age;
+                    }
+                    if(value.perfil.hasOwnProperty('sexo')){
+                        if(value.perfil.sexo == 'Masculino'){
+                            $scope.masculino ++;
+                            $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                        }else if(value.perfil.sexo == 'Femenino'){
+                            $scope.femenino ++;
+                            $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                        }else{
+                            $scope.na ++;
+                            $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                        }
+                    }else{
+                        $scope.na ++;
+                        $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                    }
+                    // Chart para Notificaciones
+                    if(value.configuracion.notificaciones.activada == true || value.configuracion.notificaciones.activada == 'true'){
+                        $scope.activada ++;
+                        $scope.notificaciones = [$scope.activada,$scope.desactivada]
+                    }else{
+                        $scope.desactivada ++;
+                        $scope.notificaciones = [$scope.activada,$scope.desactivada]
+                    }
+
+                    $scope.usuarios.push(value);
+                })
                 //console.log(success);
             },
             function(error){
@@ -809,6 +866,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
             }
         );
     };
+
 })
 
 .controller('ReportesCtrl', function($rootScope, $scope, $filter ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
