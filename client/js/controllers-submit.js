@@ -800,10 +800,92 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                 });
     };
     
-    submit.EliminarImagen = function(carpeta,key){
-        console.log(carpeta);
-        console.log(key);
-    };
+    submit.EliminarImagen = function(imagen){
+        console.log(currentProductId);
+            switch (imagen) {
+                    case 'avatar':
+                        CentrosService.eliminarImagen('categorias/centros_comerciales/comercios/'+currentProductId+'/perfil','avatar')
+                            .then(function(success){
+                                var img = document.getElementById('avatarURL');
+                                img.src = '';
+                                $scope.avatarURL = ''
+                                swal("Eliminado con exito", {
+                                  icon: "success", 
+                                });
+                            }, function(error){
+                                console.log(error);
+                                swal("No se ha eliminado", {
+                                  icon: "danger", 
+                                });
+                            });
+                        break
+                    case 'icono':
+                        CentrosService.eliminarImagen('categorias/centros_comerciales/comercios/'+currentProductId+'/perfil','icono')
+                            .then(function(success){
+                                var img = document.getElementById('iconoURL');
+                                img.src = '';
+                                $scope.iconoURL = ''
+                                swal("Eliminado con exito", {
+                                  icon: "success", 
+                                });
+                            }, function(error){
+                                console.log(error);
+                                swal("No se ha eliminado", {
+                                  icon: "danger", 
+                                });
+                            });
+                        break
+                    case 'banner1':
+                        CentrosService.eliminarImagen('categorias/centros_comerciales/comercios/'+currentProductId+'/perfil/banners_destacados','banner1')
+                            .then(function(success){
+                                var img = document.getElementById('banner1URL');
+                                img.src = '';
+                                $scope.banner1 = ''
+                                swal("Eliminado con exito", {
+                                  icon: "success", 
+                                });
+                            }, function(error){
+                                console.log(error);
+                                swal("No se ha eliminado", {
+                                  icon: "danger", 
+                                });
+                            });
+                        break
+                    case 'banner2':
+                        CentrosService.eliminarImagen('categorias/centros_comerciales/comercios/'+currentProductId+'/perfil/banners_destacados','banner2')
+                            .then(function(success){
+                                var img = document.getElementById('banner2URL');
+                                img.src = '';
+                                $scope.banner2 = ''
+                                swal("Eliminado con exito", {
+                                  icon: "success", 
+                                });
+                            }, function(error){
+                                console.log(error);
+                                swal("No se ha eliminado", {
+                                  icon: "danger", 
+                                });
+                            });
+                        break
+                    case 'banner3':
+                        CentrosService.eliminarImagen('categorias/centros_comerciales/comercios/'+currentProductId+'/perfil/banners_destacados','banner3')
+                            .then(function(success){
+                                var img = document.getElementById('banner3URL');
+                                img.src = '';
+                                $scope.banner3 = ''
+                                swal("Eliminado con exito", {
+                                  icon: "success", 
+                                });
+                            }, function(error){
+                                console.log(error);
+                                swal("No se ha eliminado", {
+                                  icon: "danger", 
+                                });
+                            });
+                        break
+            }
+        
+    }
     
     submit.Eliminar = function(categoria, key){
         swal({
@@ -1131,6 +1213,94 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         $location.hash('page-top');
         $anchorScroll();
     };
+
+    
+    submit.EliminarImagen = function(imagen){
+        console.log(submit.comercio);
+        console.log(submit.local);
+            switch (imagen) {
+                case 'avatar':
+                    CentrosLocalService.eliminarImagen('categorias/centros_comerciales/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil','avatar')
+                        .then(function(success){
+                            var img = document.getElementById('avatarURL');
+                            img.src = '';
+                            $scope.avatarURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'icono':
+                    CentrosLocalService.eliminarImagen('categorias/centros_comerciales/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil','icono')
+                        .then(function(success){
+                            var img = document.getElementById('iconoURL');
+                            img.src = '';
+                            $scope.iconoURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner1':
+                    CentrosLocalService.eliminarImagen('categorias/centros_comerciales/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner1')
+                        .then(function(success){
+                            var img = document.getElementById('banner1URL');
+                            img.src = '';
+                            $scope.banner1 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner2':
+                    CentrosLocalService.eliminarImagen('categorias/centros_comerciales/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner2')
+                        .then(function(success){
+                            var img = document.getElementById('banner2URL');
+                            img.src = '';
+                            $scope.banner2 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner3':
+                    CentrosLocalService.eliminarImagen('categorias/centros_comerciales/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner3')
+                        .then(function(success){
+                            var img = document.getElementById('banner3URL');
+                            img.src = '';
+                            $scope.banner3 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+            }
+    }
     
     submit.Eliminar = function(categoria, shopping, local){
         swal({
@@ -2132,6 +2302,93 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         $location.hash('page-top');
         $anchorScroll();
     };
+
+    
+    $scope.EliminarImagen = function(imagen){
+        console.log($scope.multimarca);
+            switch (imagen) {
+                case 'avatar':
+                    MultiMarcasService.eliminarImagen('categorias/multimarcas/comercios/'+$scope.multimarca+'/perfil','avatar')
+                        .then(function(success){
+                            var img = document.getElementById('avatarURL');
+                            img.src = '';
+                            $scope.avatarURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'icono':
+                    MultiMarcasService.eliminarImagen('categorias/multimarcas/comercios/'+$scope.multimarca+'/perfil','icono')
+                        .then(function(success){
+                            var img = document.getElementById('iconoURL');
+                            img.src = '';
+                            $scope.iconoURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner1':
+                    MultiMarcasService.eliminarImagen('categorias/multimarcas/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner1')
+                        .then(function(success){
+                            var img = document.getElementById('banner1URL');
+                            img.src = '';
+                            $scope.banner1 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner2':
+                    MultiMarcasService.eliminarImagen('categorias/multimarcas/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner2')
+                        .then(function(success){
+                            var img = document.getElementById('banner2URL');
+                            img.src = '';
+                            $scope.banner2 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner3':
+                    MultiMarcasService.eliminarImagen('categorias/multimarcas/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner3')
+                        .then(function(success){
+                            var img = document.getElementById('banner3URL');
+                            img.src = '';
+                            $scope.banner3 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+            }
+    }
 
     
     $scope.Eliminar = function(categoria, key){
@@ -3143,6 +3400,62 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         $location.hash('page-top');
         $anchorScroll();
     };
+
+    
+    $scope.EliminarImagen = function(imagen){
+        console.log(submit.comercio);
+        console.log(submit.local);
+            switch (imagen) {
+                case 'banner1':
+                    MultiSucursalService.eliminarImagen('categorias/multimarcas/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner1')
+                        .then(function(success){
+                            var img = document.getElementById('banner1URL');
+                            img.src = '';
+                            $scope.banner1 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner2':
+                    MultiSucursalService.eliminarImagen('categorias/multimarcas/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner2')
+                        .then(function(success){
+                            var img = document.getElementById('banner2URL');
+                            img.src = '';
+                            $scope.banner2 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner3':
+                    MultiSucursalService.eliminarImagen('categorias/multimarcas/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner3')
+                        .then(function(success){
+                            var img = document.getElementById('banner3URL');
+                            img.src = '';
+                            $scope.banner3 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+            }
+    }
     
     submit.Eliminar = function(categoria, shopping, local){
         swal({
@@ -4071,6 +4384,93 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         $location.hash('page-top');
         $anchorScroll();
     };
+
+    
+    $scope.EliminarImagen = function(imagen){
+        console.log($scope.multimarca);
+            switch (imagen) {
+                case 'avatar':
+                    SupermercadosService.eliminarImagen('categorias/supermercados/comercios/'+$scope.multimarca+'/perfil','avatar')
+                        .then(function(success){
+                            var img = document.getElementById('avatarURL');
+                            img.src = '';
+                            $scope.avatarURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'icono':
+                    SupermercadosService.eliminarImagen('categorias/supermercados/comercios/'+$scope.multimarca+'/perfil','icono')
+                        .then(function(success){
+                            var img = document.getElementById('iconoURL');
+                            img.src = '';
+                            $scope.iconoURL = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner1':
+                    SupermercadosService.eliminarImagen('categorias/supermercados/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner1')
+                        .then(function(success){
+                            var img = document.getElementById('banner1URL');
+                            img.src = '';
+                            $scope.banner1 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner2':
+                    SupermercadosService.eliminarImagen('categorias/supermercados/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner2')
+                        .then(function(success){
+                            var img = document.getElementById('banner2URL');
+                            img.src = '';
+                            $scope.banner2 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner3':
+                    SupermercadosService.eliminarImagen('categorias/supermercados/comercios/'+$scope.multimarca+'/perfil/banners_destacados','banner3')
+                        .then(function(success){
+                            var img = document.getElementById('banner3URL');
+                            img.src = '';
+                            $scope.banner3 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+            }
+    }
     
     $scope.Eliminar = function(categoria, key){
         swal({
@@ -4105,10 +4505,6 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
           }
         });
     };
-
-    $scope.EliminarImagen = function() {
-        
-    }
     
     /*
         Funcion para redireccion
@@ -5068,6 +5464,62 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         $location.hash('page-top');
         $anchorScroll();
     };
+
+    
+    $scope.EliminarImagen = function(imagen){
+        console.log(submit.comercio);
+        console.log(submit.local);
+            switch (imagen) {
+                case 'banner1':
+                    SuperSucursalService.eliminarImagen('categorias/supermercados/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner1')
+                        .then(function(success){
+                            var img = document.getElementById('banner1URL');
+                            img.src = '';
+                            $scope.banner1 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner2':
+                    SuperSucursalService.eliminarImagen('categorias/supermercados/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner2')
+                        .then(function(success){
+                            var img = document.getElementById('banner2URL');
+                            img.src = '';
+                            $scope.banner2 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+                case 'banner3':
+                    SuperSucursalService.eliminarImagen('categorias/supermercados/comercios/'+submit.comercio+'/locales/'+submit.local+'/perfil/banners_destacados','banner3')
+                        .then(function(success){
+                            var img = document.getElementById('banner3URL');
+                            img.src = '';
+                            $scope.banner3 = ''
+                            swal("Eliminado con exito", {
+                              icon: "success", 
+                            });
+                        }, function(error){
+                            console.log(error);
+                            swal("No se ha eliminado", {
+                              icon: "danger", 
+                            });
+                        });
+                    break
+            }
+    }
     
     submit.Eliminar = function(categoria, shopping, local){
         swal({

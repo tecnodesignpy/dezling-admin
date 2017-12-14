@@ -64,7 +64,10 @@
           </div>
         </div>
             <div class="row">
-              <div class="col-md-offset-9 col-md-3">
+              <div class="col-md-3">
+                <p>Total de Comercios: {{ items.length }}</p>
+              </div>
+              <div class="col-md-offset-6 col-md-3">
                 <select class="form-control input-lg pull-right" ng-model="itemsPerPage" ng-change="perPage()" ng-options="('Mostrar '+size) for size in pageSizes"></select>
               </div>
             </div>

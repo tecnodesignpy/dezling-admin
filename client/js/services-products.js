@@ -1259,6 +1259,28 @@ angular.module('noodlio.services-products', [])
         return firebase.database().ref('categorias/centros_comerciales/comercios/'+comercio+'/promociones/'+ promocion).remove();
     };
 
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'avatar':
+                        return firebase.database().ref(ruta).update({avatar:''});
+                        break
+                    case 'icono':
+                        return firebase.database().ref(ruta).update({icono:''});
+                        break
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
+    };
+
     return self;
 })
 
@@ -1812,6 +1834,28 @@ angular.module('noodlio.services-products', [])
         return firebase.database().ref('categorias/centros_comerciales/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
     };
 
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'avatar':
+                        return firebase.database().ref(ruta).update({avatar:''});
+                        break
+                    case 'icono':
+                        return firebase.database().ref(ruta).update({icono:''});
+                        break
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
+    };
+
     return self;
 })
 
@@ -2295,6 +2339,29 @@ angular.module('noodlio.services-products', [])
 
     self.eliminarPromocion = function(comercio, promocion) {
         return firebase.database().ref('categorias/multimarcas/comercios/'+comercio+'/promociones/'+ promocion).remove();
+    };
+
+
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'avatar':
+                        return firebase.database().ref(ruta).update({avatar:''});
+                        break
+                    case 'icono':
+                        return firebase.database().ref(ruta).update({icono:''});
+                        break
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
     };
 
     return self;
@@ -2823,6 +2890,23 @@ angular.module('noodlio.services-products', [])
     self.eliminarPromocion = function(comercio, local, promocion) {
         return firebase.database().ref('categorias/multimarcas/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
     };
+    
+
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
+    };
 
     return self;
 })
@@ -3307,6 +3391,29 @@ angular.module('noodlio.services-products', [])
 
     self.eliminarPromocion = function(comercio, promocion) {
         return firebase.database().ref('categorias/supermercados/comercios/'+comercio+'/promociones/'+ promocion).remove();
+    };
+    
+
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'avatar':
+                        return firebase.database().ref(ruta).update({avatar:''});
+                        break
+                    case 'icono':
+                        return firebase.database().ref(ruta).update({icono:''});
+                        break
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
     };
 
     return self;
@@ -3834,6 +3941,23 @@ angular.module('noodlio.services-products', [])
 
     self.eliminarPromocion = function(comercio, local, promocion) {
         return firebase.database().ref('categorias/supermercados/comercios/'+comercio+'/locales/'+local+'/promociones/'+ promocion).remove();
+    };
+    
+
+    self.eliminarImagen = function(ruta,update) {
+        console.log(ruta);
+        console.log(update);
+        switch (update) {
+                    case 'banner1':
+                        return firebase.database().ref(ruta).update({banner1:''});
+                        break
+                    case 'banner2':
+                        return firebase.database().ref(ruta).update({banner2:''});
+                        break
+                    case 'banner3':
+                        return firebase.database().ref(ruta).update({banner3:''});
+                        break
+        }
     };
 
     return self;
