@@ -870,7 +870,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
 })
 
 .controller('ReportesCtrl', function($rootScope, $scope, $filter ,$state, $anchorScroll, $location, UserService, $stateParams, $timeout,
-    CentrosComerciales, MultiMarcas, Supermercados) {
+    CentrosComerciales, MultiMarcas, Supermercados, Sponsor, Destacado) {
 
     $scope.initView = function() {
         $location.hash('page-top');
@@ -878,6 +878,38 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
         $scope.loading = true;
         $scope.items = [];
         $scope.getComercios();
+    };
+
+    $scope.initPromociones = function() {
+        $location.hash('page-top');
+        $anchorScroll();
+        $scope.loading = true;
+        $scope.items = [];
+        $scope.getComercios2();
+    };
+
+    $scope.initSponsor = function() {
+        $location.hash('page-top');
+        $anchorScroll();
+        $scope.loading = true;
+        $scope.items = [];
+        $scope.getSponsors();
+    };
+
+    $scope.initDestacado = function() {
+        $location.hash('page-top');
+        $anchorScroll();
+        $scope.loading = true;
+        $scope.items = [];
+        $scope.getDestacados();
+    };
+
+    $scope.initFavoritas = function() {
+        $location.hash('page-top');
+        $anchorScroll();
+        $scope.loading = true;
+        $scope.items = [];
+        $scope.getFavoritos();
     };
     
     /*
@@ -933,6 +965,606 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                     $scope.items.push(value);
                     // init
                       $scope.sortingOrder = 'perfil.nombre';
+                      $scope.pageSizes = [5,10,25,50];
+                      $scope.reverse = false;
+                      $scope.filteredItems = [];
+                      $scope.groupedItems = [];
+                      $scope.itemsPerPage = 25;
+                      $scope.pagedItems = [];
+                      $scope.currentPage = 0;
+                      console.log($scope.items);
+
+                      var searchMatch = function (haystack, needle) {
+                        if (!needle) {
+                          return true;
+                        }
+                        return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                      };
+                      
+                      // init the filtered items
+                      $scope.search = function () {
+                        $scope.filteredItems = $scope.items;
+                        $scope.currentPage = 0;
+                        // now group by pages
+                        $scope.groupToPages();
+                      };
+                      
+                      // show items per page
+                      $scope.perPage = function () {
+                        $scope.groupToPages();
+                      };
+                      
+                      // calculate page in place
+                      $scope.groupToPages = function () {
+                        $scope.pagedItems = [];
+                        
+                        for (var i = 0; i < $scope.filteredItems.length; i++) {
+                          if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                          } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                          }
+                        }
+                      };
+
+                      /*
+                       $scope.deleteItem = function (idx) {
+                            var itemToDelete = $scope.pagedItems[$scope.currentPage][idx];
+                            var idxInItems = $scope.items.indexOf(itemToDelete);
+                            $scope.items.splice(idxInItems,1);
+                            $scope.search();
+                            
+                            return false;
+                        };
+                      */
+
+                      $scope.range = function (start, end) {
+                        var ret = [];
+                        if (!end) {
+                          end = start;
+                          start = 0;
+                        }
+                        for (var i = start; i < end; i++) {
+                          ret.push(i);
+                        }
+                        return ret;
+                      };
+                      
+                      $scope.prevPage = function () {
+                        if ($scope.currentPage > 0) {
+                          $scope.currentPage--;
+                        }
+                      };
+                      
+                      $scope.nextPage = function () {
+                        if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                          $scope.currentPage++;
+                        }
+                      };
+                      
+                      $scope.setPage = function () {
+                        $scope.currentPage = this.n;
+                      };
+                      
+                      // functions have been describe process the data for display
+                      $scope.search();
+                     
+                      
+                      // change sorting order
+                      $scope.sort_by = function(newSortingOrder) {
+                        if ($scope.sortingOrder == newSortingOrder)
+                          $scope.reverse = !$scope.reverse;
+                        
+                        $scope.sortingOrder = newSortingOrder;
+                      };
+                    // fin 
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+    };
+    $scope.getComercios2 = function() {
+        console.log("entro");
+        MultiMarcas.get().then(
+            function(success){
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.promociones, function(valor,key) {
+                        valor.categoria = 'Multimarcas'
+                        valor.comercio = value.perfil.nombre
+                        $scope.items.push(valor);
+                    });
+                    angular.forEach(value.locales, function(valor,key) {
+                        angular.forEach(valor.promociones, function(data,key) {
+                            data.categoria = 'Multimarcas'
+                            data.comercio = valor.perfil.nombre
+                            $scope.items.push(data);
+                        });
+                    });
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+        Supermercados.get().then(
+            function(success){
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.promociones, function(valor,key) {
+                        valor.categoria = 'Supermercados'
+                        valor.comercio = value.perfil.nombre
+                        $scope.items.push(valor);
+                    });
+                    angular.forEach(value.locales, function(valor,key) {
+                        angular.forEach(valor.promociones, function(data,key) {
+                            data.categoria = 'Supermercados'
+                            data.comercio = valor.perfil.nombre
+                            $scope.items.push(data);
+                        });
+                    });
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+        CentrosComerciales.get().then(
+            function(success){
+                $scope.loading = false;
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.promociones, function(valor,key) {
+                        console.log(valor);
+                        valor.categoria = 'Shoppings'
+                        valor.comercio = value.perfil.nombre
+                        $scope.items.push(valor);
+                    });
+                    angular.forEach(value.locales, function(valor,key) {
+                        console.log(valor);
+                        angular.forEach(valor.promociones, function(data,key) {
+                            console.log(data);
+                            data.categoria = 'Shoppings'
+                            data.comercio = valor.perfil.nombre
+                            $scope.items.push(data);
+                        });
+                    });
+
+                    // init
+                      $scope.sortingOrder = 'perfil.nombre';
+                      $scope.pageSizes = [5,10,25,50];
+                      $scope.reverse = false;
+                      $scope.filteredItems = [];
+                      $scope.groupedItems = [];
+                      $scope.itemsPerPage = 25;
+                      $scope.pagedItems = [];
+                      $scope.currentPage = 0;
+                      console.log($scope.items);
+
+                      var searchMatch = function (haystack, needle) {
+                        if (!needle) {
+                          return true;
+                        }
+                        return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                      };
+                      
+                      // init the filtered items
+                      $scope.search = function () {
+                        $scope.filteredItems = $scope.items;
+                        $scope.currentPage = 0;
+                        // now group by pages
+                        $scope.groupToPages();
+                      };
+                      
+                      // show items per page
+                      $scope.perPage = function () {
+                        $scope.groupToPages();
+                      };
+                      
+                      // calculate page in place
+                      $scope.groupToPages = function () {
+                        $scope.pagedItems = [];
+                        
+                        for (var i = 0; i < $scope.filteredItems.length; i++) {
+                          if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                          } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                          }
+                        }
+                      };
+
+                      /*
+                       $scope.deleteItem = function (idx) {
+                            var itemToDelete = $scope.pagedItems[$scope.currentPage][idx];
+                            var idxInItems = $scope.items.indexOf(itemToDelete);
+                            $scope.items.splice(idxInItems,1);
+                            $scope.search();
+                            
+                            return false;
+                        };
+                      */
+
+                      $scope.range = function (start, end) {
+                        var ret = [];
+                        if (!end) {
+                          end = start;
+                          start = 0;
+                        }
+                        for (var i = start; i < end; i++) {
+                          ret.push(i);
+                        }
+                        return ret;
+                      };
+                      
+                      $scope.prevPage = function () {
+                        if ($scope.currentPage > 0) {
+                          $scope.currentPage--;
+                        }
+                      };
+                      
+                      $scope.nextPage = function () {
+                        if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                          $scope.currentPage++;
+                        }
+                      };
+                      
+                      $scope.setPage = function () {
+                        $scope.currentPage = this.n;
+                      };
+                      
+                      // functions have been describe process the data for display
+                      $scope.search();
+                     
+                      
+                      // change sorting order
+                      $scope.sort_by = function(newSortingOrder) {
+                        if ($scope.sortingOrder == newSortingOrder)
+                          $scope.reverse = !$scope.reverse;
+                        
+                        $scope.sortingOrder = newSortingOrder;
+                      };
+                    // fin 
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+    };
+    // Funcion para Cargar el listado de Sponsors
+    $scope.getSponsors = function(){
+        Sponsor.get().then(
+            function(success){
+                if(Sponsor.all != null) {
+                    $scope.loading = false;
+                    angular.forEach(success, function(value, key) {
+                        console.log(value);
+                        $scope.items.push(value);
+                    })
+
+                    // init
+                      $scope.sortingOrder = 'clicks';
+                      $scope.pageSizes = [5,10,25,50];
+                      $scope.reverse = false;
+                      $scope.filteredItems = [];
+                      $scope.groupedItems = [];
+                      $scope.itemsPerPage = 25;
+                      $scope.pagedItems = [];
+                      $scope.currentPage = 0;
+                      console.log($scope.items);
+
+                      var searchMatch = function (haystack, needle) {
+                        if (!needle) {
+                          return true;
+                        }
+                        return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                      };
+                      
+                      // init the filtered items
+                      $scope.search = function () {
+                        $scope.filteredItems = $scope.items;
+                        $scope.currentPage = 0;
+                        // now group by pages
+                        $scope.groupToPages();
+                      };
+                      
+                      // show items per page
+                      $scope.perPage = function () {
+                        $scope.groupToPages();
+                      };
+                      
+                      // calculate page in place
+                      $scope.groupToPages = function () {
+                        $scope.pagedItems = [];
+                        
+                        for (var i = 0; i < $scope.filteredItems.length; i++) {
+                          if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                          } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                          }
+                        }
+                      };
+
+                      /*
+                       $scope.deleteItem = function (idx) {
+                            var itemToDelete = $scope.pagedItems[$scope.currentPage][idx];
+                            var idxInItems = $scope.items.indexOf(itemToDelete);
+                            $scope.items.splice(idxInItems,1);
+                            $scope.search();
+                            
+                            return false;
+                        };
+                      */
+
+                      $scope.range = function (start, end) {
+                        var ret = [];
+                        if (!end) {
+                          end = start;
+                          start = 0;
+                        }
+                        for (var i = start; i < end; i++) {
+                          ret.push(i);
+                        }
+                        return ret;
+                      };
+                      
+                      $scope.prevPage = function () {
+                        if ($scope.currentPage > 0) {
+                          $scope.currentPage--;
+                        }
+                      };
+                      
+                      $scope.nextPage = function () {
+                        if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                          $scope.currentPage++;
+                        }
+                      };
+                      
+                      $scope.setPage = function () {
+                        $scope.currentPage = this.n;
+                      };
+                      
+                      // functions have been describe process the data for display
+                      $scope.search();
+                     
+                      
+                      // change sorting order
+                      $scope.sort_by = function(newSortingOrder) {
+                        if ($scope.sortingOrder == newSortingOrder)
+                          $scope.reverse = !$scope.reverse;
+                        
+                        $scope.sortingOrder = newSortingOrder;
+                      };
+                    // fin 
+
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+    $scope.getDestacados = function(){
+        $scope.cargando = true;
+        Destacado.get().then(
+            function(success){
+                if(Destacado.all != null) {
+                    $scope.loading = false;
+                    angular.forEach(success, function(value, key) {
+                        console.log(value);
+                        $scope.items.push(value);
+                    })
+
+                    // init
+                      $scope.sortingOrder = 'clicks';
+                      $scope.pageSizes = [5,10,25,50];
+                      $scope.reverse = false;
+                      $scope.filteredItems = [];
+                      $scope.groupedItems = [];
+                      $scope.itemsPerPage = 25;
+                      $scope.pagedItems = [];
+                      $scope.currentPage = 0;
+                      console.log($scope.items);
+
+                      var searchMatch = function (haystack, needle) {
+                        if (!needle) {
+                          return true;
+                        }
+                        return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                      };
+                      
+                      // init the filtered items
+                      $scope.search = function () {
+                        $scope.filteredItems = $scope.items;
+                        $scope.currentPage = 0;
+                        // now group by pages
+                        $scope.groupToPages();
+                      };
+                      
+                      // show items per page
+                      $scope.perPage = function () {
+                        $scope.groupToPages();
+                      };
+                      
+                      // calculate page in place
+                      $scope.groupToPages = function () {
+                        $scope.pagedItems = [];
+                        
+                        for (var i = 0; i < $scope.filteredItems.length; i++) {
+                          if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [ $scope.filteredItems[i] ];
+                          } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                          }
+                        }
+                      };
+
+                      /*
+                       $scope.deleteItem = function (idx) {
+                            var itemToDelete = $scope.pagedItems[$scope.currentPage][idx];
+                            var idxInItems = $scope.items.indexOf(itemToDelete);
+                            $scope.items.splice(idxInItems,1);
+                            $scope.search();
+                            
+                            return false;
+                        };
+                      */
+
+                      $scope.range = function (start, end) {
+                        var ret = [];
+                        if (!end) {
+                          end = start;
+                          start = 0;
+                        }
+                        for (var i = start; i < end; i++) {
+                          ret.push(i);
+                        }
+                        return ret;
+                      };
+                      
+                      $scope.prevPage = function () {
+                        if ($scope.currentPage > 0) {
+                          $scope.currentPage--;
+                        }
+                      };
+                      
+                      $scope.nextPage = function () {
+                        if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                          $scope.currentPage++;
+                        }
+                      };
+                      
+                      $scope.setPage = function () {
+                        $scope.currentPage = this.n;
+                      };
+                      
+                      // functions have been describe process the data for display
+                      $scope.search();
+                     
+                      
+                      // change sorting order
+                      $scope.sort_by = function(newSortingOrder) {
+                        if ($scope.sortingOrder == newSortingOrder)
+                          $scope.reverse = !$scope.reverse;
+                        
+                        $scope.sortingOrder = newSortingOrder;
+                      };
+                    // fin 
+                }
+            },
+            function(error){
+                console.log(error);
+                $scope.cargando = true;
+                $scope.mensaje =  "Hubo un error..."
+            }
+        );
+    };
+
+
+    $scope.getFavoritos = function() {
+        console.log("entro");
+        MultiMarcas.get().then(
+            function(success){
+                console.log(success);
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        var i =0;
+                        angular.forEach(valor.estadisticas.favoritos, function(data) {
+                            if(data.fav == true){
+                                i++;
+                            }
+                        })
+                            valor.categoria = 'Multimarcas'
+                            valor.cantidad = i;
+                            $scope.items.push(valor);
+                    });
+
+                    var j =0;
+                    angular.forEach(value.estadisticas.favoritos, function(data) {
+                        if(data.fav == true){
+                            j++;
+                        }
+                    })
+                    value.categoria = 'Multimarcas'
+                    value.cantidad = j;
+                    $scope.items.push(value);
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+        Supermercados.get().then(
+            function(success){
+                console.log(success);
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        var i =0;
+                        angular.forEach(valor.estadisticas.favoritos, function(data) {
+                            if(data.fav == true){
+                                i++;
+                            }
+                        })
+                            valor.categoria = 'Supermercados'
+                            valor.cantidad = i;
+                            $scope.items.push(valor);
+                    });
+
+                    var j =0;
+                    angular.forEach(value.estadisticas.favoritos, function(data) {
+                        if(data.fav == true){
+                            j++;
+                        }
+                    })
+                    value.categoria = 'Supermercados'
+                    value.cantidad = j;
+                    $scope.items.push(value);
+                });
+            },
+            function(error){
+                $scope.loading = false;
+                console.log(error);
+            }
+        );
+        CentrosComerciales.get().then(
+            function(success){
+                $scope.loading = false;
+                console.log(success);
+
+                angular.forEach(success, function(value, key) {
+                    angular.forEach(value.locales, function(valor) {
+                        var i =0;
+                        angular.forEach(valor.estadisticas.favoritos, function(data) {
+                            if(data.fav == true){
+                                i++;
+                            }
+                        })
+                            valor.categoria = 'Shoppings'
+                            valor.cantidad = i;
+                            $scope.items.push(valor);
+                    });
+
+                    var j =0;
+                    angular.forEach(value.estadisticas.favoritos, function(data) {
+                        if(data.fav == true){
+                            j++;
+                        }
+                    })
+                    value.categoria = 'Shoppings'
+                    value.cantidad = j;
+                    $scope.items.push(value);
+
+                    // init
+                      $scope.sortingOrder = '-cantidad';
                       $scope.pageSizes = [5,10,25,50];
                       $scope.reverse = false;
                       $scope.filteredItems = [];

@@ -11,13 +11,13 @@
 <link rel="stylesheet" type="text/css" href="/css/bootstrap-table/bootstrap-table.min.css"> <!-- Customization -->
 <div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
 
-<section id="home" class="section-product" ng-init="initView()">
+<section id="home" class="section-product" ng-init="initPromociones()">
     <div class="container">
         
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <h1>
-                    <a href="" ui-sref="admin.home">Menu</a> | Reportes
+                    <a href="" ui-sref="admin.home">Menu</a> | <a href="" ui-sref="admin.reportes"> Reportes</a> | Lista de Promociones
                 </h1>
             </div>
         </div>
@@ -32,40 +32,9 @@
         </div>  <!-- ./ spinner -->
 
         <hr>
-
-        <div class="row">
-          <div class="col-md-3 text-center">
-            <button
-                ui-sref="admin.lista_sponsors"
-                class="btn-choice">
-                Banner Sponsor
-            </button>
-          </div>
-          <div class="col-md-3 text-center">
-            <button
-                ui-sref="admin.lista_destacado"
-                class="btn-choice">
-                Banner Destacado
-            </button>
-          </div>
-          <div class="col-md-3 text-center">
-            <button
-                ui-sref="admin.lista_favoritas"
-                class="btn-choice">
-                Tiendas Favoritas
-            </button>
-          </div>
-          <div class="col-md-3 text-center">
-            <button
-                ui-sref="admin.lista_promociones"
-                class="btn-choice">
-                Promociones
-            </button>
-          </div>
-        </div>
             <div class="row">
               <div class="col-md-3">
-                <p>Total de Comercios: {{ items.length }}</p>
+                <p>Total de Promociones: {{ items.length }}</p>
               </div>
               <div class="col-md-offset-6 col-md-3">
                 <select class="form-control input-lg pull-right" ng-model="itemsPerPage" ng-change="perPage()" ng-options="('Mostrar '+size) for size in pageSizes"></select>
@@ -75,12 +44,12 @@
             
             <table class="table table-striped table-hover">
               <tbody><tr>
-                <th style="text-align: center;" class="id"><a ng-click="sort_by('id')">Nombre <i class="fa fa-sort"></i></a></th>
+                <th style="text-align: center;" class="id"><a ng-click="sort_by('id')">Comercio <i class="fa fa-sort"></i></a></th>
                 <th style="text-align: center;" class="name"><a ng-click="sort_by('name')">Categoria <i class="fa fa-sort"></i></a></th>
-                <th style="text-align: center;" class="description"><a ng-click="sort_by('name')">Online <i class="fa fa-sort"></i></a></th>
-                <th style="text-align: center;" class="field3"><a ng-click="sort_by('field3')">Puntos <i class="fa fa-sort"></i></a></th>
-                <th style="text-align: center;" class="field4"><a ng-click="sort_by('field4')">Destacado<i class="fa fa-sort"></i></a></th>
-                <th style="text-align: center;" class="visitas"><a ng-click="sort_by('estadisticas.visitas')">Visitas<i class="fa fa-sort"></i></a></th>
+                <th style="text-align: center;" class="description"><a ng-click="sort_by('name')">Promocion <i class="fa fa-sort"></i></a></th>
+                <th style="text-align: center;" class="description"><a ng-click="sort_by('fechainicio')">Inicio <i class="fa fa-sort"></i></a></th>
+                <th style="text-align: center;" class="description"><a ng-click="sort_by('fechafin')">Fin <i class="fa fa-sort"></i></a></th>
+                <th style="text-align: center;" class="field3"><a ng-click="sort_by('field3')">Clicks<i class="fa fa-sort"></i></a></th>
               </tr>
               </tbody>
               <tfoot>
@@ -102,11 +71,11 @@
               </tr></tfoot>
               <tbody>
                 <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
-                  <td>{{item.perfil.nombre}}</td>
+                  <td>{{item.comercio}}</td>
                   <td>{{item.categoria}}</td>
-                  <td><i ng-show="item.perfil.online == 'true' || item.perfil.online == true" style="color: green;" class="fa fa-check-circle" aria-hidden="true"></i><i ng-show="item.perfil.online =='false' || item.perfil.online == false" style="color: red;" class="fa fa-times-circle" aria-hidden="true"></i></td>
-                  <td><i ng-show="item.perfil.puntos == 'true' || item.perfil.puntos == true" style="color: green;" class="fa fa-check-circle" aria-hidden="true"></i><i ng-show="item.perfil.puntos =='false' || item.perfil.puntos == false" style="color: red;" class="fa fa-times-circle" aria-hidden="true"></i></td>
-                  <td><i ng-show="item.perfil.destacado == 'true' || item.perfil.destacado == true" style="color: green;" class="fa fa-check-circle" aria-hidden="true"></i><i ng-show="item.perfil.destacado =='false' || item.perfil.destacado == false" style="color: red;" class="fa fa-times-circle" aria-hidden="true"></i></td>
+                  <td>{{item.texto.titulo}}</td>
+                  <td>{{item.fechainicio}}</td>
+                  <td>{{item.fechafin}}</td>
                   <td>{{item.estadisticas.visitas}}</td>
                 </tr>
               </tbody>

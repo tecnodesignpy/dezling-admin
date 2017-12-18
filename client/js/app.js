@@ -450,10 +450,31 @@ angular.module('noodlio', [
     /*
             REPORTES
     */
-              //Visualiza el listado de Destacados
+              //Visualiza el listado de Comercios
               .state('admin.reportes', {
                   url: '/reportes',
                   templateUrl: '/templates/reportes/lista_comercios.html',
+                  controller:'ReportesCtrl'
+              })
+              //Visualiza el listado de Comercios
+              .state('admin.lista_promociones', {
+                  url: '/reportes/promociones',
+                  templateUrl: '/templates/reportes/lista_promociones.html',
+                  controller:'ReportesCtrl'
+              })
+              .state('admin.lista_sponsors', {
+                  url: '/reportes/sponsors',
+                  templateUrl: '/templates/reportes/lista_sponsors.html',
+                  controller:'ReportesCtrl'
+              })
+              .state('admin.lista_destacado', {
+                  url: '/reportes/destacados',
+                  templateUrl: '/templates/reportes/lista_destacado.html',
+                  controller:'ReportesCtrl'
+              })
+              .state('admin.lista_favoritas', {
+                  url: '/reportes/favoritas',
+                  templateUrl: '/templates/reportes/lista_favoritas.html',
                   controller:'ReportesCtrl'
               })
 
