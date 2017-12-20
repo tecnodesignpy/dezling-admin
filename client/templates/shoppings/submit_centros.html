@@ -120,6 +120,20 @@
                     ng-model="submit.ProductMeta.perfil.direccion"
                     class="submit-box-generic submit-input-wide" type="text" value="">
                 
+                <h5>Ciudad</h5>
+                <p id="error-message">{{submit.ErrorMessages['ciudad']}}</p>
+                
+                <input  id="ciudad"
+                    ng-model="submit.ProductMeta.perfil.ciudad"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
+                <h5>País</h5>
+                <p id="error-message">{{submit.ErrorMessages['pais']}}</p>
+                
+                <input  id="pais"
+                    ng-model="submit.ProductMeta.perfil.pais"
+                    class="submit-box-generic submit-input-wide" type="text" value="">
+                
             </div>
         </div>
         

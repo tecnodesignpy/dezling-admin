@@ -104,8 +104,8 @@
                                     <td>{{ usuario.perfil.sexo }}</td>
                                     <td ng-show="usuario.configuracion.notificaciones.activada"><i style="color: green;" class="fa fa-check-circle" aria-hidden="true"></i></td>
                                     <td ng-show="!usuario.configuracion.notificaciones.activada"><i style="color: red;" class="fa fa-times-circle" aria-hidden="true"></i></td>
-                                    <td>4</td>
-                                    <td>2</td>
+                                    <td>{{ usuario.cupones_canjeados || '0' }}</td>
+                                    <td>{{ usuario.cupones_vigentes || '0' }}</td>
                                     <td>
                                         <a href="#" ui-sref="admin.listado-usuario({usuario:id})" style="color: #25628F">
                                             <span class="ks-text">Listado</span>

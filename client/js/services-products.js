@@ -1088,6 +1088,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario: datos.horario || '',
                             mapa:    {
@@ -1123,6 +1125,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario: datos.horario || '',
                             mapa:    {
@@ -2663,6 +2667,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario:    {
                                             lunes:  {
@@ -2722,6 +2728,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario:    {
                                             lunes:  {
@@ -3715,6 +3723,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario:    {
                                             lunes:  {
@@ -3774,6 +3784,8 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             direccion: datos.direccion || '',
+                            pais: datos.pais || '',
+                            ciudad: datos.ciudad || '',
                             descripcion: datos.descripcion || '',
                             horario:    {
                                             lunes:  {

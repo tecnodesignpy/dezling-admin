@@ -610,7 +610,21 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
             function(success){
                 $scope.loading = false;
                 angular.forEach(success, function(value, key) {
-                    console.log(value.perfil);
+                    //console.log(value.perfil);
+                    if(value.hasOwnProperty('cupones')){
+                        var i = 0
+                        var j = 0
+                        angular.forEach(value.cupones, function(valor, key) {
+                            console.log(valor);
+                            value.cupones_canjeados = i+1;
+                            var timeNow = new Date().getTime();
+                            console.log((timeNow-valor.time_generado)/1000/60);
+                            if(((timeNow-valor.time_generado)/1000/60)<=4){
+                                console.log("Recien genero el cupon");
+                                value.cupones_vigentes = j+1;
+                            }
+                        })
+                    }
                     if(value.perfil.hasOwnProperty('nacimiento')){
                         var today = new Date();
                         var birthDate = new Date(value.perfil.nacimiento);
