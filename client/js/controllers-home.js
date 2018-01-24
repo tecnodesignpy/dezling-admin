@@ -38,7 +38,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
     };
 
     $scope.devicepush = function(){
-        $window.open('http://panel.devicepush.com','_blank');
+        $window.open('https://onesignal.com/','_blank');
     };
 })
 

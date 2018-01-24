@@ -1690,58 +1690,55 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
      */
     submit.status['submitLoading'] = false;
     submit.submitForm = function(comercio) {
-                        //
-                        console.log(comercio);
-        
+        //
+        console.log(comercio);
         // prepare
         scrollToSubmitEnd(); 
         
+        console.log(submit.status['editMode']);
+        switch (submit.status['editMode']) {
+            case true:
+                //// validate
+                console.log("Editamos");
+                if(validarEdicion()){
+                    
+                    // referential
+                    //addReferentialData();
+                    
+                    // psubmit
+                    submit.status['submitLoading']      = true;
         
-            console.log(submit.status['editMode']);
-            switch (submit.status['editMode']) {
-                case true:
-                    //// validate
-                    console.log("Editamos");
-                    if(validarEdicion()){
-                        
-                        // referential
-                        //addReferentialData();
-                        
-                        // psubmit
-                        submit.status['submitLoading']      = true;
+                    CentrosLocalService.editProduct(submit.ProductMeta, $scope.avatarURL, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3, $scope.iconoURL).then(
+                        function(success){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error)
+                        }
+                    );
+                    break
+                };
+            case false:
+                //// validate
+                if(validateProductMeta()){
+                    
+                    // referential
+                    //addReferentialData();
+                    
+                    // psubmit
+                    submit.status['submitLoading']      = true;
+                    CentrosLocalService.submitProduct(submit.ProductMeta, Auth.AuthData, comercio).then(
+                        function(){
+                            handleSuccess();
+                        },
+                        function(error){
+                            handleError(error)
+                        }
+                    );
+                    break
+                };
+        } // ./ switch
             
-                        CentrosLocalService.editProduct(submit.ProductMeta, $scope.avatarURL, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3, $scope.iconoURL).then(
-                            function(success){
-                                handleSuccess();
-                            },
-                            function(error){
-                                handleError(error)
-                            }
-                        );
-                        break
-                    };
-                case false:
-                    //// validate
-                    if(validateProductMeta()){
-                        
-                        // referential
-                        //addReferentialData();
-                        
-                        // psubmit
-                        submit.status['submitLoading']      = true;
-                        CentrosLocalService.submitProduct(submit.ProductMeta, Auth.AuthData, comercio).then(
-                            function(){
-                                handleSuccess();
-                            },
-                            function(error){
-                                handleError(error)
-                            }
-                        );
-                        break
-                    };
-            } // ./ switch
-            
-        
         // fn error
         function handleError(error) {
             submit.status['submitLoading']      = false;
@@ -1753,7 +1750,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         function handleSuccess() {
             submit.status['submitLoading']      = false;
             submit.status['containsNoError']    = false;
-            $state.go('admin.categories-centros_comerciales');
+            $state.go('admin.Locales',{CentroComercial:comercio});
         };
         
     };
@@ -3642,7 +3639,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         function handleSuccess() {
             submit.status['submitLoading']      = false;
             submit.status['containsNoError']    = false;
-            $state.go('admin.categories-multimarcas');
+            $state.go('admin.SucursalesMultimarcas',{CentroComercial:$scope.shopping});
         };
         
     };
@@ -3885,7 +3882,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         function handleSuccess() {
             submit.status['submitLoading']      = false;
             submit.status['containsNoError']    = false;
-            $state.go('admin.categories-multimarcas');
+            $state.go('admin.SucursalesMultimarcas',{CentroComercial:comercio});
         };
         
     };
@@ -5951,7 +5948,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
         function handleSuccess() {
             submit.status['submitLoading']      = false;
             submit.status['containsNoError']    = false;
-            $state.go('admin.categories-supermercados');
+            $state.go('admin.SucursalesSupermercados',{CentroComercial:comercio});
         };
         
     };

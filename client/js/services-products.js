@@ -1099,6 +1099,7 @@ angular.module('noodlio.services-products', [])
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
                             puntos: datos.puntos || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -1136,6 +1137,7 @@ angular.module('noodlio.services-products', [])
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
                             puntos: datos.puntos || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -1639,6 +1641,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -1703,6 +1706,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -2185,6 +2189,7 @@ angular.module('noodlio.services-products', [])
                             descripcion: datos.descripcion || '',
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -2212,6 +2217,7 @@ angular.module('noodlio.services-products', [])
                             descripcion: datos.descripcion || '',
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -2706,6 +2712,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -2767,6 +2774,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -3241,6 +3249,7 @@ angular.module('noodlio.services-products', [])
                             descripcion: datos.descripcion || '',
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -3268,6 +3277,7 @@ angular.module('noodlio.services-products', [])
                             descripcion: datos.descripcion || '',
                             online: datos.online || 'true',
                             destacado: datos.destacado || 'false',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -3762,6 +3772,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
@@ -3823,6 +3834,7 @@ angular.module('noodlio.services-products', [])
                                             },
                             online: datos.online || '',
                             destacado: datos.destacado || '',
+                            tags: datos.tags || '',
                         },
           });
         return funcion;
