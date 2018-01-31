@@ -14,7 +14,6 @@ angular.module('noodlio.controllers-categories', [])
     };
 
     $scope.promocion =  $stateParams.shopping;
-    console.log($scope.promocion);
     
     categories.initView = function() {
         $location.hash('page-top');
@@ -180,6 +179,15 @@ angular.module('noodlio.controllers-categories', [])
     categories.goTo = function(nextState) {
         $state.go(nextState)
     };
+
+
+    $scope.RenderCalendario = function() {
+        console.log("RenderCalendario");
+        $scope.eventSources = []; 
+        $scope.shopping = $stateParams.shopping;
+
+
+    }
   
 })
 
@@ -545,7 +553,7 @@ angular.module('noodlio.controllers-categories', [])
 })
 
 .controller('SucursalesMultimarcas', function($scope, $state, $anchorScroll, $location,
- $stateParams, Auth, MultiSucursales, Utils, MultiSucursalService) {
+ $stateParams, Auth, MultiSucursales, Utils, MultiSucursalService, $window) {
     
     var locales              = this;
     locales.AuthData         = Auth.AuthData;
@@ -722,7 +730,48 @@ angular.module('noodlio.controllers-categories', [])
     locales.goTocomercio = function() {
         $state.go('admin.SucursalesMultimarcas',{CentroComercial:$scope.shopping})
     };
-  
+    
+    $scope.goTo = function(nextState) {
+        $state.go(nextState)
+    };
+
+
+    $scope.RenderCalendario = function() {
+        $scope.cargando = true;
+        $scope.submit = [];
+        console.log("RenderCalendario");
+        $scope.eventSources = []; 
+        $scope.shopping = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $scope.GetFeriados();
+
+    }
+
+    $scope.AddFeriado = function() {
+        MultiSucursalService.AddFeriado($scope.submit.ProductMeta, $scope.shopping, $scope.local).then(
+            function(success){
+                $window.location.reload();
+            },
+            function(error){
+                $window.location.reload();
+                console.log(error);
+            });
+    }
+
+    $scope.GetFeriados = function() {
+        MultiSucursalService.getFeriados($scope.shopping, $scope.local).then(
+            function(success){
+                $scope.Feriados = success;
+                $scope.cargando = false;
+            },
+            function(error){
+                console.log(error);
+                locales.statusObj['loading'] = false;
+                locales.statusObj['generalmessage'] = "Hubo un error..."
+            }
+        );
+    }
+
 })
 
 

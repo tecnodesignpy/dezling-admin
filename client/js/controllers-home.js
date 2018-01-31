@@ -605,12 +605,13 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
     $scope.sexo_label = ["Masculino","Femenino","Sin Respuesta"]
     $scope.notificaciones = []
     $scope.notificaciones_label = ["Activadas","Desactivada"]
+
     $scope.getUsuarios = function() {
         UserService.getUsuarios().then(
             function(success){
                 $scope.loading = false;
                 angular.forEach(success, function(value, key) {
-                    //console.log(value.perfil);
+                    console.log(value);
                     if(value.hasOwnProperty('cupones')){
                         var i = 0
                         var j = 0

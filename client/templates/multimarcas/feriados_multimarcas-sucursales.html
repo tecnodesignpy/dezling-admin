@@ -1,0 +1,168 @@
+
+
+<div id="page-top" class="page-top">&nbsp;</div> <!-- used for anchorscroll -->
+
+<section id="home" class="section-product" ng-init="RenderCalendario()">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                
+                
+                <h1>
+                    <a href="" ng-click="goTo('admin.home')">Menu</a> |<a href="" ng-click="goTo('admin.categories-multimarcas')">Multimarcas</a> | {{ shopping }} | {{ local }} | Feriados
+                </h1>
+      
+            </div>
+        </div>
+        
+        <hr class="star-light">
+        
+        
+        
+    </div>
+</section>
+
+
+<section ng-show="!locales.statusObj.loading">
+    <div class="container">
+
+        
+        <form name="myForm">
+	        <div class="row">
+	            <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border">
+	                
+	                <h5>Fecha</h5>
+	                
+	                <input  id="fecha"
+	                    ng-model="submit.ProductMeta.feriado.fecha"
+	                    class="submit-box-generic submit-input-wide" type="text" value="" placeholder="dd/mm/aaaa" required>
+	                
+	            </div>
+	        </div> 
+
+        
+	        <div class="row">
+	            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+	                
+	                <h5>Descripcion (opcional)</h5>
+	                <p id="error-message">{{submit.ErrorMessages['description']}}</p>
+	                
+	                <textarea 
+	                    ng-model="submit.ProductMeta.feriado.descripcion"
+	                    rows="6" 
+	                    class="submit-box-generic submit-input-wide" 
+	                    placeholder="Opcional"></textarea>
+	                
+	            </div>
+	        </div>
+        
+	        <div class="row">
+	            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+	                
+	                <div ng-show="!submit.ProductMeta.feriado.diferenciado">
+	                	<input type="checkbox" 
+		                    ng-model="submit.ProductMeta.feriado.allday"
+		                    class="submit-box-generic submit-input-wide"> Cerrado todo el Día <br>
+		            </div>
+	                
+	                <div ng-show="!submit.ProductMeta.feriado.allday">
+	                	<input type="checkbox" 
+		                    ng-model="submit.ProductMeta.feriado.diferenciado"
+		                    class="submit-box-generic submit-input-wide"> Horario Diferenciado <br>
+	                </div>
+	                
+	            </div>
+	        </div>
+
+	        <div class="row" ng-show="submit.ProductMeta.feriado.diferenciado">
+	            <div class="col-lg-10 col-lg-offset-1 submit-form-group">
+	                
+	                <h5>Horario de Atención</h5>
+	                <p id="error-message">{{submit.ErrorMessages['horarios']}}</p>
+	                <div class="row">
+	                    <div class="col-md-3 text-center">
+	                        <p style="font-weight: lighter;">Desde</p>
+	                    </div>
+	                    <div class="col-md-3 text-center">
+	                        <p style="font-weight: lighter;">Hasta</p>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-3">
+	                        <input style="padding: 5px;margin: 5px"
+	                            ng-model="submit.ProductMeta.feriado.desde"
+	                            class="submit-box-generic submit-input-wide" type="text" value="" placeholder="09:00">
+	                    </div>
+	                    <div class="col-md-3">
+	                        <input style="padding: 5px;margin: 5px"
+	                            ng-model="submit.ProductMeta.feriado.hasta"
+	                            class="submit-box-generic submit-input-wide" type="text" value="" placeholder="13:00">
+	                        
+	                    </div>
+	                </div>
+	            </div>
+	        </div> 
+	     </form>
+
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 submit-form-group  submit-bottom-border  text-center">
+                <div>
+                    <p ng-show="myForm.$invalid" style="color: red !important">
+                        Hay campos que deben ser completados!
+                    </p>
+                    <p class="text-positive" ng-show="status['submitLoading']">
+                        Espere mientras cargamos la base de datos!
+                    </p>
+                    <hr class="star-light">
+                </div>
+                <button ng-disabled="myForm.$invalid" class="btn-positive" ng-click="AddFeriado()">
+                    <span>
+                        <span>
+                            Guardar
+                        </span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <h1>Lista de Feriados</h1>
+            </div>
+        </div>
+
+        
+        <!-- spinner - can be rewritten to ng-switch to avoid flickering -->
+        <div class="row" ng-show="cargando">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p><img ng-src="css/loading.svg" id="loading-img-large"></p>
+            </div>
+        </div>  <!-- ./ spinner -->
+
+
+            <div class="row row-item card-1"  ng-repeat="datos in Feriados | orderBy:'descripcion' ">
+                
+                <div class="col-sm-8  text-left center-small-screen">
+                    <p class="small">
+                        <strong style="text-transform: uppercase;">{{datos.fechainicio}}</strong>
+                    </p>
+                    <p class="smaller">
+                        <strong>Descripcion: </strong>{{datos.descripcion}}
+                    </p>
+                    <p class="smaller" ng-show="datos.diferenciado == true">
+                        <strong>Desde: </strong>{{datos.desde}}
+                    </p>
+                    <p class="smaller" ng-show="datos.diferenciado == true">
+                        <strong>Hasta: </strong>{{datos.hasta}}
+                    </p>
+                </div>
+                <div class="col-sm-4  text-right center-small-screen">
+                	<p ng-show="datos.allday == true" >CERRADO TODO EL DIA</p>
+                	<p ng-show="datos.diferenciado == true" >CERRADO PARCIALMENTE</p>
+                </div>
+                
+            </div>
+        
+    </div>
+</section>

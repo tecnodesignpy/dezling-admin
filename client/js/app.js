@@ -28,6 +28,7 @@ angular.module('noodlio', [
   'noodlio.services-fb-functions',    // v3
   'ui.bootstrap',
   'chart.js',
+  
   ]
 )
 
@@ -114,6 +115,13 @@ angular.module('noodlio', [
                           url: '/categories/centros_comerciales/beneficios/:shopping/submit/:beneficio',
                           templateUrl: '/templates/shoppings/submit_centros_beneficios.html',
                           controller:'BeneficiosShopping',
+                          resolve: {authResolve: authResolve}
+                      })
+                      // Feriados 
+                      .state('admin.FeriadosCentrosComerciales', {
+                          url: '/categories/centros_comerciales/feriados/:shopping',
+                          templateUrl: '/templates/shoppings/feriados_shoppings.html',
+                          controller:'CateCentrosComercialesCtrl',
                           resolve: {authResolve: authResolve}
                       })
               /*  FIN CATEGORIAS  */
@@ -263,6 +271,13 @@ angular.module('noodlio', [
                           url: '/categories/multimarcas/:shopping/local/:local/beneficios/submit/:beneficio',
                           templateUrl: '/templates/multimarcas/submit_multimarcas_beneficios_sucursales.html',
                           controller:'BeneficiosMutimarcasSucursales',
+                          resolve: {authResolve: authResolve}
+                      })
+                      // Feriados 
+                      .state('admin.FeriadosMultimarcas', {
+                          url: '/categories/multimarcas/feriados/:shopping/local/:local',
+                          templateUrl: '/templates/multimarcas/feriados_multimarcas-sucursales.html',
+                          controller:'SucursalesMultimarcas',
                           resolve: {authResolve: authResolve}
                       })
 

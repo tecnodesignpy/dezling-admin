@@ -2896,6 +2896,39 @@ angular.module('noodlio.services-products', [])
         return funcion;
     };
 
+
+
+    // Hacemos Submit a la promocion
+    self.AddFeriado = function(FeriadoMeta, shopping, local) {
+        var database = firebase.database();
+        var datos = FeriadoMeta.feriado;
+
+        console.log(FeriadoMeta.feriado);
+        console.log(shopping);
+        console.log(local);
+        
+        var ref = firebase.database().ref('categorias/multimarcas/comercios/' + shopping +'/locales/' + local );
+        var id = ref.child('feriados');
+
+        
+        var funcion = id.push().set({
+            fechainicio:datos.fecha || '',
+            descripcion:datos.descripcion || '',
+            allday:datos.allday || '',
+            diferenciado:datos.diferenciado || '',
+            desde:datos.desde || '',
+            hasta:datos.hasta || '',
+          });
+        return funcion;
+        
+    };
+
+    
+    self.getFeriados = function(shopping, local) {
+        var childRef = "categorias/multimarcas/comercios/" + shopping +"/locales/"+ local +"/feriados";
+        return FireFunc.onValue(childRef);
+    };
+
     self.deleteProduct = function(productId, AuthData) {
         return ProductManagement.delete(productId, AuthData);
     };

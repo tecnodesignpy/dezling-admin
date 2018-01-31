@@ -29,15 +29,19 @@ angular.module('noodlio.controllers-navbar', [])
         if(!$scope.AuthData.hasOwnProperty('uid')) {
             Auth.checkAuthState().then(
                 function(loggedIn){
-                    
+                    console.log("Logeado");
+                    navbar.statusObj['loading']     = false;
+                    navbar.statusObj['loggedIn']    = true;
                     $scope.AuthData = Auth.AuthData;
                 },
                 function(notLoggedIn) {
+                    console.log("No esta Logeado");
+                    navbar.statusObj['loading']     = false;
+                    navbar.statusObj['loggedIn']    = false;
                     $state.go('admin.login')
                 }
             )
         };
-        
     };
     
     
@@ -68,6 +72,5 @@ angular.module('noodlio.controllers-navbar', [])
     navbar.goTo = function(nextState, dataObj) {
         $state.go(nextState, dataObj)
     };
-
     
 })
