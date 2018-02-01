@@ -762,7 +762,7 @@ angular.module('noodlio.services-products', [])
 })
 
 
-/**
+/*
     CENTROS COMERCIALES - SHOPPINGS 
  */
 .factory('CentrosService', function($q, ProductManagement, Utils, FireFunc, UserService) {
@@ -1096,7 +1096,7 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.latitud || '0',
                                                 longitud: datos.longitud || '0',
                                             },
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
@@ -1110,7 +1110,7 @@ angular.module('noodlio.services-products', [])
         var slug = productId;
         console.log(productId);
         var datos = ProductMeta.perfil;
-        console.log(datos);
+        console.log(datos.online);
 
         var funcion = firebase.database().ref('categorias/centros_comerciales/comercios/' + slug ).update({
             perfil :    {   
@@ -1134,7 +1134,7 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '0',
                                                 longitud: datos.mapa.longitud || '0',
                                             },
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
@@ -1641,8 +1641,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -1706,8 +1707,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -2189,7 +2191,7 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             descripcion: datos.descripcion || '',
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             tags: datos.tags || '',
                         },
@@ -2217,7 +2219,7 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             descripcion: datos.descripcion || '',
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             tags: datos.tags || '',
                         },
@@ -2712,8 +2714,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -2774,8 +2777,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -2921,6 +2925,10 @@ angular.module('noodlio.services-products', [])
           });
         return funcion;
         
+    };
+
+    self.eliminarFeriado = function(comercio, local, promocion) {
+        return firebase.database().ref('categorias/multimarcas/comercios/'+comercio+'/locales/'+local+'/feriados/'+ promocion).remove();
     };
 
     
@@ -3282,7 +3290,7 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             descripcion: datos.descripcion || '',
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             tags: datos.tags || '',
                         },
@@ -3310,7 +3318,7 @@ angular.module('noodlio.services-products', [])
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
                             descripcion: datos.descripcion || '',
-                            online: datos.online || 'true',
+                            online: datos.online || 'false',
                             destacado: datos.destacado || 'false',
                             tags: datos.tags || '',
                         },
@@ -3805,8 +3813,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -3867,8 +3876,9 @@ angular.module('noodlio.services-products', [])
                                                 latitud: datos.mapa.latitud || '',
                                                 longitud: datos.mapa.longitud || '',
                                             },
-                            online: datos.online || '',
-                            destacado: datos.destacado || '',
+                            online: datos.online || 'false',
+                            destacado: datos.destacado || 'false',
+                            puntos: datos.puntos || 'false',
                             tags: datos.tags || '',
                         },
           });
@@ -3987,6 +3997,43 @@ angular.module('noodlio.services-products', [])
             categoria:datos.categoria || '',
           });
         return funcion;
+    };
+
+
+
+    // Hacemos Submit a la promocion
+    self.AddFeriado = function(FeriadoMeta, shopping, local) {
+        var database = firebase.database();
+        var datos = FeriadoMeta.feriado;
+
+        console.log(FeriadoMeta.feriado);
+        console.log(shopping);
+        console.log(local);
+        
+        var ref = firebase.database().ref('categorias/supermercados/comercios/' + shopping +'/locales/' + local );
+        var id = ref.child('feriados');
+
+        
+        var funcion = id.push().set({
+            fechainicio:datos.fecha || '',
+            descripcion:datos.descripcion || '',
+            allday:datos.allday || '',
+            diferenciado:datos.diferenciado || '',
+            desde:datos.desde || '',
+            hasta:datos.hasta || '',
+          });
+        return funcion;
+        
+    };
+
+    self.eliminarFeriado = function(comercio, local, promocion) {
+        return firebase.database().ref('categorias/supermercados/comercios/'+comercio+'/locales/'+local+'/feriados/'+ promocion).remove();
+    };
+
+    
+    self.getFeriados = function(shopping, local) {
+        var childRef = "categorias/supermercados/comercios/" + shopping +"/locales/"+ local +"/feriados";
+        return FireFunc.onValue(childRef);
     };
 
     self.deleteProduct = function(productId, AuthData) {

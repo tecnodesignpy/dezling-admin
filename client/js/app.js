@@ -383,6 +383,13 @@ angular.module('noodlio', [
                           controller:'BeneficiosSupermercadosSucursales',
                           resolve: {authResolve: authResolve}
                       })
+                      // Feriados 
+                      .state('admin.FeriadosSupermercados', {
+                          url: '/categories/supermercados/feriados/:shopping/local/:local',
+                          templateUrl: '/templates/supermercados/feriados_supermercados-sucursales.html',
+                          controller:'SucursalesSupermercados',
+                          resolve: {authResolve: authResolve}
+                      })
               
               /*  FIN SUCURSALES   */
 

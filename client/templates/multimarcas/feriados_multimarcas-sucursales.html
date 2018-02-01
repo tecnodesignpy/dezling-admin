@@ -10,7 +10,7 @@
                 
                 
                 <h1>
-                    <a href="" ng-click="goTo('admin.home')">Menu</a> |<a href="" ng-click="goTo('admin.categories-multimarcas')">Multimarcas</a> | {{ shopping }} | {{ local }} | Feriados
+                    <a href="" ng-click="goTo('admin.home')">Menu</a> |<a href="" ng-click="goTo('admin.categories-multimarcas')">Multimarcas</a> | <a href="" ui-sref="admin.SucursalesMultimarcas({CentroComercial: shopping})">{{ shopping }}</a> | {{ local }} | Feriados
                 </h1>
       
             </div>
@@ -141,7 +141,7 @@
         </div>  <!-- ./ spinner -->
 
 
-            <div class="row row-item card-1"  ng-repeat="datos in Feriados | orderBy:'descripcion' ">
+            <div class="row row-item card-1"  ng-repeat="datos in Feriados | orderBy:'fecha' ">
                 
                 <div class="col-sm-8  text-left center-small-screen">
                     <p class="small">
@@ -160,6 +160,9 @@
                 <div class="col-sm-4  text-right center-small-screen">
                 	<p ng-show="datos.allday == true" >CERRADO TODO EL DIA</p>
                 	<p ng-show="datos.diferenciado == true" >CERRADO PARCIALMENTE</p>
+                    <button style="font-size: 9px !important;" class="btn-red-outline active" ng-click="eliminarFeriado(shopping, local, datos.key)">
+                        Eliminar
+                    </button>
                 </div>
                 
             </div>

@@ -735,17 +735,19 @@ angular.module('noodlio.controllers-categories', [])
         $state.go(nextState)
     };
 
+    $scope.goTocomercio = function() {
+        $state.go('admin.SucursalesMultimarcas',{CentroComercial:$scope.shopping})
+    };
+
 
     $scope.RenderCalendario = function() {
         $scope.cargando = true;
         $scope.submit = [];
         console.log("RenderCalendario");
-        $scope.eventSources = []; 
         $scope.shopping = $stateParams.shopping;
         $scope.local = $stateParams.local;
         $scope.GetFeriados();
-
-    }
+    };
 
     $scope.AddFeriado = function() {
         MultiSucursalService.AddFeriado($scope.submit.ProductMeta, $scope.shopping, $scope.local).then(
@@ -756,21 +758,56 @@ angular.module('noodlio.controllers-categories', [])
                 $window.location.reload();
                 console.log(error);
             });
-    }
+    };
 
+    $scope.Feriados = []
     $scope.GetFeriados = function() {
         MultiSucursalService.getFeriados($scope.shopping, $scope.local).then(
             function(success){
-                $scope.Feriados = success;
+                angular.forEach(success, function(value, key) {
+                    // Obtenemos la fecha, seteamo y agregamos un nuevo campo para poder ordenar por fecha en el template
+                    const [day, month, year] = value.fechainicio.split("/");
+                    var fecha = new Date(year, month - 1, day);
+                    value.fecha = fecha;
+                    value.key = key;
+                    $scope.Feriados.push(value);
+                })
+                console.log($scope.Feriados);
                 $scope.cargando = false;
             },
             function(error){
                 console.log(error);
-                locales.statusObj['loading'] = false;
-                locales.statusObj['generalmessage'] = "Hubo un error..."
             }
         );
-    }
+    };
+
+    $scope.eliminarFeriado = function(shopping, local, key) {
+        swal({
+          title: "Desea eliminar el feriado?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            MultiSucursalService.eliminarFeriado(shopping, local, key).then(function(success){
+                console.log(success);
+                $scope.goTocomercio();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $scope.goTocomercio();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
+    };
 
 })
 
@@ -955,7 +992,7 @@ angular.module('noodlio.controllers-categories', [])
 })
 
 .controller('SucursalesSupermercados', function($scope, $state, $anchorScroll, $location,
- $stateParams, Auth, SuperSucursales, Utils, SuperSucursalService) {
+ $stateParams, Auth, SuperSucursales, Utils, SuperSucursalService, $window) {
     
     var locales              = this;
     locales.AuthData         = Auth.AuthData;
@@ -1131,6 +1168,84 @@ angular.module('noodlio.controllers-categories', [])
     
     locales.goTocomercio = function() {
         $state.go('admin.SucursalesSupermercados',{CentroComercial:$scope.shopping})
+    };
+    
+    $scope.goTo = function(nextState) {
+        $state.go(nextState)
+    };
+
+    $scope.goTocomercio = function() {
+        $state.go('admin.SucursalesSupermercados',{CentroComercial:$scope.shopping})
+    };
+
+
+    $scope.RenderCalendario = function() {
+        $scope.cargando = true;
+        $scope.submit = [];
+        console.log("RenderCalendario");
+        $scope.shopping = $stateParams.shopping;
+        $scope.local = $stateParams.local;
+        $scope.GetFeriados();
+    };
+
+    $scope.AddFeriado = function() {
+        SuperSucursalService.AddFeriado($scope.submit.ProductMeta, $scope.shopping, $scope.local).then(
+            function(success){
+                $window.location.reload();
+            },
+            function(error){
+                $window.location.reload();
+                console.log(error);
+            });
+    };
+
+    $scope.Feriados = []
+    $scope.GetFeriados = function() {
+        SuperSucursalService.getFeriados($scope.shopping, $scope.local).then(
+            function(success){
+                angular.forEach(success, function(value, key) {
+                    // Obtenemos la fecha, seteamo y agregamos un nuevo campo para poder ordenar por fecha en el template
+                    const [day, month, year] = value.fechainicio.split("/");
+                    var fecha = new Date(year, month - 1, day);
+                    value.fecha = fecha;
+                    value.key = key;
+                    $scope.Feriados.push(value);
+                })
+                console.log($scope.Feriados);
+                $scope.cargando = false;
+            },
+            function(error){
+                console.log(error);
+            }
+        );
+    };
+
+    $scope.eliminarFeriado = function(shopping, local, key) {
+        swal({
+          title: "Desea eliminar el feriado?",
+          text: "Ya no se va a poder recuperar.",
+          icon: "warning",
+          buttons: ["Cancelar", "Eliminar"],
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log(key);
+            SuperSucursalService.eliminarFeriado(shopping, local, key).then(function(success){
+                console.log(success);
+                $scope.goTocomercio();
+                swal("Eliminado con exito", {
+                  icon: "success", 
+                });
+            }, function(error){
+                console.log(error);
+                $scope.goTocomercio();
+                swal("No se ha eliminado", {
+                  icon: "danger", 
+                });
+            });
+          }
+        });
     };
   
 })
