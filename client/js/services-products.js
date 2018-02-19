@@ -2258,6 +2258,7 @@ angular.module('noodlio.services-products', [])
                                     detalle: {
                                                     titulo : datos.texto.titulo || '',
                                                     descripcion: datos.texto.descripcion || '',
+                                                    descripcion_larga: datos.texto.descripcion_larga || '',
                                             },
                                     fechainicio:datos.fechainicio || '',
                                     fechafin:datos.fechafin || '',
@@ -2317,6 +2318,7 @@ angular.module('noodlio.services-products', [])
                                     detalle: {
                                                     titulo : datos.texto.titulo || '',
                                                     descripcion: datos.texto.descripcion || '',
+                                                    descripcion_larga: datos.texto.descripcion_larga || '',
                                             },
                                     fechainicio:datos.fechainicio || '',
                                     fechafin:datos.fechafin || '',
@@ -2817,6 +2819,7 @@ angular.module('noodlio.services-products', [])
                                     detalle: {
                                                     titulo : datos.texto.titulo || '',
                                                     descripcion: datos.texto.descripcion || '',
+                                                    descripcion_larga: datos.texto.descripcion_larga || '',
                                             },
                                     fechainicio:datos.fechainicio || '',
                                     fechafin:datos.fechafin || '',
@@ -2837,6 +2840,7 @@ angular.module('noodlio.services-products', [])
             texto: {
                             titulo : datos.texto.titulo || '',
                             descripcion: datos.texto.descripcion || '',
+                            descripcion_larga: datos.texto.descripcion_larga || '',
                     },
             fechainicio:datos.fechainicio || '',
             fechafin:datos.fechafin || '',
@@ -3357,6 +3361,7 @@ angular.module('noodlio.services-products', [])
                                     detalle: {
                                                     titulo : datos.texto.titulo || '',
                                                     descripcion: datos.texto.descripcion || '',
+                                                    descripcion_larga: datos.texto.descripcion_larga || '',
                                             },
                                     fechainicio:datos.fechainicio || '',
                                     fechafin:datos.fechafin || '',
@@ -3916,6 +3921,7 @@ angular.module('noodlio.services-products', [])
                                     detalle: {
                                                     titulo : datos.texto.titulo || '',
                                                     descripcion: datos.texto.descripcion || '',
+                                                    descripcion_larga: datos.texto.descripcion_larga || '',
                                             },
                                     fechainicio:datos.fechainicio || '',
                                     fechafin:datos.fechafin || '',
@@ -3936,6 +3942,7 @@ angular.module('noodlio.services-products', [])
             texto: {
                             titulo : datos.texto.titulo || '',
                             descripcion: datos.texto.descripcion || '',
+                            descripcion_larga: datos.texto.descripcion_larga || '',
                     },
             fechainicio:datos.fechainicio || '',
             fechafin:datos.fechafin || '',
