@@ -484,6 +484,42 @@
             
             </div>
         </div>
+
+            <div class="row">
+                
+                <div class="col-lg-10 col-lg-offset-1 submit-form-group submit-top-border ">
+                    
+                    <center><h5>MAPA DEL COMPLEJO (.svg)</h5></center>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p id="error-message">{{submit.ErrorMessages['mapa_complejo']}}</p>
+
+                            <form name="form9" class="submit-box-generic-blank">
+                                    
+                                <input id="imagen.destacado.mapa_complejo"
+                                    type="file" 
+                                    ng-model="submit.destacado.mapa_complejo" 
+                                    name="submit.destacado.mapa_complejo" 
+                                    base-sixty-four-input 
+                                    required 
+                                    onload="submit.mapa_complejo" 
+                                    maxsize="10000" 
+                                    accept="image/*" multiple="false">
+                
+                                <div class="images-row" style="margin-top: 15px">
+                                    <div class="center">
+                                        <img width="100%" style="max-width: 400px;" id="mapa_complejoURL" class="not-opened"><br>
+                                        <!--<a href="" ng-click="submit.removeScreenshot(key)">Quitar Imagen </a>-->
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
         
         <div class="row" ng-show="status['loadingScreenshots']">
             

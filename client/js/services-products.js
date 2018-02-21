@@ -2727,7 +2727,7 @@ angular.module('noodlio.services-products', [])
         return funcion;
     };
 
-    self.editProduct = function(ProductMeta, AuthData, comercio, productId, banner1, banner2, banner3) {
+    self.editProduct = function(ProductMeta, AuthData, comercio, productId, banner1, banner2, banner3, mapa_complejo) {
         var database = firebase.database();
         var slug = productId;
         console.log(productId);
@@ -2740,6 +2740,7 @@ angular.module('noodlio.services-products', [])
                                             banner2: banner2 || '',
                                             banner3: banner3 || '',
                                         },
+                            mapa_complejo:mapa_complejo || '',
                             email: datos.email || '',
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',
@@ -3832,7 +3833,7 @@ angular.module('noodlio.services-products', [])
         return funcion;
     };
 
-    self.editProduct = function(ProductMeta, AuthData, comercio, productId, banner1, banner2, banner3) {
+    self.editProduct = function(ProductMeta, AuthData, comercio, productId, banner1, banner2, banner3, mapa_complejo) {
         var database = firebase.database();
         var slug = productId;
         console.log(productId);
@@ -3845,6 +3846,7 @@ angular.module('noodlio.services-products', [])
                                             banner2: banner2 || '',
                                             banner3: banner3 || '',
                                         },
+                            mapa_complejo:mapa_complejo || '',
                             email: datos.email || '',
                             nombre: datos.nombre || '',
                             numero_telefono: datos.numero_telefono || '',

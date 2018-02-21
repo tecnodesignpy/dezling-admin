@@ -3754,6 +3754,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             
             // -->
             loadBanners();
+            loadMapa();
             
             // -->
             loadScreenshots();
@@ -3841,7 +3842,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                         // psubmit
                         submit.status['submitLoading']      = true;
             
-                        MultiSucursalService.editProduct(submit.ProductMeta, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3).then(
+                        MultiSucursalService.editProduct(submit.ProductMeta, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3, $scope.mapa_complejoURL).then(
                             function(success){
                                 handleSuccess();
                             },
@@ -3889,18 +3890,23 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
 
     function loadBanners() {
         console.log("Cargando Banners" + local);
+        $scope.banner1= submit.ProductMeta.perfil.banners_destacados.banner1;
+        var img = document.getElementById('banner1URL');
+        img.src = $scope.banner1;
 
-                $scope.banner1= submit.ProductMeta.perfil.banners_destacados.banner1;
-                var img = document.getElementById('banner1URL');
-                img.src = $scope.banner1;
+        $scope.banner2= submit.ProductMeta.perfil.banners_destacados.banner2;
+        var img = document.getElementById('banner2URL');
+        img.src = $scope.banner2;
 
-                $scope.banner2= submit.ProductMeta.perfil.banners_destacados.banner2;
-                var img = document.getElementById('banner2URL');
-                img.src = $scope.banner2;
+        $scope.banner3= submit.ProductMeta.perfil.banners_destacados.banner3;
+        var img = document.getElementById('banner3URL');
+        img.src = $scope.banner3;
+    };
 
-                $scope.banner3= submit.ProductMeta.perfil.banners_destacados.banner3;
-                var img = document.getElementById('banner3URL');
-                img.src = $scope.banner3;
+    function loadMapa() {
+        $scope.mapa_complejoURL= submit.ProductMeta.perfil.mapa_complejo;
+        var img = document.getElementById('mapa_complejoURL');
+        img.src = $scope.mapa_complejoURL;
     };
 
     submit.banner1 = function (e, reader, file, fileList, fileOjects, fileObj) {
@@ -4010,6 +4016,43 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                   $scope.banner3 = ImagenesRef.snapshot.downloadURL;
                     var img = document.getElementById('banner3URL');
                     img.src = $scope.banner3;
+                });
+    };
+
+    submit.mapa_complejo = function (e, reader, file, fileList, fileOjects, fileObj) {
+        var storageRef = firebase.storage().ref();
+                var ImagenesRef = storageRef.child('mapa_complejo/'+ local).put(file);
+                ImagenesRef.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                  function(snapshot) {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                      case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                      case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                    }
+                  }, function(error) {
+                  switch (error.code) {
+                    case 'storage/unauthorized':
+                      // User doesn't have permission to access the object
+                      break;
+
+                    case 'storage/canceled':
+                      // User canceled the upload
+                      break;
+                    case 'storage/unknown':
+                      // Unknown error occurred, inspect error.serverResponse
+                      break;
+                  }
+                }, function() {
+                  // Upload completed successfully, now we can get the download URL
+                  $scope.mapa_complejoURL = ImagenesRef.snapshot.downloadURL;
+                    var img = document.getElementById('mapa_complejoURL');
+                    img.src = $scope.mapa_complejoURL;
                 });
     };
     
@@ -5820,7 +5863,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
             
             // -->
             loadBanners();
-            
+            loadMapa();
             // -->
             loadScreenshots();
         };
@@ -5907,7 +5950,7 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                         // psubmit
                         submit.status['submitLoading']      = true;
             
-                        SuperSucursalService.editProduct(submit.ProductMeta, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3).then(
+                        SuperSucursalService.editProduct(submit.ProductMeta, Auth.AuthData, comercio, local, $scope.banner1, $scope.banner2, $scope.banner3, $scope.mapa_complejoURL).then(
                             function(success){
                                 handleSuccess();
                             },
@@ -5967,6 +6010,13 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                 $scope.banner3= submit.ProductMeta.perfil.banners_destacados.banner3;
                 var img = document.getElementById('banner3URL');
                 img.src = $scope.banner3;
+    };
+
+
+    function loadMapa() {
+        $scope.mapa_complejoURL= submit.ProductMeta.perfil.mapa_complejo;
+        var img = document.getElementById('mapa_complejoURL');
+        img.src = $scope.mapa_complejoURL;
     };
 
     submit.banner1 = function (e, reader, file, fileList, fileOjects, fileObj) {
@@ -6079,6 +6129,42 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                 });
     };
     
+    submit.mapa_complejo = function (e, reader, file, fileList, fileOjects, fileObj) {
+        var storageRef = firebase.storage().ref();
+                var ImagenesRef = storageRef.child('mapa_complejo/'+ local).put(file);
+                ImagenesRef.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                  function(snapshot) {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                      case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                      case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                    }
+                  }, function(error) {
+                  switch (error.code) {
+                    case 'storage/unauthorized':
+                      // User doesn't have permission to access the object
+                      break;
+
+                    case 'storage/canceled':
+                      // User canceled the upload
+                      break;
+                    case 'storage/unknown':
+                      // Unknown error occurred, inspect error.serverResponse
+                      break;
+                  }
+                }, function() {
+                  // Upload completed successfully, now we can get the download URL
+                  $scope.mapa_complejoURL = ImagenesRef.snapshot.downloadURL;
+                    var img = document.getElementById('mapa_complejoURL');
+                    img.src = $scope.mapa_complejoURL;
+                });
+    };
   
     /**
      * Used for filtering
