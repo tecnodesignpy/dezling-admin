@@ -1199,6 +1199,63 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
     submit.ErrorMessages    = {};
     submit.IndexData        = {};
 
+    /* 
+        Funcion para hacer Drag en el mapa
+    */
+        var mainMarker = {
+                    lat: -25.342132,
+                    lng: -57.556246,
+                    focus: true,
+                    //message: "Hey, drag me if you want",
+                    draggable: true
+                };
+
+        angular.extend($scope, {
+            london: {
+                lat: -25.342132,
+                lng: -57.556246,
+                zoom: 15
+            },
+            markers: {
+                mainMarker: angular.copy(mainMarker)
+            },
+            position: {
+                lat: -25.3313193,
+                lng: -57.5719568
+            },
+            events: { // or just {} //all events
+                markers:{
+                  enable: [ 'dragend' ]
+                  //logic: 'emit'
+                }
+            },
+            defaults: {
+                scrollWheelZoom: false
+            },
+            layers: {
+                baselayers: {
+                    googleTerrain: {
+                        name: 'Google Terrain',
+                        layerType: 'TERRAIN',
+                        type: 'google'
+                    },
+                }
+            }
+        });
+
+        $scope.$on("leafletDirectiveMarker.dragend", function(event, args){
+            document.getElementById("mapa.latitud").value = args.model.lat;
+            document.getElementById("mapa.longitud").value = args.model.lng;
+            submit.ProductMeta.perfil.mapa.latitud = args.model.lat
+            submit.ProductMeta.perfil.mapa.longitud = args.model.lng
+            console.log($scope.london.lat);
+            console.log($scope.london.lng);
+        });
+
+    /* 
+        FIN Funcion para hacer Drag en el mapa
+    */
+
     // init the dependencies on load
     submit.initView = function() {
         
@@ -1527,6 +1584,53 @@ angular.module('noodlio.controllers-submit', ['ui-leaflet'])
                     function(ProductMeta){
                         if(ProductMeta != null) {
                             submit.ProductMeta = ProductMeta;   // bind the data
+                            
+                            if(ProductMeta.perfil.mapa.latitud != 0 && ProductMeta.perfil.mapa.longitud != 0){
+                                setTimeout(function(){
+                                    $scope.lat = ProductMeta.perfil.mapa.latitud;
+                                    $scope.lng = ProductMeta.perfil.mapa.longitud;
+                                    var mainMarker = {
+                                        lat: $scope.lat,
+                                        lng: $scope.lng,
+                                        focus: true,
+                                        //message: "Hey, drag me if you want",
+                                        draggable: true
+                                    };
+
+                                    angular.extend($scope, {
+                                        london: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng,
+                                            zoom: 15
+                                        },
+                                        markers: {
+                                            mainMarker: angular.copy(mainMarker)
+                                        },
+                                        position: {
+                                            lat: $scope.lat,
+                                            lng: $scope.lng
+                                        },
+                                        events: { // or just {} //all events
+                                            markers:{
+                                              enable: [ 'dragend' ]
+                                              //logic: 'emit'
+                                            }
+                                        },
+                                        layers: {
+                                            baselayers: {
+                                                googleTerrain: {
+                                                    name: 'Google Terrain',
+                                                    layerType: 'TERRAIN',
+                                                    type: 'google'
+                                                },
+                                            }
+                                        }
+                                    });
+
+
+                                    $scope.$apply();
+                                }, 0);  
+                            }
                             initEditMode();  
                         } else {
                             local = null;

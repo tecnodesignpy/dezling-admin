@@ -626,47 +626,56 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                             }
                         })
                     }
-                    if(value.perfil.hasOwnProperty('nacimiento')){
-                        var today = new Date();
-                        var birthDate = new Date(value.perfil.nacimiento);
-                        var age = today.getFullYear() - birthDate.getFullYear();
-                        var m = today.getMonth() - birthDate.getMonth(); 
-                        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                            age--;
+                    if(value.hasOwnProperty('perfil')){
+                        if(value.perfil.hasOwnProperty('nacimiento')){
+                            var today = new Date();
+                            var birthDate = new Date(value.perfil.nacimiento);
+                            var age = today.getFullYear() - birthDate.getFullYear();
+                            var m = today.getMonth() - birthDate.getMonth(); 
+                            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                                age--;
+                            }
+                            value.age = age;
+                        }else if(value.perfil.hasOwnProperty('birth')){
+                            if(value.perfil.birth != ''){
+                                var today = new Date();
+                                var birthDate = new Date(value.perfil.birth);
+                                var age = today.getFullYear() - birthDate.getFullYear();
+                                var m = today.getMonth() - birthDate.getMonth(); 
+                                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                                    age--;
+                                }
+                                value.age = age;
+                            }else if(value.perfil.hasOwnProperty('edad')){
+                                value.age = value.perfil.edad.min;
+                            }
                         }
-                        value.age = age;
-                    }else if(value.perfil.hasOwnProperty('birth')){
-                        var today = new Date();
-                        var birthDate = new Date(value.perfil.birth);
-                        var age = today.getFullYear() - birthDate.getFullYear();
-                        var m = today.getMonth() - birthDate.getMonth(); 
-                        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                            age--;
-                        }
-                        value.age = age;
-                    }
-                    if(value.perfil.hasOwnProperty('sexo')){
-                        if(value.perfil.sexo == 'Masculino'){
-                            $scope.masculino ++;
-                            $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
-                        }else if(value.perfil.sexo == 'Femenino'){
-                            $scope.femenino ++;
-                            $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+
+                        if(value.perfil.hasOwnProperty('sexo')){
+                            if(value.perfil.sexo == 'Masculino'){
+                                $scope.masculino ++;
+                                $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                            }else if(value.perfil.sexo == 'Femenino'){
+                                $scope.femenino ++;
+                                $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                            }else{
+                                $scope.na ++;
+                                $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
+                            }
                         }else{
                             $scope.na ++;
                             $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
                         }
-                    }else{
-                        $scope.na ++;
-                        $scope.sexo = [$scope.masculino,$scope.femenino,$scope.na]
-                    }
-                    // Chart para Notificaciones
-                    if(value.configuracion.notificaciones.activada == true || value.configuracion.notificaciones.activada == 'true'){
-                        $scope.activada ++;
-                        $scope.notificaciones = [$scope.activada,$scope.desactivada]
-                    }else{
-                        $scope.desactivada ++;
-                        $scope.notificaciones = [$scope.activada,$scope.desactivada]
+                        if(value.hasOwnProperty('configuracion.notificaciones')){
+                            // Chart para Notificaciones
+                            if(value.configuracion.notificaciones.activada == true || value.configuracion.notificaciones.activada == 'true'){
+                                $scope.activada ++;
+                                $scope.notificaciones = [$scope.activada,$scope.desactivada]
+                            }else{
+                                $scope.desactivada ++;
+                                $scope.notificaciones = [$scope.activada,$scope.desactivada]
+                            } 
+                        }
                     }
 
                     $scope.usuarios.push(value);
