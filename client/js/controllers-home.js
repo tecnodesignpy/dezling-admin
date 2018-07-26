@@ -196,7 +196,9 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                 function(success){
                     if(Sponsor.SponsorMeta != null) {
                         $scope.SponsorMeta = Sponsor.SponsorMeta;
-                        $scope.filepreview = Sponsor.SponsorMeta.banner
+                        $scope.banner = Sponsor.SponsorMeta.banner;
+                        var img = document.getElementById('bannerURL');
+                        img.src = $scope.banner;
                         $scope.cargando = false;
                     }
                 },
@@ -225,7 +227,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                         // psubmit
                         //submit.status['submitLoading']      = true;
             
-                        Sponsor.editSponsor($scope.SponsorMeta, $scope.filepreview, $stateParams.IdSponsor).then(
+                        Sponsor.editSponsor($scope.SponsorMeta, $scope.banner, $stateParams.IdSponsor).then(
                             function(success){
                                 $state.go('admin.sponsor');
                             },
@@ -245,7 +247,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                         // psubmit
                         //
                         console.log($scope.fileinput);
-                        Sponsor.submitSponsor($scope.SponsorMeta, $scope.filepreview).then(
+                        Sponsor.submitSponsor($scope.SponsorMeta, $scope.banner).then(
                             function(success){
                                 $state.go('admin.sponsor');
                             },
@@ -257,6 +259,45 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                     };
             } // ./ switch
         //Enviamos los datos al service para realizar el push or update
+    };
+
+
+    $scope.UploadBanner = function (e, reader, file, fileList, fileOjects, fileObj) {
+        var storageRef = firebase.storage().ref();
+                var randomvalue = Math.random();
+                var ImagenesRef = storageRef.child('home/sponsors/'+ randomvalue).put(file);
+                ImagenesRef.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                  function(snapshot) {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                      case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                      case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                    }
+                  }, function(error) {
+                  switch (error.code) {
+                    case 'storage/unauthorized':
+                      // User doesn't have permission to access the object
+                      break;
+
+                    case 'storage/canceled':
+                      // User canceled the upload
+                      break;
+                    case 'storage/unknown':
+                      // Unknown error occurred, inspect error.serverResponse
+                      break;
+                  }
+                }, function() {
+                  // Upload completed successfully, now we can get the download URL
+                  $scope.banner = ImagenesRef.snapshot.downloadURL;
+                    var img = document.getElementById('bannerURL');
+                    img.src = $scope.banner;
+                });
     };
     
     // Scroll hasta el final de la pagina
@@ -439,7 +480,9 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                 function(success){
                     if(Destacado.SponsorMeta != null) {
                         $scope.SponsorMeta = Destacado.SponsorMeta;
-                        $scope.filepreview = Destacado.SponsorMeta.banner
+                        $scope.banner = Destacado.SponsorMeta.banner;
+                        var img = document.getElementById('bannerURL');
+                        img.src = $scope.banner;
                         $scope.cargando = false;
                     }
                 },
@@ -468,7 +511,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                         // psubmit
                         //submit.status['submitLoading']      = true;
             
-                        Destacado.editSponsor($scope.SponsorMeta, $scope.filepreview, $stateParams.IdSponsor).then(
+                        Destacado.editSponsor($scope.SponsorMeta, $scope.banner, $stateParams.IdSponsor).then(
                             function(success){
                                 $state.go('admin.destacados');
                             },
@@ -488,7 +531,7 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                         // psubmit
                         //
                         console.log($scope.fileinput);
-                        Destacado.submitSponsor($scope.SponsorMeta, $scope.filepreview).then(
+                        Destacado.submitSponsor($scope.SponsorMeta, $scope.banner).then(
                             function(success){
                                 $state.go('admin.destacados');
                             },
@@ -500,6 +543,44 @@ angular.module('noodlio.controllers-home', ["chart.js",'dx',])
                     };
             } // ./ switch
         //Enviamos los datos al service para realizar el push or update
+    };
+
+    $scope.UploadBanner = function (e, reader, file, fileList, fileOjects, fileObj) {
+        var storageRef = firebase.storage().ref();
+                var randomvalue = Math.random();
+                var ImagenesRef = storageRef.child('home/destacados/'+ randomvalue).put(file);
+                ImagenesRef.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                  function(snapshot) {
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                      case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                      case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                    }
+                  }, function(error) {
+                  switch (error.code) {
+                    case 'storage/unauthorized':
+                      // User doesn't have permission to access the object
+                      break;
+
+                    case 'storage/canceled':
+                      // User canceled the upload
+                      break;
+                    case 'storage/unknown':
+                      // Unknown error occurred, inspect error.serverResponse
+                      break;
+                  }
+                }, function() {
+                  // Upload completed successfully, now we can get the download URL
+                  $scope.banner = ImagenesRef.snapshot.downloadURL;
+                    var img = document.getElementById('bannerURL');
+                    img.src = $scope.banner;
+                });
     };
     
     // Scroll hasta el final de la pagina

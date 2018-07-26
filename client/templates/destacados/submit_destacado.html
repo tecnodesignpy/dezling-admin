@@ -126,27 +126,22 @@
                 <h5>Banner</h5>
                 <p id="error-message">{{submit.ErrorMessages['banner']}}</p>
                     
-                <input type="file" fileinput="file" filepreview="filepreview"/>
-
-                <img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview"/>
-
-
-                <!--
+                    
                     <input id="banner"
                         type="file" 
                         ng-model="banner" 
                         name="banner" 
+                        onload="UploadBanner"
                         base-sixty-four-input 
                         required 
                         maxsize="10000" 
                         accept="image/*" multiple="false">
                 
-                <div class="images-row" style="margin-top: 15px">
-                    <div class="center">
-                        <img id="bannerURL" class="not-opened"><br>
+                    <div class="images-row" style="margin-top: 15px">
+                        <div class="center">
+                            <img id="bannerURL" class="not-opened"><br>
+                        </div>
                     </div>
-                </div>
-                -->
 
             </div>
         
